@@ -1,0 +1,618 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css">
+<script src="https://templates.lcs.brightspace.com/lib/assets/js/scripts.min.js" defer=""></script>
+<link rel="stylesheet" href="https://templates.lcs.brightspace.com/lib/assets/css/styles.min.css">
+<style>
+  :root {
+    --bg-main: #f5efe4;
+    --lace-paper: #fffcf4;
+    --lace-ink: #1f1d19;
+    --lace-muted: #706a5f;
+    --lace-muted-strong: #5f584d;
+    --lace-hairline: rgba(69, 58, 41, 0.16);
+    --lace-gold: #b88a2d;
+    --radius-card: 14px;
+    --radius-control: 12px;
+    --shadow-soft: 0 8px 24px rgba(40, 32, 20, 0.06);
+    --font-sans: Lato, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", Consolas, ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box !important; }
+
+  html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--font-sans) !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    color: var(--lace-ink) !important;
+    background:
+      radial-gradient(circle at 82% -5%, rgba(184, 138, 45, 0.08), transparent 28rem),
+      radial-gradient(circle at 10% 22%, rgba(95, 138, 120, 0.07), transparent 26rem),
+      linear-gradient(180deg, var(--bg-main) 0%, #fbf7ef 48%, #f4ede1 100%) !important;
+    overflow-x: hidden;
+    text-align: center !important;
+  }
+
+  .page-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    background-image:
+      linear-gradient(rgba(69, 58, 41, 0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(69, 58, 41, 0.012) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .page-inner {
+    width: 100% !important;
+    max-width: 680px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 20px 48px !important;
+    text-align: left !important;
+  }
+
+  .page-nav {
+    border-bottom: 1px solid var(--lace-hairline);
+    background: rgba(248, 242, 232, 0.92);
+    box-shadow: 0 4px 18px rgba(40, 32, 20, 0.04);
+    margin-bottom: 32px;
+    overflow: visible !important;
+  }
+
+  .page-nav-inner {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    padding: 12px 20px;
+    overflow: visible !important;
+  }
+
+  .nav-dropdown { position: relative; z-index: 100; }
+
+  .nav-menu-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--lace-hairline) !important;
+    border-radius: var(--radius-control);
+    background: #fffdf7 !important;
+    color: var(--lace-ink) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: none !important;
+  }
+
+  .nav-menu-btn:hover,
+  .nav-menu-btn[aria-expanded="true"] {
+    border-color: rgba(184, 138, 45, 0.45) !important;
+    background: #fffaf0 !important;
+  }
+
+  .nav-menu-icon { font-size: 15px; color: var(--lace-gold); }
+  .nav-menu-chevron { font-size: 9px; color: var(--lace-muted); transition: transform 0.15s; margin-left: 2px; }
+  .nav-menu-btn[aria-expanded="true"] .nav-menu-chevron { transform: rotate(180deg); }
+
+  .nav-dropdown-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 300px;
+    max-width: min(300px, calc(100vw - 32px));
+    border: 1px solid var(--lace-hairline) !important;
+    border-radius: var(--radius-card);
+    background: #fffcf4 !important;
+    box-shadow: 0 12px 32px rgba(40, 32, 20, 0.14);
+    padding: 10px;
+    text-align: left;
+  }
+
+  .nav-dropdown-panel.open { display: block; }
+
+  .menu-scroll {
+    max-height: 360px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(112, 106, 95, 0.35) transparent;
+  }
+
+  #course-menu a, #course-menu a:hover {
+    text-decoration: none !important;
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .menu-home {
+    display: block !important;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--lace-gold) !important;
+    background: rgba(184, 138, 45, 0.08) !important;
+  }
+
+  .menu-home:hover { background: rgba(184, 138, 45, 0.14) !important; }
+
+  .menu-block {
+    margin-bottom: 8px;
+    padding: 4px;
+    border-radius: 10px;
+    background: rgba(255, 253, 247, 0.8);
+  }
+
+  .menu-block-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--lace-muted);
+    padding: 6px 10px 4px;
+  }
+
+  .menu-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lace-ink) !important;
+  }
+
+  .menu-item:hover { background: rgba(184, 138, 45, 0.1) !important; }
+  .menu-item.current { background: #ede3cf !important; color: var(--lace-gold) !important; font-weight: 700; pointer-events: none; }
+  .menu-item.completed { color: var(--lace-muted) !important; font-weight: 500; }
+  .menu-item.is-next { background: rgba(184, 138, 45, 0.12) !important; box-shadow: inset 0 0 0 1px rgba(184, 138, 45, 0.22); }
+  .menu-item.disabled { color: var(--lace-muted) !important; opacity: 0.45; pointer-events: none; font-weight: 500; }
+
+  .menu-check {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(111, 146, 123, 0.15);
+    color: #6f927b;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .menu-item.completed .menu-check { display: inline-block; }
+
+  .menu-progress {
+    padding: 8px 10px 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: rgba(184, 138, 45, 0.06);
+  }
+
+  .menu-progress.hidden { display: none !important; }
+
+  .menu-progress-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--lace-muted);
+    margin-bottom: 6px;
+  }
+
+  .menu-progress-track { height: 4px; border-radius: 99px; background: #e6dccb; overflow: hidden; }
+  .menu-progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #a97824, #c89a3f); }
+
+  .nav-left { display: flex; gap: 8px; align-items: center; min-width: 0; }
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+
+  .nav-btn {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: var(--radius-control);
+    font-family: var(--font-sans) !important;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+
+  .nav-btn-ghost {
+    background: #fffdf7 !important;
+    color: var(--lace-muted-strong) !important;
+    border: 1px solid var(--lace-hairline) !important;
+  }
+
+  .nav-btn-primary {
+    background: #171713 !important;
+    color: #fffaf0 !important;
+    border: 1px solid #171713 !important;
+    box-shadow: 0 6px 16px rgba(23, 23, 19, 0.12);
+  }
+
+  .topic-progress {
+    max-width: 680px !important;
+    margin: -20px auto 20px !important;
+    padding: 0 20px;
+  }
+
+  .topic-progress.hidden { display: none !important; }
+
+  .topic-progress-inner {
+    border: 1px solid var(--lace-hairline);
+    border-radius: 10px;
+    background: var(--lace-paper);
+    padding: 10px 14px;
+    box-shadow: 0 4px 14px rgba(40, 32, 20, 0.04);
+  }
+
+  .topic-progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .topic-progress-text { font-size: 12px; font-weight: 700; color: var(--lace-ink); }
+
+  .topic-progress-next, .topic-progress-next:hover {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lace-gold) !important;
+    text-decoration: none !important;
+    border: none !important;
+  }
+
+  .topic-progress-bar { height: 4px; border-radius: 99px; background: #e6dccb; overflow: hidden; }
+  .topic-progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #a97824, #c89a3f); }
+
+  .page-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lace-gold);
+    margin: 0 0 8px;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #171713;
+    margin: 0 0 8px;
+  }
+
+  .page-lead {
+    font-size: 15px;
+    color: var(--lace-muted-strong);
+    margin: 0 0 20px;
+  }
+
+  .content-card {
+    border: 1px solid var(--lace-hairline);
+    border-radius: var(--radius-card);
+    background: linear-gradient(180deg, rgba(255, 252, 244, 0.96), rgba(250, 245, 235, 0.82)), var(--lace-paper);
+    box-shadow: var(--shadow-soft);
+    padding: 20px 22px 18px;
+    margin-bottom: 16px;
+    width: 100% !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .content-card::before {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: var(--lace-gold);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .content-card .d2l-element {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .content-card .card,
+  .content-card .jumbotron {
+    border-radius: 10px !important;
+    border: 1px solid var(--lace-hairline) !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .content-card .card-standard {
+    background: rgba(255, 253, 247, 0.9) !important;
+  }
+
+  .content-card .card-graphic {
+    background: rgba(255, 253, 247, 0.9) !important;
+  }
+
+  .content-card .jumbotron {
+    background: rgba(184, 138, 45, 0.08) !important;
+    padding: 18px 20px !important;
+  }
+
+  .content-card .d2l-callout-title {
+    font-family: var(--font-sans) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--lace-ink) !important;
+    margin-bottom: 6px !important;
+  }
+
+  .content-card .card-body p,
+  .content-card .jumbotron p {
+    margin: 0 !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    color: var(--lace-muted-strong) !important;
+  }
+
+  .intro-line {
+    font-size: 14px;
+    color: var(--lace-muted-strong);
+    margin: 0 0 16px;
+  }
+
+  .intro-line strong { color: var(--lace-ink); }
+</style>
+</head>
+<body>
+
+<div class="page-shell">
+
+  <nav class="page-nav">
+    <div class="page-nav-inner">
+      <div class="nav-left">
+      <a class="nav-btn nav-btn-ghost" href="https://mcreed-mlri.github.io/lms-discovery/">← Back to home</a>
+      <div class="nav-dropdown">
+        <button class="nav-menu-btn" type="button" id="course-menu-btn" aria-expanded="false" aria-controls="course-menu" onclick="toggleCourseMenu(event)">
+          <span class="nav-menu-icon" aria-hidden="true">☰</span>
+          Course Menu
+          <span class="nav-menu-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="nav-dropdown-panel" id="course-menu">
+          <a class="menu-home" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Course%20Wrapper.html?ou=6698&amp;d2l_body_type=3">All modules</a>
+          <div class="menu-progress hidden" id="menu-progress">
+            <span class="menu-progress-label" id="menu-progress-label">Sarah · 0 of 0 complete</span>
+            <div class="menu-progress-track"><div class="menu-progress-fill" id="menu-progress-fill" style="width:0%"></div></div>
+          </div>
+          <div class="menu-scroll">
+            <div class="menu-block">
+              <div class="menu-block-title">Start here</div>
+              <a class="menu-item" data-slug="overview" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Using%20Interactive%20Elements.html?ou=6698&amp;d2l_body_type=3"><span>Lesson overview</span><span class="menu-check" aria-hidden="true">✓</span></a>
+            </div>
+            <div class="menu-block">
+              <div class="menu-block-title">Module 1</div>
+              <a class="menu-item" data-slug="accordion" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Accordion.html?ou=6698&amp;d2l_body_type=3"><span>Accordion</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="tabs" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Tabs.html?ou=6698&amp;d2l_body_type=3"><span>Tabs</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="callouts" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Callouts.html?ou=6698&amp;d2l_body_type=3"><span>Callouts</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="stylized-quotes" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Stylized%20Quotes.html?ou=6698&amp;d2l_body_type=3"><span>Stylized Quotes</span><span class="menu-check" aria-hidden="true">✓</span></a>
+            </div>
+            <div class="menu-block">
+              <div class="menu-block-title">Module 2</div>
+              <a class="menu-item" data-slug="sorting-gallery" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Sorting%20Gallery.html?ou=6698&amp;d2l_body_type=3"><span>Sorting Gallery</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="sequencing" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Sequencing.html?ou=6698&amp;d2l_body_type=3"><span>Sequencing</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="flip-cards" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Flip%20Cards.html?ou=6698&amp;d2l_body_type=3"><span>Flip Cards</span><span class="menu-check" aria-hidden="true">✓</span></a>
+              <a class="menu-item" data-slug="fill-in-blanks" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Fill-in-the-Blanks.html?ou=6698&amp;d2l_body_type=3"><span>Fill in the Blanks</span><span class="menu-check" aria-hidden="true">✓</span></a>
+            </div>
+            <div class="menu-block">
+              <div class="menu-block-title">Module 3</div>
+              <span class="menu-item disabled">Image Hotspots</span>
+              <span class="menu-item disabled">Integrated Video</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-btn nav-btn-ghost" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Tabs.html?ou=6698&amp;d2l_body_type=3">← Previous</a>
+        <a class="nav-btn nav-btn-primary" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Stylized%20Quotes.html?ou=6698&amp;d2l_body_type=3">Next →</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="topic-progress hidden" id="topic-progress" aria-live="polite">
+    <div class="topic-progress-inner">
+      <div class="topic-progress-row">
+        <span class="topic-progress-text" id="topic-progress-text">5 of 9 complete</span>
+        <a class="topic-progress-next" id="topic-progress-next" href="#">Next up: Stylized Quotes →</a>
+      </div>
+      <div class="topic-progress-bar" role="progressbar" id="topic-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="topic-progress-fill" id="topic-progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-inner">
+
+    <p class="page-eyebrow">Module 1 · Static Layouts</p>
+    <h1 class="page-title">Callouts</h1>
+    <p class="page-lead">Colored boxes with icons — draw the eye to what matters most.</p>
+    <p class="intro-line"><strong>What it is:</strong> Colored boxes with icons.</p>
+
+    <div class="content-card">
+      <div class="d2l-element mceNonEditable" data-idx="3" data-type="noicon" role="section" aria-describedby="d2l-uid-321">
+        <p id="d2l-uid-321" class="sr-only">Callout</p>
+        <div class="card card-standard" data-prop="0|noicon">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="d2l-callout-title" data-prop="1|null">No Icon Callout</div>
+              <div data-prop="2|null">
+                <p>Use this to box in important information.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="d2l-element mceNonEditable" data-idx="3" data-type="question" role="section" aria-describedby="d2l-uid-525">
+        <p id="d2l-uid-525" class="sr-only">Callout</p>
+        <div class="card card-graphic" data-prop="0|question">
+          <div class="card-body">
+            <div class="card-icon"></div>
+            <div class="card-text">
+              <div class="d2l-callout-title" data-prop="1|null">Question Callout</div>
+              <div data-prop="2|null">
+                <p>Use this to ask a question or have the learner ponder on something.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="d2l-element mceNonEditable" data-idx="3" data-type="attention" role="section" aria-describedby="d2l-uid-728">
+        <p id="d2l-uid-728" class="sr-only">Callout</p>
+        <div class="card card-graphic" data-prop="0|attention">
+          <div class="card-body">
+            <div class="card-icon"></div>
+            <div class="card-text">
+              <div class="d2l-callout-title" data-prop="1|null">Attention Callout</div>
+              <div data-prop="2|null">
+                <p>Use this to bring attention to something very important!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="d2l-element mceNonEditable" data-idx="3" data-type="jumbo" role="section" aria-describedby="d2l-uid-931">
+        <p id="d2l-uid-931" class="sr-only">Callout</p>
+        <div class="jumbotron" data-prop="0|jumbo">
+          <div class="d2l-callout-title" data-prop="1|null">Jumbo Callout</div>
+          <div data-prop="2|null">
+            <p>Use this for a larger callout box.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var MOCK_PROGRESS = {
+  isReturning: true,
+  userName: 'Sarah',
+  completed: ['overview', 'accordion', 'tabs', 'callouts', 'sorting-gallery'],
+  continueSlug: 'stylized-quotes'
+};
+var CURRENT_SLUG = 'callouts';
+
+function applyTopicProgress(data, currentSlug) {
+  if (!data || !data.isReturning) return;
+
+  var items = document.querySelectorAll('#course-menu [data-slug]');
+  var completable = [];
+  items.forEach(function(el) {
+    if (el.classList.contains('disabled')) return;
+    completable.push(el.getAttribute('data-slug'));
+  });
+
+  var completedSet = {};
+  data.completed.forEach(function(s) { completedSet[s] = true; });
+
+  var done = completable.filter(function(s) { return completedSet[s]; }).length;
+  var total = completable.length;
+  var pct = total ? Math.round((done / total) * 100) : 0;
+
+  document.getElementById('topic-progress').classList.remove('hidden');
+  document.getElementById('menu-progress').classList.remove('hidden');
+  document.getElementById('topic-progress-text').textContent = done + ' of ' + total + ' complete';
+  document.getElementById('menu-progress-label').textContent = data.userName + ' · ' + done + ' of ' + total + ' complete';
+  document.getElementById('topic-progress-fill').style.width = pct + '%';
+  document.getElementById('menu-progress-fill').style.width = pct + '%';
+  document.getElementById('topic-progress-bar').setAttribute('aria-valuenow', pct);
+
+  var continueEl = document.querySelector('[data-slug="' + data.continueSlug + '"]');
+  if (continueEl && continueEl.href) {
+    var nextLink = document.getElementById('topic-progress-next');
+    nextLink.href = continueEl.href;
+    nextLink.textContent = 'Next up: ' + continueEl.querySelector('span').textContent.trim() + ' →';
+  }
+
+  items.forEach(function(el) {
+    var slug = el.getAttribute('data-slug');
+    if (completedSet[slug]) el.classList.add('completed');
+    if (slug === data.continueSlug) el.classList.add('is-next');
+    if (slug === currentSlug) {
+      el.classList.add('current');
+      el.classList.remove('is-next');
+      el.setAttribute('aria-current', 'page');
+    }
+  });
+}
+
+function toggleCourseMenu(event) {
+  event.stopPropagation();
+  var panel = document.getElementById('course-menu');
+  var btn = document.getElementById('course-menu-btn');
+  var isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+}
+
+document.addEventListener('click', function() {
+  var panel = document.getElementById('course-menu');
+  var btn = document.getElementById('course-menu-btn');
+  if (panel && panel.classList.contains('open')) {
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.getElementById('course-menu').addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+
+applyTopicProgress(MOCK_PROGRESS, CURRENT_SLUG);
+</script>
+
+</body>
+</html>

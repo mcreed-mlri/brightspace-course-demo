@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css">
+<title>Using Interactive Elements in Brightspace</title>
+<style>
+  :root {
+    --bg-main: #f5efe4;
+    --lace-paper: #fffcf4;
+    --lace-ink: #1f1d19;
+    --lace-muted: #706a5f;
+    --lace-hairline: rgba(69, 58, 41, 0.16);
+    --lace-gold: #b88a2d;
+    --lace-sage: #6f927b;
+    --lace-rust: #b76545;
+    --radius: 12px;
+    --font-sans: Lato, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", Consolas, ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box !important; }
+
+  html, body {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--font-sans) !important;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--lace-ink) !important;
+    background:
+      radial-gradient(circle at 82% -5%, rgba(184, 138, 45, 0.07), transparent 24rem),
+      linear-gradient(180deg, var(--bg-main) 0%, #fbf7ef 100%) !important;
+    overflow-x: hidden;
+    text-align: center !important;
+  }
+
+  .hub-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    background-image:
+      linear-gradient(rgba(69, 58, 41, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(69, 58, 41, 0.01) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .hub-inner {
+    width: 100% !important;
+    max-width: 560px !important;
+    margin: 0 auto !important;
+    padding: 20px 16px 40px !important;
+    text-align: left !important;
+  }
+
+  .hub-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--lace-hairline);
+  }
+
+  .hub-home-link {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: var(--radius-control);
+    font-family: var(--font-sans) !important;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    background: #fffdf7 !important;
+    color: var(--lace-muted-strong) !important;
+    border: 1px solid var(--lace-hairline) !important;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .hub-home-link:hover {
+    border-color: rgba(184, 138, 45, 0.45) !important;
+    color: var(--lace-ink) !important;
+  }
+
+  .hub-logo-main {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    color: var(--lace-ink);
+  }
+
+  .hub-logo-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #786f62;
+  }
+
+  .course-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #171713;
+    margin: 0 0 4px;
+    line-height: 1.2;
+  }
+
+  .course-hint {
+    font-size: 13px;
+    color: var(--lace-muted);
+    margin: 0 0 14px;
+  }
+
+  /* ── Returning user / progress ── */
+  .progress-panel {
+    border: 1px solid var(--lace-hairline);
+    border-radius: var(--radius);
+    background: var(--lace-paper);
+    box-shadow: 0 6px 20px rgba(40, 32, 20, 0.05);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    width: 100% !important;
+  }
+
+  .progress-panel.hidden { display: none !important; }
+
+  .progress-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--lace-gold);
+    margin: 0 0 4px;
+  }
+
+  .progress-greeting {
+    font-size: 15px;
+    font-weight: 700;
+    color: #171713;
+    margin: 0 0 10px;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lace-muted);
+    margin-bottom: 6px;
+  }
+
+  .progress-meta strong {
+    color: var(--lace-ink);
+    font-weight: 700;
+  }
+
+  .progress-track {
+    height: 6px;
+    border-radius: 99px;
+    background: #e6dccb;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #a97824, #c89a3f);
+    transition: width 0.3s ease;
+  }
+
+  .progress-panel a,
+  .progress-panel a:link,
+  .progress-panel a:visited,
+  .progress-panel a:hover {
+    text-decoration: none !important;
+    border: none !important;
+  }
+
+  .btn-continue {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    background: #171713 !important;
+    color: #fffaf0 !important;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.12s;
+  }
+
+  .btn-continue:hover { background: #000 !important; }
+
+  .btn-continue-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 250, 240, 0.65);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .btn-continue-title { display: block; }
+
+  /* ── TOC ── */
+  .toc-card {
+    border: 1px solid var(--lace-hairline);
+    border-radius: var(--radius);
+    background: var(--lace-paper);
+    box-shadow: 0 6px 20px rgba(40, 32, 20, 0.05);
+    overflow: hidden;
+    width: 100% !important;
+  }
+
+  .toc-card a,
+  .toc-card a:link,
+  .toc-card a:visited,
+  .toc-card a:hover,
+  .toc-card a:active {
+    text-decoration: none !important;
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
+  }
+
+  .toc-overview {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(184, 138, 45, 0.08);
+    border-bottom: 1px solid var(--lace-hairline);
+    color: var(--lace-ink) !important;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.12s;
+  }
+
+  .toc-overview:hover { background: rgba(184, 138, 45, 0.14); }
+  .toc-overview.completed { background: rgba(111, 146, 123, 0.1); }
+
+  .toc-link-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .toc-check {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(111, 146, 123, 0.15);
+    color: var(--lace-sage);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  .toc-link.completed .toc-check,
+  .toc-overview.completed .toc-check { display: inline-block; }
+
+  .toc-overview.completed .toc-arrow { display: none; }
+
+  .toc-overview-arrow, .toc-arrow {
+    color: var(--lace-gold);
+    font-size: 12px;
+  }
+
+  .toc-module { border-bottom: 1px solid var(--lace-hairline); }
+  .toc-module:last-child { border-bottom: none; }
+
+  .toc-module-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 16px 6px;
+  }
+
+  .toc-module-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lace-muted);
+  }
+
+  .toc-module-label::before {
+    content: "";
+    width: 3px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .toc-module.accent-gold .toc-module-label::before { background: var(--lace-gold); }
+  .toc-module.accent-sage .toc-module-label::before { background: var(--lace-sage); }
+  .toc-module.accent-rust .toc-module-label::before { background: var(--lace-rust); }
+
+  .module-fraction {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--lace-muted);
+    white-space: nowrap;
+  }
+
+  .toc-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 8px 8px !important;
+  }
+
+  .toc-list li { margin: 0 !important; padding: 0 !important; }
+
+  .toc-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100% !important;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: var(--lace-ink) !important;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.1s;
+  }
+
+  .toc-link:hover { background: rgba(184, 138, 45, 0.1); }
+  .toc-link.completed { color: var(--lace-muted) !important; font-weight: 500; }
+  .toc-link.completed:hover { background: rgba(111, 146, 123, 0.08); }
+
+  .toc-link.is-next {
+    background: rgba(184, 138, 45, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(184, 138, 45, 0.25);
+  }
+
+  .toc-link .toc-arrow { opacity: 0; transition: opacity 0.1s; }
+  .toc-link:hover .toc-arrow,
+  .toc-link.is-next .toc-arrow { opacity: 1; }
+  .toc-link.completed .toc-arrow { display: none; }
+
+  .toc-link.disabled {
+    color: var(--lace-muted) !important;
+    opacity: 0.45;
+    pointer-events: none;
+    font-weight: 500;
+  }
+
+  .toc-soon {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--lace-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="hub-shell">
+  <div class="hub-inner">
+
+    <header class="hub-header">
+      <div>
+        <div class="hub-logo-main">LACE</div>
+        <div class="hub-logo-sub">Learning Hub</div>
+      </div>
+      <a class="hub-home-link" href="https://mcreed-mlri.github.io/lms-discovery/">← Back to home</a>
+    </header>
+
+    <h1 class="course-title">Using Interactive Elements</h1>
+    <p class="course-hint" id="course-hint">Pick a topic to begin.</p>
+
+    <!-- Returning user panel (populated by mock / future API) -->
+    <div class="progress-panel hidden" id="progress-panel" aria-live="polite">
+      <p class="progress-eyebrow">Welcome back</p>
+      <p class="progress-greeting" id="progress-greeting">Welcome back, Sarah</p>
+      <div class="progress-meta">
+        <span><strong id="progress-count">0</strong> of <span id="progress-total">0</span> complete</span>
+        <span id="progress-percent">0%</span>
+      </div>
+      <div class="progress-track" role="progressbar" id="progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <a class="btn-continue" id="btn-continue" href="#">
+        <span>
+          <span class="btn-continue-label">Continue where you left off</span>
+          <span class="btn-continue-title" id="continue-title">—</span>
+        </span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <nav class="toc-card" aria-label="Course topics">
+
+      <a class="toc-overview toc-link" data-slug="overview"
+         href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Using%20Interactive%20Elements.html?ou=6698&amp;d2l_body_type=3">
+        <span>Lesson overview</span>
+        <span class="toc-link-right">
+          <span class="toc-check" aria-label="Completed">✓</span>
+          <span class="toc-overview-arrow toc-arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
+
+      <div class="toc-module accent-gold" data-module="module-1">
+        <div class="toc-module-head">
+          <span class="toc-module-label">Module 1 · Static Layouts</span>
+          <span class="module-fraction" data-module-fraction="module-1"></span>
+        </div>
+        <ul class="toc-list">
+          <li><a class="toc-link" data-slug="accordion" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Accordion.html?ou=6698&amp;d2l_body_type=3"><span>Accordion</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="tabs" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Tabs.html?ou=6698&amp;d2l_body_type=3"><span>Tabs</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="callouts" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Callouts.html?ou=6698&amp;d2l_body_type=3"><span>Callouts</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="stylized-quotes" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Stylized%20Quotes.html?ou=6698&amp;d2l_body_type=3"><span>Stylized Quotes</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+        </ul>
+      </div>
+
+      <div class="toc-module accent-sage" data-module="module-2">
+        <div class="toc-module-head">
+          <span class="toc-module-label">Module 2 · Self Checks</span>
+          <span class="module-fraction" data-module-fraction="module-2"></span>
+        </div>
+        <ul class="toc-list">
+          <li><a class="toc-link" data-slug="sorting-gallery" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Sorting%20Gallery.html?ou=6698&amp;d2l_body_type=3"><span>Sorting Gallery</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="sequencing" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Sequencing.html?ou=6698&amp;d2l_body_type=3"><span>Sequencing</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="flip-cards" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Flip%20Cards.html?ou=6698&amp;d2l_body_type=3"><span>Flip Cards</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="toc-link" data-slug="fill-in-blanks" href="https://mlri.brightspace.com/content/enforced/6698-demo.instructor_mc/Fill-in-the-Blanks.html?ou=6698&amp;d2l_body_type=3"><span>Fill in the Blanks</span><span class="toc-link-right"><span class="toc-check" aria-label="Completed">✓</span><span class="toc-arrow" aria-hidden="true">→</span></span></a></li>
+        </ul>
+      </div>
+
+      <div class="toc-module accent-rust" data-module="module-3">
+        <div class="toc-module-head">
+          <span class="toc-module-label">Module 3 · Insert Media</span>
+          <span class="module-fraction" data-module-fraction="module-3"></span>
+        </div>
+        <ul class="toc-list">
+          <li><span class="toc-link disabled" data-slug="image-hotspots"><span>Image Hotspots</span><span class="toc-soon">Soon</span></span></li>
+          <li><span class="toc-link disabled" data-slug="integrated-video"><span>Integrated Video</span><span class="toc-soon">Soon</span></span></li>
+        </ul>
+      </div>
+
+    </nav>
+
+  </div>
+</div>
+
+<script>
+/*
+  MOCK PROGRESS — replace with LACE API fetch later:
+  fetch('/api/courses/6698/progress', { headers: { Authorization: 'Bearer ' + token } })
+*/
+var MOCK_PROGRESS = {
+  isReturning: true,
+  userName: 'Sarah',
+  completed: [
+    'overview',
+    'accordion',
+    'tabs',
+    'callouts',
+    'sorting-gallery'
+  ],
+  continueSlug: 'stylized-quotes',
+  moduleMap: {
+    'module-1': ['overview', 'accordion', 'tabs', 'callouts', 'stylized-quotes'],
+    'module-2': ['sorting-gallery', 'sequencing', 'flip-cards', 'fill-in-blanks'],
+    'module-3': []
+  }
+};
+
+function applyProgress(data) {
+  if (!data || !data.isReturning) return;
+
+  var links = document.querySelectorAll('[data-slug]');
+  var completable = [];
+  links.forEach(function(el) {
+    if (el.classList.contains('disabled')) return;
+    completable.push(el.getAttribute('data-slug'));
+  });
+
+  var completedSet = {};
+  data.completed.forEach(function(slug) { completedSet[slug] = true; });
+
+  var completedCount = 0;
+  completable.forEach(function(slug) {
+    if (completedSet[slug]) completedCount++;
+  });
+
+  var total = completable.length;
+  var pct = total ? Math.round((completedCount / total) * 100) : 0;
+
+  // Progress panel
+  var panel = document.getElementById('progress-panel');
+  var hint = document.getElementById('course-hint');
+  panel.classList.remove('hidden');
+  if (hint) hint.textContent = 'Pick up where you left off, or jump to any topic.';
+
+  document.getElementById('progress-greeting').textContent = 'Welcome back, ' + data.userName;
+  document.getElementById('progress-count').textContent = completedCount;
+  document.getElementById('progress-total').textContent = total;
+  document.getElementById('progress-percent').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-bar').setAttribute('aria-valuenow', pct);
+
+  // Continue button
+  var continueEl = document.querySelector('[data-slug="' + data.continueSlug + '"]');
+  if (continueEl && continueEl.href) {
+    document.getElementById('btn-continue').href = continueEl.href;
+    document.getElementById('continue-title').textContent = continueEl.querySelector('span').textContent.trim();
+  }
+
+  // Mark completed + highlight next
+  links.forEach(function(el) {
+    var slug = el.getAttribute('data-slug');
+    if (completedSet[slug]) el.classList.add('completed');
+    if (slug === data.continueSlug) el.classList.add('is-next');
+  });
+
+  // Per-module fractions
+  Object.keys(data.moduleMap).forEach(function(modId) {
+    var slugs = data.moduleMap[modId];
+    if (!slugs.length) return;
+    var done = slugs.filter(function(s) { return completedSet[s]; }).length;
+    var fracEl = document.querySelector('[data-module-fraction="' + modId + '"]');
+    if (fracEl) fracEl.textContent = done + '/' + slugs.length;
+  });
+}
+
+applyProgress(MOCK_PROGRESS);
+</script>
+
+</body>
+</html>

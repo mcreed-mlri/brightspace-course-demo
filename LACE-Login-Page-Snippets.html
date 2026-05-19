@@ -1,0 +1,143 @@
+<!--
+  MLRI Login Page — Brightspace Login Page Management
+  ===================================================
+  Where: Admin → Branding → Login Page Management
+
+  IMPORTANT — Background limitation
+  ---------------------------------
+  Brightspace only colours the login *widget area*, not the full page.
+  The org navbar (MLRI logo), side margins, and "Powered by D2L" footer
+  stay white. Fighting that with #f5efe4 creates a beige box on white.
+
+  Recommended approach (v2):
+  - Background colour → #ffffff  (blend with the outer page)
+  - Branding lives in Message as a centred card
+  - Help text stays short and sits with the branding (not a separate block)
+  - CSS in Additional Content tries to style the form + optional full-page bg
+
+  QUICK SETTINGS
+  --------------
+  Headline:           (leave blank if Brightspace allows — removes duplicate "Sign in")
+  Headline color:     #171713  (only if you keep a headline)
+  Background colour:  #ffffff
+  Picture widget:     None
+  Advanced:
+    - Check "Center the login and picture widgets horizontally"
+    - Local Login Form Display: Expanded (Default)
+
+  Paste MESSAGE block into Message (</> Source).
+  Paste ADDITIONAL block into Additional Content (</> Source).
+-->
+
+<!-- ========== MESSAGE (paste into Message field, Source view) ========== -->
+
+<link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css">
+
+<div style="font-family: Lato, 'Segoe UI', ui-sans-serif, system-ui, sans-serif; color: #1f1d19; text-align: center; max-width: 440px; margin: 0 auto; line-height: 1.5;">
+
+  <div style="border: 1px solid rgba(69, 58, 41, 0.14); border-radius: 14px; background: linear-gradient(180deg, rgba(255, 252, 244, 0.98), rgba(250, 245, 235, 0.88)), #fffcf4; box-shadow: 0 10px 28px rgba(40, 32, 20, 0.07); padding: 26px 24px 20px; position: relative; overflow: hidden;">
+
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #9a7424, #b88a2d, #9a7424);"></div>
+
+    <p style="margin: 0; font-size: 2rem; font-weight: 400; letter-spacing: -0.055em; color: #171713; line-height: 1.1;">
+      MLRI
+    </p>
+    <p style="margin: 4px 0 18px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #786f62; font-family: 'IBM Plex Mono', Consolas, ui-monospace, monospace;">
+      Learning Hub
+    </p>
+
+    <p style="margin: 0; font-size: 15px; font-weight: 500; color: #5f584d; line-height: 1.45;">
+      Sign in with your MLRI credentials to access assigned training, courses, and learning paths.
+    </p>
+
+    <p style="margin: 12px 0 0; font-size: 12px; color: #8a8173; line-height: 1.4;">
+      Forgot your password? Use the link on the sign-in form below.
+    </p>
+
+    <div style="margin: 18px 0 14px; height: 1px; background: rgba(69, 58, 41, 0.1);"></div>
+
+    <p style="margin: 0 0 6px; font-size: 11px; font-weight: 400; color: #8a8173; line-height: 1.5;">
+      Questions?
+      <a href="mailto:training@mlri.org" style="color: #9a7424; font-weight: 600; text-decoration: none;">training@mlri.org</a>
+      <span style="color: rgba(69, 58, 41, 0.35);">&nbsp;·&nbsp;</span>
+      <a href="https://www.mlri.org/" target="_blank" rel="noopener noreferrer" style="color: #9a7424; font-weight: 600; text-decoration: none;">mlri.org</a>
+    </p>
+
+    <p style="margin: 0; font-size: 10px; letter-spacing: 0.02em; color: #a39a8c; line-height: 1.4;">
+      Massachusetts Law Reform Institute
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ========== ADDITIONAL CONTENT (paste into Additional Content, Source view) ========== -->
+
+<style>
+  /*
+    Full-page background — may work on some Brightspace builds.
+    If Preview still shows white margins, that is a platform limit; the
+    white background colour setting above is the reliable fix.
+  */
+  html,
+  body,
+  .d2l-page-main,
+  .d2l-page-main-padding,
+  .d2l-login-page,
+  .d2l-login-container,
+  .d2l-login-widgets,
+  .d2l-login-widgets-main {
+    background-color: #f5efe4 !important;
+  }
+
+  /* Login form fields */
+  .d2l-login-form input[type="text"],
+  .d2l-login-form input[type="password"],
+  .d2l-login-widgets-main input[type="text"],
+  .d2l-login-widgets-main input[type="password"],
+  input.d2l-edit {
+    border-radius: 12px !important;
+    border: 1px solid rgba(69, 58, 41, 0.16) !important;
+    background: #fffdf7 !important;
+    font-family: Lato, "Segoe UI", sans-serif !important;
+    font-size: 15px !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Log In button — match MLRI dark primary instead of default blue */
+  .d2l-login-form input[type="submit"],
+  .d2l-login-form button[type="submit"],
+  .d2l-login-widgets-main input[type="submit"],
+  .d2l-login-widgets-main button[type="submit"],
+  .d2l-button,
+  button.d2l-button-primary {
+    border-radius: 12px !important;
+    background: #171713 !important;
+    border: 1px solid #171713 !important;
+    color: #fffaf0 !important;
+    font-family: Lato, "Segoe UI", sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 10px 18px !important;
+    box-shadow: 0 6px 16px rgba(23, 23, 19, 0.12) !important;
+  }
+
+  .d2l-login-form a,
+  .d2l-login-widgets-main a {
+    color: #b88a2d !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+
+  .d2l-login-form a:hover,
+  .d2l-login-widgets-main a:hover {
+    color: #171713 !important;
+  }
+
+  /* Soften the login widget box if Brightspace wraps it */
+  .d2l-login-widgets-main,
+  .d2l-login-form {
+    border-radius: 14px !important;
+  }
+</style>
