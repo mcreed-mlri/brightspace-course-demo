@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course outline</title>
+
+  <!--
+    The reworked wrapper merges the old "Home" and "Modules" pages into a
+    single outline page (Home.html). This file now forwards there so any
+    existing Brightspace content topic pointing at Modules.html keeps working.
+  -->
+  <meta http-equiv="refresh" content="0; url=Home.html">
+  <meta name="course-slug" content="modules">
+  <link rel="stylesheet" href="course-style.css">
+</head>
+<body>
+  <div class="page">
+    <main class="page-body" style="text-align:center;">
+      <p class="eyebrow">Course outline</p>
+      <h1 class="display outline-title" style="font-size:34px;">Taking you to the outline…</h1>
+      <p class="outline-lead" style="margin-left:auto;margin-right:auto;">
+        The course outline now lives on one page.
+        <a href="Home.html" style="color:var(--gold-deep);text-decoration:underline;">Continue to the outline</a>
+        if you are not redirected automatically.
+      </p>
+    </main>
+  </div>
+  <script>window.location.replace("Home.html");</script>
+</body>
+</html>

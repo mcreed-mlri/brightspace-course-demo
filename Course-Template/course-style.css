@@ -1,0 +1,851 @@
+/* ============================================================================
+   LACE Course Wrapper — design system
+   Editorial legal-aid learning, hosted inside Brightspace. Lato throughout
+   (light 300 for display), clean ivory/stone surfaces, warm topic accents.
+   Reworked to match the LACE Learning Hub: no whiplash crossing from hub to
+   course.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ── Neutral base — clean ivory/stone canvas; warmth lives in accents,
+        not in full-page parchment wash. ─────────────────────────────────── */
+  --bg: #f7f6f3;          /* warm stone — page canvas, not parchment */
+  --paper: #fefefe;       /* bright off-white — cards, drawer, panels */
+  --surface: #ffffff;     /* clean white — raised rows, rule boxes */
+  --warm: #eceae6;        /* neutral sunken — progress tracks, controls */
+  --ivory: #f2f1ed;       /* whisper hover tint — warm, not tan */
+  --chrome-bg: rgba(252, 251, 249, 0.94);
+
+  --ink: #211f1b;         /* charcoal — primary text */
+  --ink-soft: #36322b;    /* slightly softened ink */
+  --muted: #504a44;       /* muted body copy */
+  --muted-soft: #6e6860;  /* soft metadata — eyebrows, captions */
+
+  --hair: rgba(32, 30, 28, 0.10);        /* neutral stone hairline */
+  --hair-strong: rgba(32, 30, 28, 0.16);
+
+  /* ── Brand — the LACE editorial gold. Used sparingly, never as wallpaper. */
+  --brand: #9a7a34;
+  --brand-ink: #806014;
+
+  /* ── Topic families — one accent per course family ────────────────────── */
+  --topic-court: #b07458;        --topic-court-soft: #f0e5de;        --topic-court-ink: #8a4d31;
+  --topic-client: #5d8a6e;       --topic-client-soft: #e5ede6;       --topic-client-ink: #3d6048;
+  --topic-ethics: #5e7793;       --topic-ethics-soft: #e6e9f0;       --topic-ethics-ink: #41536d;
+  --topic-research: #4e827b;     --topic-research-soft: #e2ebe9;     --topic-research-ink: #345e58;
+  --topic-drafting: #9c7e3d;     --topic-drafting-soft: #efe8d3;     --topic-drafting-ink: #6f5418;
+  --topic-trauma: #a06f87;       --topic-trauma-soft: #eee2e8;       --topic-trauma-ink: #794a60;
+  --topic-foundations: #9a8a66;  --topic-foundations-soft: #ebe5d8;  --topic-foundations-ink: #6a5b3c;
+
+  /* ── Status — lifecycle / progress signal, kept distinct from topics ──── */
+  --status-progress: #4d7c57;    --status-progress-soft: #e4efe5;    --status-progress-ink: #305a3c;
+  --status-next: #506f9c;        --status-next-soft: #e7ebf3;        --status-next-ink: #3a5279;
+  --status-done: #5a6b60;        --status-done-soft: #e7eae6;        --status-done-ink: #3e4c43;
+  --status-new: #bf8f33;         --status-new-soft: #f6ecca;         --status-new-ink: #876219;
+  --status-updated: #5078a6;     --status-updated-soft: #e6edf3;     --status-updated-ink: #3b5d84;
+  --status-changed: #b0533a;     --status-changed-soft: #f3e1da;     --status-changed-ink: #893e28;
+  --status-later: #8a8278;       --status-later-soft: #eeedea;       --status-later-ink: #5e584f;
+
+  /* ── Topic accent — the page-level orientation colour. Defaults to a warm
+        neutral; [data-topic] on <html> swaps it per course (see below). ─── */
+  --accent: var(--topic-foundations);
+  --accent-soft: var(--topic-foundations-soft);
+  --accent-ink: var(--topic-foundations-ink);
+
+  --font: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Lato', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --radius-card: 14px;
+  --radius-control: 12px;
+  --shadow-soft: 0 1px 3px rgba(28, 26, 24, 0.05), 0 4px 14px rgba(28, 26, 24, 0.07);
+  --shadow-lift: 0 12px 32px rgba(28, 26, 24, 0.09), 0 22px 48px rgba(28, 26, 24, 0.08);
+  --shadow-card: 0 1px 2px rgba(28, 26, 24, 0.04), 0 2px 8px rgba(28, 26, 24, 0.05);
+
+  /* ── Legacy aliases — older rules now resolve into the new system.
+        --gold follows the topic accent; --sage/--rust carry status meaning. */
+  --gold: var(--accent);          --gold-deep: var(--accent-ink);          --gold-soft: var(--accent-soft);
+  --sage: var(--status-progress); --sage-deep: var(--status-progress-ink); --sage-soft: var(--status-progress-soft);
+  --rust: var(--status-changed);  --rust-deep: var(--status-changed-ink);  --rust-soft: var(--status-changed-soft);
+  --lace-gold: var(--accent);
+  --lace-sage: var(--status-progress);
+  --lace-rust: var(--status-changed);
+  --lace-ink: var(--ink);
+  --lace-muted: var(--muted);
+  --lace-muted-strong: var(--muted);
+  --lace-hairline: var(--hair);
+}
+
+/* Per-course topic accent. course-config.js carries `topic`; each page sets
+   <html data-topic="…"> from it, and the accent cascades into every rule that
+   uses --accent (eyebrow, progress, active row, continue card, drawer). */
+[data-topic="court"]       { --accent: var(--topic-court);       --accent-soft: var(--topic-court-soft);       --accent-ink: var(--topic-court-ink); }
+[data-topic="client"]      { --accent: var(--topic-client);      --accent-soft: var(--topic-client-soft);      --accent-ink: var(--topic-client-ink); }
+[data-topic="ethics"]      { --accent: var(--topic-ethics);      --accent-soft: var(--topic-ethics-soft);      --accent-ink: var(--topic-ethics-ink); }
+[data-topic="research"]    { --accent: var(--topic-research);    --accent-soft: var(--topic-research-soft);    --accent-ink: var(--topic-research-ink); }
+[data-topic="drafting"]    { --accent: var(--topic-drafting);    --accent-soft: var(--topic-drafting-soft);    --accent-ink: var(--topic-drafting-ink); }
+[data-topic="trauma"]      { --accent: var(--topic-trauma);      --accent-soft: var(--topic-trauma-soft);      --accent-ink: var(--topic-trauma-ink); }
+[data-topic="foundations"] { --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink); }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--accent-soft); }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Shared text atoms ───────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.eyebrow-muted { color: var(--muted-soft); font-weight: 600; }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--ink);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+/* Topic pill — follows the page accent (orientation). */
+.pill-accent { color: var(--accent-ink); background: var(--accent-soft); border: 1px solid var(--hair); }
+.pill-ink    { color: var(--paper);      background: var(--ink); }
+
+/* Status pills — lifecycle / progress. Always carry a text label so the
+   meaning never rests on colour alone. */
+.pill-new      { color: var(--status-new-ink);      background: var(--status-new-soft);      border: 1px solid var(--hair); }
+.pill-updated  { color: var(--status-updated-ink);  background: var(--status-updated-soft);  border: 1px solid var(--hair); }
+.pill-changed  { color: var(--status-changed-ink);  background: var(--status-changed-soft);  border: 1px solid var(--hair); }
+.pill-progress { color: var(--status-progress-ink); background: var(--status-progress-soft); border: 1px solid var(--hair); }
+.pill-next     { color: var(--status-next-ink);     background: var(--status-next-soft);     border: 1px solid var(--hair); }
+.pill-done     { color: var(--status-done-ink);     background: var(--status-done-soft);     border: 1px solid var(--hair); }
+.pill-later    { color: var(--status-later-ink);    background: var(--status-later-soft);    border: 1px solid var(--hair); }
+
+/* Legacy aliases — old content keeps working; gold pills follow the accent. */
+.pill-gold { color: var(--accent-ink); background: var(--accent-soft); border: 1px solid var(--hair); }
+.pill-sage { color: var(--status-progress-ink); background: var(--status-progress-soft); border: 1px solid var(--hair); }
+.pill-rust { color: var(--status-changed-ink); background: var(--status-changed-soft); border: 1px solid var(--hair); }
+
+/* ============================================================================
+   CHROME BAR — replaces the old four-button navbar with one editorial
+   breadcrumb on the left and a clean prev/next pair on the right.
+   ========================================================================= */
+.wrap-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 64px;
+  padding: 0 20px;
+  background: var(--chrome-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hair);
+}
+
+.chrome-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.chrome-icon-btn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  border-radius: 10px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.chrome-icon-btn:hover { border-color: var(--hair-strong); color: var(--ink); }
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+.crumb {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+a.crumb:hover { color: var(--ink); }
+.crumb-sep { color: var(--muted-soft); font-size: 14px; flex-shrink: 0; }
+.crumb-current {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.chrome-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.chrome-btn {
+  height: 38px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  color: var(--ink-soft);
+  transition: border-color 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+.chrome-btn:hover { border-color: var(--hair-strong); }
+.chrome-btn:active { transform: translateY(1px); }
+.chrome-btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+
+.chrome-next {
+  height: 38px;
+  padding: 0 14px 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(28, 26, 24, 0.14);
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+.chrome-next:hover { background: #000; }
+.chrome-next:active { transform: translateY(1px); }
+.chrome-next.finish { background: var(--sage); }
+.chrome-next.finish:hover { background: var(--sage-deep); }
+.chrome-next-label { text-align: left; line-height: 1.1; }
+.chrome-next-hint {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.68;
+  margin-top: 1px;
+}
+
+/* ── Outline drawer — slide-out topic list ───────────────────────────────── */
+.drawer-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(28, 26, 24, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.drawer-scrim.open { opacity: 1; pointer-events: auto; }
+
+.outline-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 51;
+  width: 320px;
+  max-width: 86vw;
+  background: var(--paper);
+  border-right: 1px solid var(--hair);
+  box-shadow: 10px 0 40px rgba(28, 26, 24, 0.10);
+  padding: 22px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform: translateX(-104%);
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+.outline-drawer.open { transform: translateX(0); }
+
+.drawer-head { display: flex; align-items: center; justify-content: space-between; }
+.drawer-title { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; line-height: 1.2; }
+.drawer-track { height: 3px; border-radius: 999px; background: var(--warm); overflow: hidden; }
+.drawer-track > div { height: 100%; background: var(--gold); border-radius: 999px; }
+.drawer-close { width: 28px; height: 28px; border: 0; background: transparent; color: var(--muted-soft); cursor: pointer; font-size: 18px; line-height: 1; }
+
+.drawer-topic {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  margin-left: -8px;
+  transition: background 0.12s;
+}
+.drawer-topic:hover { background: var(--ivory); }
+.drawer-topic.current {
+  background: color-mix(in srgb, var(--accent-soft) 26%, var(--paper));
+  border-left-color: var(--gold);
+}
+.drawer-topic .dt-title { font-size: 14px; font-weight: 600; color: var(--ink-soft); line-height: 1.25; }
+.drawer-topic.current .dt-title { font-weight: 700; color: var(--ink); }
+.drawer-topic.done .dt-title { color: var(--muted); }
+.drawer-topic .dt-meta { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-soft); margin-top: 3px; }
+.drawer-exit { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 13px; font-weight: 600; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+.drawer-exit:hover { color: var(--ink); }
+
+/* Numbered status node — shared by drawer + outline rows. */
+.node {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1.5px solid var(--hair-strong);
+  background: transparent;
+  color: var(--muted);
+}
+.node.done { background: var(--status-done); border-color: var(--status-done); color: #fff; }
+.node.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ============================================================================
+   PAGE SHELL
+   ========================================================================= */
+.page { min-height: 100vh; background: var(--bg); }
+.page-body { max-width: 760px; margin: 0 auto; padding: 44px 28px 64px; }
+.topic-body { max-width: 720px; }
+
+/* ============================================================================
+   OUTLINE PAGE  (Home.html / Modules.html)
+   Lean hero, progress folded into one dark Continue card, course-coded rows.
+   ========================================================================= */
+.outline-title { font-size: 46px; margin: 10px 0 0; }
+.outline-lead {
+  margin: 16px 0 0;
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.outline-lead em { font-style: italic; color: var(--gold-deep); }
+
+.continue-card {
+  margin-top: 26px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow-lift);
+  border: 1px solid rgba(32, 30, 28, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.continue-ring { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
+.continue-ring svg { transform: rotate(-90deg); }
+.continue-ring span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+/* The progress ring belongs to this course/topic — so it carries the topic
+   accent. On completion it shifts to the steady "in progress / done" green. */
+#continue-ring-arc { stroke: var(--accent); transition: stroke-dashoffset 0.4s ease; }
+.continue-card.is-complete #continue-ring-arc { stroke: var(--status-progress); }
+.continue-card.is-complete .continue-go { background: var(--status-progress); color: #fff; }
+.continue-meta { flex: 1; min-width: 0; }
+.continue-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.continue-topic { margin-top: 6px; font-family: var(--font-display); font-weight: 400; font-size: 21px; letter-spacing: -0.015em; line-height: 1.2; }
+.continue-sub { margin-top: 4px; font-size: 13px; color: rgba(255, 250, 240, 0.66); }
+.continue-go {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+}
+.continue-go:hover { filter: brightness(1.05); }
+.continue-go:active { transform: translateY(1px); }
+
+.outline-section { margin-top: 40px; }
+.outline-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.outline-section-head h2 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; letter-spacing: -0.02em; }
+
+.outline-list { display: flex; flex-direction: column; gap: 6px; }
+
+.outline-module-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+  margin: 18px 0 8px;
+}
+.outline-module-label:first-child { margin-top: 0; }
+
+.outline-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-left: 3px solid var(--hair);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.outline-row:hover { box-shadow: var(--shadow-soft); transform: translateY(-1px); }
+/* done / next / later carry a status colour on the left rail; the active row —
+   where the learner is — carries the topic accent + a light topic tint. */
+.outline-row.done    { border-left-color: var(--status-done); }
+.outline-row.active  {
+  border-color: var(--hair-strong);
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 22%, var(--surface));
+}
+.outline-row.next    { border-left-color: var(--status-next); }
+.outline-row.later   { border-left-color: var(--hair-strong); }
+.outline-row.locked  { opacity: 0.72; }
+
+.outline-row-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--ink); }
+.outline-row.done .outline-row-title { color: var(--muted); font-weight: 400; }
+.outline-row-meta { display: flex; align-items: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
+.outline-row-meta .mins { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-soft); }
+.outline-row-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+  text-align: right;
+}
+.outline-row.active .outline-row-status { color: var(--accent-ink); }
+.outline-row.done .outline-row-status { color: var(--status-done-ink); }
+.outline-row.next .outline-row-status { color: var(--status-next-ink); }
+.outline-row.later .outline-row-status { color: var(--status-later-ink); }
+.outline-row-chevron { color: var(--muted-soft); display: grid; place-items: center; font-size: 15px; }
+.outline-row.active .outline-row-chevron { color: var(--accent); }
+
+.kind-tag {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer-microcopy {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--hair-strong);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.footer-microcopy button {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid var(--hair);
+  color: var(--muted);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.footer-microcopy button:hover { border-color: var(--hair-strong); color: var(--ink); }
+
+/* ============================================================================
+   TOPIC PAGE — committed editorial template
+   Five sections, in order: Scenario -> Rule -> What changed -> Try it ->
+   Remember. One accent (gold); rust only for the "what changed" block.
+   ========================================================================= */
+.topic-title { font-size: 50px; margin: 10px 0 0; }
+.topic-standfirst {
+  margin: 16px 0 0;
+  font-size: 19px;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--muted);
+}
+.topic-progress { margin-top: 22px; display: flex; align-items: center; gap: 12px; }
+.topic-progress-track { flex: 1; height: 3px; border-radius: 999px; background: var(--warm); overflow: hidden; }
+.topic-progress-track > div { height: 100%; background: var(--gold); border-radius: 999px; transition: width 0.4s; }
+.topic-progress-label { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-soft); white-space: nowrap; }
+
+.section { margin-top: 46px; }
+.section-rule { display: flex; align-items: center; gap: 14px; }
+.section-rule .sr-num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: var(--gold); }
+.section-rule.rust .sr-num { color: var(--rust); }
+.section-rule .sr-line { height: 1px; flex: 1; background: var(--hair); }
+.section-rule .sr-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-soft); }
+
+.prose { margin: 20px 0 0; font-size: 18px; line-height: 1.65; color: var(--ink-soft); }
+.prose strong { color: var(--ink); font-weight: 700; }
+.prose em { color: var(--ink); font-style: italic; }
+.prose + .prose { margin-top: 16px; }
+
+.rule-box {
+  margin-top: 22px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 22px 24px;
+}
+.rule-box ol { margin: 12px 0 0; padding-left: 20px; font-size: 17px; line-height: 1.65; color: var(--ink); }
+.rule-box li { margin-top: 4px; }
+
+.changed-box {
+  margin-top: 20px;
+  background: var(--rust-soft);
+  border-left: 4px solid var(--rust);
+  border-radius: 0 14px 14px 0;
+  padding: 20px 24px;
+}
+.changed-box h3 { margin: 12px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; color: var(--ink); }
+.changed-box p { margin: 10px 0 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); }
+.changed-box .cb-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+/* Try it — the climax of the topic. */
+.tryit-box {
+  margin-top: 20px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+}
+.tryit-q { margin: 10px 0 18px; font-size: 17px; line-height: 1.5; color: var(--ink); }
+.tryit-options { display: flex; flex-direction: column; gap: 8px; }
+.tryit-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--hair);
+  background: var(--bg);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+.tryit-option:hover { border-color: var(--hair-strong); }
+.tryit-radio {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--hair-strong);
+  display: grid;
+  place-items: center;
+  margin-top: 1px;
+  color: #fff;
+}
+.tryit-option.correct { border-color: var(--sage); background: var(--sage-soft); }
+.tryit-option.correct .tryit-radio { border-color: var(--sage); background: var(--sage); }
+.tryit-option.wrong { border-color: var(--rust); background: var(--rust-soft); }
+.tryit-option.wrong .tryit-radio { border-color: var(--rust); background: var(--rust); }
+.tryit-you { margin-left: auto; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-deep); align-self: center; }
+
+.answer-banner {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--sage-soft);
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  display: flex;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--sage-deep);
+}
+.answer-banner.hidden { display: none; }
+.answer-banner strong { font-weight: 700; }
+
+.remember-box { margin-top: 22px; padding-left: 22px; border-left: 3px solid var(--gold); }
+.remember-box ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.remember-box li { font-family: var(--font-display); font-size: 19px; line-height: 1.4; color: var(--ink); }
+.remember-box li strong { font-weight: 700; }
+.remember-box li em { font-style: italic; }
+.remember-box li .text-rust { color: var(--rust); font-weight: 700; }
+
+.next-up { margin-top: 52px; padding-top: 28px; border-top: 1px solid var(--hair); }
+.next-up-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 14px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+.next-up-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+.next-up-card .nu-body { flex: 1; min-width: 0; }
+.next-up-card .nu-title { margin-top: 8px; font-family: var(--font-display); font-size: 23px; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.next-up-card .nu-sub { margin-top: 4px; font-size: 14px; color: var(--muted); line-height: 1.45; }
+.next-up-go {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ============================================================================
+   CONTENT COMPONENTS — callouts, quotes, accordions, tabs.
+   Class names preserved so existing topic content keeps working.
+   ========================================================================= */
+.content-card { margin-top: 24px; }
+
+.callout {
+  margin: 20px 0;
+  padding: 16px 18px 16px 20px;
+  background: var(--gold-soft);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+}
+.callout-sage { background: var(--sage-soft); border-left-color: var(--sage); }
+.callout-rust { background: var(--rust-soft); border-left-color: var(--rust); }
+.callout-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.callout-sage .callout-title { color: var(--sage-deep); }
+.callout-rust .callout-title { color: var(--rust-deep); }
+.callout-body { margin-top: 6px; font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); }
+
+.stylized-quote {
+  margin: 22px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--gold);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 23px;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-style: italic;
+}
+.quote-author {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--muted-soft);
+}
+
+.instruction { font-size: 14px; font-style: italic; color: var(--muted); }
+
+.accordion-container { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.accordion-item {
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: left;
+}
+.accordion-chevron { color: var(--gold); transition: transform 0.22s; font-size: 12px; }
+.accordion-item.active .accordion-chevron { transform: rotate(180deg); }
+.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.28s ease; }
+.accordion-body { padding: 0 16px 16px; font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
+
+.tabs-container { margin: 16px 0; }
+.tab-buttons { display: flex; gap: 4px; border-bottom: 1px solid var(--hair); }
+.tab-btn {
+  padding: 9px 14px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: var(--font);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+}
+.tab-btn.active { color: var(--ink); border-bottom-color: var(--gold); }
+.tab-panel { display: none; padding: 16px 2px; font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); }
+.tab-panel.active { display: block; }
+
+/* ============================================================================
+   RESPONSIVE — designed for mobile, not a shrunken desktop.
+   ========================================================================= */
+@media (max-width: 720px) {
+  body { font-size: 15px; }
+  .wrap-chrome { height: 56px; padding: 0 12px; gap: 10px; }
+  .crumb:not(.crumb-current) { display: none; }
+  .crumb-sep { display: none; }
+  .chrome-icon-btn { width: 36px; height: 36px; }
+  .chrome-prev-label { display: none; }
+  .chrome-next-hint { display: none; }
+
+  .page-body { padding: 24px 18px 48px; }
+  .outline-title { font-size: 32px; }
+  .outline-lead { font-size: 15px; }
+  .continue-card { flex-wrap: wrap; padding: 18px; }
+  .continue-go { width: 100%; justify-content: center; }
+  .outline-section-head h2 { font-size: 20px; }
+  .outline-row { grid-template-columns: 26px 1fr auto; padding: 13px 14px; }
+  .outline-row-status { display: none; }
+  .outline-row-title { font-size: 16px; }
+
+  .topic-title { font-size: 32px; }
+  .topic-standfirst { font-size: 16px; }
+  .prose { font-size: 16.5px; }
+  .remember-box li { font-size: 16.5px; }
+  .next-up-card { flex-wrap: wrap; }
+  .next-up-go { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto; }
+}
