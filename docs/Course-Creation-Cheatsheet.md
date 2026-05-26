@@ -124,6 +124,7 @@ Checklist:
 - [ ] Upload images/assets folders
 - [ ] Confirm pages load from Manage Files
 - [ ] Do not edit custom HTML in the Brightspace WYSIWYG editor
+- [ ] When updating an existing page, overwrite the file instead of deleting/recreating it
 
 ---
 
@@ -145,6 +146,7 @@ Rules:
 - Set required HTML pages to **Automatic: Visited** unless a stricter completion rule is needed.
 - Copy each Brightspace topic URL into the matching `url` field in `course-config.js`.
 - Re-upload `course-config.js` after switching `deployMode` to `"lms"`.
+- If a file was deleted from **Manage Files**, remove or replace the matching **Course Builder/Content** node too. Deleted files do not automatically remove outline nodes.
 
 ---
 
@@ -183,6 +185,8 @@ Test with a learner/test account.
 - [ ] Brightspace reports show expected progress
 - [ ] No required page is Draft/Hidden if it must count for completion
 - [ ] No duplicate visible topic points to the same required page
+- [ ] No topic shows as broken in Course Builder
+- [ ] Brightspace content API returns `brokenTopicCount: 0` for synced courses
 
 ---
 

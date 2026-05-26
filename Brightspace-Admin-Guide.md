@@ -175,6 +175,9 @@ Use this mental model:
 | **Brightspace Content** | Official LMS topics, completion records, reports, and course progress | Create one Content topic for every trackable page |
 | **LACE navigation** | The learner-facing menu, previous/next buttons, and calm page flow | Point `course-config.js` at Brightspace topic URLs |
 
+> [!IMPORTANT]
+> **Manage Files and Course Builder are separate.** Deleting a file from **Manage Files** does not delete the matching topic/node from **Course Builder** or **Content**. The node can remain in the outline as a broken placeholder until you remove, replace, or reattach it there too. If the page is still part of the course, overwrite the file in Manage Files. If the page is no longer part of the course, remove the Course Builder/Content node as well.
+
 For full tracking, every page that should count as complete must be a Brightspace Content topic. The LACE menu should not link directly to `topic-1.html` in production; it should link to the Brightspace topic URL for that page. That is how Brightspace sees the visit and records completion.
 
 #### Full-Tracking Build Order
@@ -357,10 +360,15 @@ Always perform updates locally and push files to the LMS using file overwrites:
 3.  **Upload & Overwrite**:
     *   Go to Brightspace -> **Manage Files**.
     *   Click **Upload** and upload only the modified file.
-    *   Brightspace will alert you that the file already exists. Select **Overwrite**.
-    *   *Tip*: Clear your browser cache (`Ctrl + F5` or CMD + Shift + R) to view the changes immediately.
+     *   Brightspace will alert you that the file already exists. Select **Overwrite**.
+     *   *Tip*: Clear your browser cache (`Ctrl + F5` or CMD + Shift + R) to view the changes immediately.
+4.  **If you intentionally remove a page**:
+    *   Delete the file from **Manage Files** only after confirming it is no longer needed.
+    *   Go to **Course Builder** or **Content** and remove the matching topic/node.
+    *   Re-check the course outline. Broken nodes will appear in the API as `IsBroken: true` or with a missing URL.
+    *   Do not sync broken topics into the LACE catalog or reporting layer.
 
----
+  ---
 
 ## 5. Ingestion Pipeline for Non-Technical Attorneys
 
