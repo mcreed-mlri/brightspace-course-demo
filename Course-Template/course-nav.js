@@ -201,20 +201,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderChromeBar(m) {
     var container = document.getElementById("lace-nav-container");
     if (!container) return;
+    // Bar breadcrumb stays shallow (course › current topic) — the ☰ drawer
+    // carries full navigation, so deeper levels here are just noise.
     var crumbHtml = "";
-    m.crumbs.forEach(function (c, i) {
+    m.crumbs.slice(-2).forEach(function (c, i) {
       if (i > 0) crumbHtml += '<span class="crumb-sep" aria-hidden="true">›</span>';
       crumbHtml += c.current
         ? '<span class="crumb crumb-current" aria-current="page">' + esc(c.label) + "</span>"
         : '<a class="crumb" href="' + (c.href || "#") + '">' + esc(c.label) + "</a>";
     });
+    // Prev is icon-only on the bar (title kept as the accessible name).
     var prevHtml = m.prev
-      ? '<a class="chrome-btn" href="' + withParams(m.prev.url) + '">' + icon("arrowLeft", 14) +
-        '<span class="chrome-prev-label">' + esc(m.prev.title) + "</span></a>" : "";
+      ? '<a class="chrome-btn chrome-btn-icon" href="' + withParams(m.prev.url) +
+        '" aria-label="Previous: ' + esc(m.prev.title).replace(/"/g, "&quot;") + '">' +
+        icon("arrowLeft", 16) + "</a>" : "";
+    // Next drops the uppercase subtitle — just the action label.
     var nextHtml =
       '<a class="chrome-next' + (m.isFinish ? " finish" : "") + '" href="' + withParams(m.next ? m.next.url : "#") + '">' +
-        '<span class="chrome-next-label">' + esc(m.nextLabel) +
-          (m.nextHint ? '<span class="chrome-next-hint">' + esc(m.nextHint) + "</span>" : "") + "</span>" +
+        '<span class="chrome-next-label">' + esc(m.nextLabel) + "</span>" +
         icon("arrow", 14) + "</a>";
     var modeHtml = isOutline ? "" : modeToggleHtml();
 

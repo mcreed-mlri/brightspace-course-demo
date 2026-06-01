@@ -254,6 +254,7 @@ a.crumb:hover { color: var(--ink); }
 .chrome-btn:hover { border-color: var(--hair-strong); background: var(--ivory); }
 .chrome-btn:active { transform: translateY(1px); }
 .chrome-btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+.chrome-btn-icon { width: 38px; padding: 0; justify-content: center; gap: 0; color: var(--muted); }
 
 .chrome-next {
   height: 38px; padding: 0 14px 0 16px;
