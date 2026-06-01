@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LACE Course Wrapper — Studio build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;450;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8; --paper:#fff; --warm:#eef0f4; --ivory:#f4f6f9;
+    --ink:#14161b; --ink-soft:#24272e; --muted:#565c69; --soft:#8b909d;
+    --hair:#e4e7ed; --hair-strong:#d4d8e0;
+    --brand:#1c3fb0; --brand-fill:#2a5bff; --brand-tint:#eaf0ff;
+    --green:#179a72; --green-soft:#e2f4ed; --rust:#c8493b;
+    --font:'Geist',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+    --shadow:0 1px 2px rgba(20,22,27,.04),0 6px 18px rgba(20,22,27,.06);
+    --shadow-lift:0 1px 2px rgba(20,22,27,.05),0 18px 40px rgba(20,22,27,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* top bar */
+  .top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+  .top-in{max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:14px}
+  .mk{display:flex;align-items:center;gap:9px}
+  .mk-badge{width:30px;height:30px;border-radius:8px;background:var(--ink);display:grid;place-items:center}
+  .mk-name{font-size:19px;font-weight:700;letter-spacing:-.02em}
+  .top .tag{margin-left:4px;color:var(--soft)}
+  .top .spacer{flex:1}
+  .top .pill{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:5px 10px;border-radius:7px}
+
+  /* hero */
+  header.hero{padding:60px 0 30px}
+  .hero .mono{color:var(--brand)}
+  .hero h1{margin:14px 0 0;font-size:46px;font-weight:720;letter-spacing:-.038em;line-height:1.03;max-width:14ch}
+  .hero p{margin:18px 0 0;max-width:660px;font-size:17.5px;line-height:1.55;color:var(--muted)}
+  .hero p b{color:var(--ink-soft);font-weight:600}
+
+  section.block{padding:40px 0;border-top:1px solid var(--hair);margin-top:44px}
+  .block-head .mono{color:var(--soft)}
+  .block-head h2{margin:8px 0 0;font-size:28px;font-weight:700;letter-spacing:-.03em}
+  .block-head p{margin:12px 0 0;max-width:680px;font-size:16px;line-height:1.55;color:var(--muted)}
+  .block-head p em{font-style:normal;color:var(--brand);font-weight:600}
+
+  /* handoff stage */
+  .stage{position:relative;margin-top:28px;height:760px;border:1px solid var(--hair);border-radius:18px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow-lift)}
+  .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .4s ease}
+  .stage.live iframe{opacity:1}
+
+  /* hub mock (handoff start) */
+  .hubmock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:40px;background:
+    radial-gradient(120% 80% at 80% -10%, rgba(42,91,255,.05), transparent 60%), var(--bg);transition:opacity .35s, filter .35s;z-index:2}
+  .hubmock.gone{opacity:0;pointer-events:none}
+  .hubcard{width:520px;max-width:100%;background:var(--paper);border:1px solid var(--hair);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .hubcard .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .chip{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:7px;background:var(--brand-tint);color:var(--brand)}
+  .hubcard h3{margin:0 0 6px;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+  .hubcard .sub{margin:0 0 18px;font-size:13.5px;color:var(--muted)}
+  .track{height:6px;border-radius:999px;background:var(--warm);overflow:hidden}
+  .track>i{display:block;height:100%;width:40%;background:var(--brand-fill);border-radius:999px}
+  .hubcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+  .hubcard .foot span{font-size:13px;color:var(--soft)}
+  .btn{height:42px;padding:0 18px;border:0;border-radius:11px;background:var(--brand-fill);color:#fff;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 2px rgba(42,91,255,.3);transition:filter .15s,transform .1s}
+  .btn:hover{filter:brightness(1.06)} .btn:active{transform:translateY(1px)}
+  .hint{margin-top:18px;text-align:center;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+
+  /* loading bridge */
+  .bridge{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .35s;z-index:3}
+  .bridge.on{opacity:1}
+  .ring{width:58px;height:58px}
+  .ring circle{fill:none;stroke-width:5}
+  .ring .trk{stroke:var(--warm)}
+  .ring .arc{stroke:var(--brand-fill);stroke-linecap:round;stroke-dasharray:150;stroke-dashoffset:110;transform-origin:center;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bridge .lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+  .bridge .ttl{font-size:22px;font-weight:700;letter-spacing:-.02em}
+
+  .replay{margin-top:16px;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--hair);background:var(--paper);border-radius:10px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
+  .replay:hover{border-color:var(--hair-strong);background:var(--ivory)}
+
+  /* rail options */
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+  .opt{background:var(--paper);border:1px solid var(--hair);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .opt.reco{border-color:var(--brand-tint);box-shadow:0 0 0 2px var(--brand-tint),var(--shadow)}
+  .opt-thumb{position:relative;height:240px;background:var(--bg);border-bottom:1px solid var(--hair);overflow:hidden}
+  .opt-thumb .scaler{position:absolute;top:0;left:0;width:1280px;height:960px;transform:scale(.305);transform-origin:top left;pointer-events:none}
+  .opt-thumb iframe{width:1280px;height:960px;border:0;background:#fff}
+  .opt-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+  .opt-body .lab{display:flex;align-items:center;gap:8px}
+  .opt-body .lab .n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--soft)}
+  .badge-reco{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);background:var(--brand-tint);padding:3px 7px;border-radius:6px}
+  .opt-body h3{margin:8px 0 0;font-size:18px;font-weight:700;letter-spacing:-.02em}
+  .opt-body p{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted);flex:1}
+  .opt-open{margin-top:16px;height:42px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;background:var(--ink);color:#fff}
+  .opt-open:hover{background:#000}
+  .opt.reco .opt-open{background:var(--brand-fill)} .opt.reco .opt-open:hover{filter:brightness(1.06)}
+
+  /* deploy / files */
+  .files{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin-top:28px}
+  .panel{background:var(--paper);border:1px solid var(--hair);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .panel h3{margin:0 0 4px;font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .panel .mono{color:var(--soft);display:block;margin-bottom:14px}
+  .filerow{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--hair);align-items:baseline}
+  .filerow:first-of-type{border-top:0}
+  .filerow code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink)}
+  .filerow span{font-size:13px;color:var(--muted);line-height:1.45}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .steps li{list-style:none;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-size:14px;color:var(--ink-soft);line-height:1.5}
+  .steps li::before{counter-increment:s;content:counter(s);width:26px;height:26px;border-radius:8px;background:var(--warm);color:var(--ink);font-family:var(--mono);font-size:12px;font-weight:700;display:grid;place-items:center}
+  .steps code{font-family:var(--mono);font-size:12.5px;background:var(--warm);padding:1px 6px;border-radius:5px;color:var(--brand)}
+
+  footer{padding:48px 0 70px;color:var(--soft);font-size:13px}
+  @media(max-width:880px){.opts{grid-template-columns:1fr}.files{grid-template-columns:1fr}.hero h1{font-size:34px}.stage{height:660px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-in">
+    <div class="mk"><span class="mk-badge"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 8 4 15a3 3 0 0 0 6 0z"/><path d="M17 8l-3 7a3 3 0 0 0 6 0z"/></svg></span><span class="mk-name">LACE</span></div>
+    <span class="mono tag">Course wrapper · Studio build</span>
+    <span class="spacer"></span>
+    <span class="pill">Matches A2 hub</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="mono">The seam between hub & Brightspace</div>
+    <h1>The course, wearing the hub's clothes.</h1>
+    <p>Brightspace hosts the content — but its heavy header and fixed left menu starve the page and look nothing like your A2 hub. This wrapper restyles the whole course into the <b>Studio language</b> (Geist, cool grays, brand blue, hairlines) and replaces Brightspace's chrome with a slim bar or the hub's own rail. Same surfaces, same type, same blue. <b>No whiplash.</b></p>
+  </header>
+
+  <!-- ── HANDOFF ───────────────────────────────────────────────────── -->
+  <section class="block">
+    <div class="block-head">
+      <div class="mono">The handoff moment</div>
+      <h2>Clicking a course never breaks the contract.</h2>
+      <p>From the hub you tap <em>Resume</em>. A quiet bridge holds the <em>same</em> background and the course title while Brightspace boots — no white flash, no LMS shell — then the outline arrives in the same skin. Press play.</p>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="hubmock" id="hubmock">
+        <div>
+          <div class="hubcard">
+            <div class="row"><span class="chip">Continue · Court Skills</span><span class="mono" style="color:var(--soft)">40%</span></div>
+            <h3>Eviction defense: the first 48 hours</h3>
+            <p class="sub">Up next · Service of process checklist</p>
+            <div class="track"><i></i></div>
+            <div class="foot"><span>7 min left</span><button class="btn" id="play-handoff">Resume
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </button></div>
+          </div>
+          <div class="hint">↑ a card on the A2 hub</div>
+        </div>
+      </div>
+
+      <div class="bridge" id="bridge">
+        <svg class="ring" viewBox="0 0 58 58"><circle class="trk" cx="29" cy="29" r="25"/><circle class="arc" cx="29" cy="29" r="25"/></svg>
+        <div class="lbl">Opening course</div>
+        <div class="ttl">Eviction defense: the first 48 hours</div>
+      </div>
+
+      <iframe id="stage-frame" title="Course outline preview"></iframe>
+    </div>
+    <button class="replay" id="replay" style="display:none">↻ Replay the handoff</button>
+  </section>
+
+  <!-- ── RAIL OPTIONS ──────────────────────────────────────────────── -->
+  <section class="block">
+    <div class="block-head">
+      <div class="mono">Explore — how the rail carries into the course</div>
+      <h2>Three ways to wear it. One config flag.</h2>
+      <p>You said you're short on content space inside Brightspace, so the <em>Slim bar</em> is the default — it reclaims the most room. But the hub's rail can come along if continuity matters more. Switch with <code style="font-family:var(--mono);font-size:12px;background:var(--warm);padding:1px 6px;border-radius:5px">chromeMode</code> in <code style="font-family:var(--mono);font-size:12px;background:var(--warm);padding:1px 6px;border-radius:5px">course-config.js</code>. Click any to open the full clickable course.</p>
+    </div>
+
+    <div class="opts">
+      <div class="opt reco">
+        <div class="opt-thumb"><div class="scaler"><iframe src="Home.html?chrome=bar" title="Slim bar preview" scrolling="no"></iframe></div></div>
+        <div class="opt-body">
+          <div class="lab"><span class="n">Option A</span><span class="badge-reco">Recommended</span></div>
+          <h3>Slim bar + drawer</h3>
+          <p>A 58px sticky bar — breadcrumb, Read·Practice, prev/next. The full outline lives in a slide-out drawer. Maximum reading width; reclaims the space Brightspace eats.</p>
+          <a class="opt-open" href="Home.html?chrome=bar">Open clickable course →</a>
+        </div>
+      </div>
+      <div class="opt">
+        <div class="opt-thumb"><div class="scaler"><iframe src="Home.html?chrome=rail" title="Rail preview" scrolling="no"></iframe></div></div>
+        <div class="opt-body">
+          <div class="lab"><span class="n">Option B</span></div>
+          <h3>Persistent rail</h3>
+          <p>The hub's left rail, carried in — wordmark, full outline, exit-to-hub, prev/next at the foot. The strongest "I never left" continuity.</p>
+          <a class="opt-open" href="Home.html?chrome=rail">Open clickable course →</a>
+        </div>
+      </div>
+      <div class="opt">
+        <div class="opt-thumb"><div class="scaler"><iframe src="Home.html?chrome=rail&rail=min" title="Collapsed rail preview" scrolling="no"></iframe></div></div>
+        <div class="opt-body">
+          <div class="lab"><span class="n">Option C</span></div>
+          <h3>Collapsed rail</h3>
+          <p>Same rail, collapsed to a 72px icon strip — the hub's signature move. Best of both: continuity at the edge, room in the middle. Toggles live.</p>
+          <a class="opt-open" href="Home.html?chrome=rail&rail=min">Open clickable course →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FILES / DEPLOY ────────────────────────────────────────────── -->
+  <section class="block">
+    <div class="block-head">
+      <div class="mono">Drop into your repo</div>
+      <h2>What ships — and how to deploy.</h2>
+    </div>
+    <div class="files">
+      <div class="panel">
+        <h3>Files</h3>
+        <span class="mono">lace-wrapper/</span>
+        <div class="filerow"><code>course-style.css</code><span>The whole design system, restyled to Studio. Every page reads it — replace your old one.</span></div>
+        <div class="filerow"><code>course-nav.js</code><span>Chrome bar / rail, outline drawer, Read·Practice toggle, step pager, progress engine.</span></div>
+        <div class="filerow"><code>course-config.js</code><span>Unchanged shape. New: <code style="font-family:var(--mono);font-size:11.5px">chromeMode</code> and <code style="font-family:var(--mono);font-size:11.5px">completeUrl</code>.</span></div>
+        <div class="filerow"><code>complete.html</code><span>The "you earned it" completion screen.</span></div>
+        <div class="filerow"><code>Home / topics</code><span>Your existing pages — untouched. Same class names, so they just inherit the new skin.</span></div>
+      </div>
+      <div class="panel">
+        <h3>Deploy</h3>
+        <span class="mono">3 steps</span>
+        <ol class="steps">
+          <li>Swap <code>course-style.css</code> and <code>course-nav.js</code> in your course package. No HTML edits needed.</li>
+          <li>Pick a treatment: set <code>chromeMode</code> to <code>"bar"</code> or <code>"rail"</code> in <code>course-config.js</code>.</li>
+          <li>Flip <code>deployMode</code> back to <code>"lms"</code> and re-upload. The Brightspace URLs in config take over.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>LACE · Legal Aid LMS — course wrapper, Studio build. This page is a showcase; the wrapper itself is the four files above.</footer>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById("stage");
+  var hubmock = document.getElementById("hubmock");
+  var bridge = document.getElementById("bridge");
+  var frame = document.getElementById("stage-frame");
+  var play = document.getElementById("play-handoff");
+  var replay = document.getElementById("replay");
+
+  function runHandoff() {
+    // reset
+    stage.classList.remove("live");
+    frame.removeAttribute("src");
+    hubmock.classList.remove("gone");
+    bridge.classList.remove("on");
+    replay.style.display = "none";
+
+    // 1) hub → bridge
+    setTimeout(function () { hubmock.classList.add("gone"); bridge.classList.add("on"); }, 350);
+    // 2) boot the iframe behind the bridge
+    setTimeout(function () { frame.src = "Home.html?chrome=bar"; }, 700);
+    // 3) reveal once loaded (with a floor so the bridge is felt, not flashed)
+    var revealed = false;
+    function reveal() {
+      if (revealed) return; revealed = true;
+      bridge.classList.remove("on");
+      stage.classList.add("live");
+      replay.style.display = "inline-flex";
+    }
+    frame.onload = function () { setTimeout(reveal, 500); };
+    setTimeout(reveal, 2200); // safety floor
+  }
+
+  play.addEventListener("click", runHandoff);
+  replay.addEventListener("click", runHandoff);
+})();
+</script>
+</body>
+</html>

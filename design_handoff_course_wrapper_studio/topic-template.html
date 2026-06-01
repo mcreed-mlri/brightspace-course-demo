@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topic</title>
+
+  <!--
+    TOPIC TEMPLATE — the committed editorial structure.
+    Every topic is the same five sections, in this order:
+      § 1  The scenario      — a real client, a real moment
+      § 2  The rule          — the law, stated plainly
+      § 3  What changed      — only if something did (rust accent)
+      § 4  Try it            — one question; this is the climax
+      § 5  Remember          — the two or three things that must stick
+
+    To create a new topic: copy this file, rename it, update the
+    <meta name="course-slug"> below to match course-config.js, and replace
+    the content of the five <section>s. Keep the structure.
+  -->
+  <meta name="course-slug" content="service-of-process">
+
+  <link rel="stylesheet" href="course-style.css">
+  <script src="course-config.js"></script>
+  <!-- Apply the course's topic accent before paint, so there is no colour flash. -->
+  <script>document.documentElement.dataset.topic = (window.COURSE_CONFIG || {}).topic || "foundations";</script>
+  <script src="course-nav.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+  <!-- Chrome bar (breadcrumb + prev/next) injected by course-nav.js -->
+  <div id="lace-nav-container"></div>
+
+  <main class="page-body topic-body">
+
+    <!-- ── Topic header ─────────────────────────────────────────────────── -->
+    <p class="eyebrow">Topic 3 of 5 · Practice · 3 min</p>
+    <h1 class="display topic-title">Service of process checklist</h1>
+    <p class="topic-standfirst">
+      Improper service is the easiest win you'll ever get for a client. Here's
+      what to check, before the clock starts.
+    </p>
+    <div class="topic-progress">
+      <div class="topic-progress-track"><div data-lace="course-progress-bar"></div></div>
+      <span class="topic-progress-label"><span data-lace="course-progress">0%</span> through this course</span>
+    </div>
+
+    <!-- ── § 1 · The scenario ───────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 1</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">The scenario</span>
+      </div>
+      <p class="prose">
+        Maria walks into your clinic on a Tuesday. Her landlord taped a notice
+        to her door on Saturday night. She has been a tenant for six years and
+        never missed rent. She is supposed to be in Housing Court next Friday —
+        eight business days from now.
+      </p>
+      <p class="prose">
+        Before you read a single word of the notice, you are checking
+        <em>how it got there</em>.
+      </p>
+    </section>
+
+    <!-- ── § 2 · The rule ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 2</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">The rule</span>
+      </div>
+      <p class="prose">
+        A summary process summons is only valid if it was served by a constable
+        or sheriff using one of three accepted methods. Taping it to a door
+        <strong>by the landlord</strong> is not one of them.
+      </p>
+      <div class="rule-box">
+        <div class="eyebrow">The three valid methods</div>
+        <ol>
+          <li><strong>In-hand delivery</strong> to the tenant by a sheriff or constable.</li>
+          <li><strong>Service to a competent adult</strong> at the tenant's residence — not a minor, not a guest.</li>
+          <li><strong>Last-and-usual + first-class mail</strong> by an authorized officer. Both must occur.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── § 3 · What changed (rust accent — use only when the law moved) ── -->
+    <section class="section">
+      <div class="section-rule rust">
+        <span class="sr-num">§ 3</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">What changed</span>
+      </div>
+      <div class="changed-box">
+        <div class="cb-meta">
+          <span class="pill pill-rust">Law changed · 3 days ago</span>
+          <span class="eyebrow eyebrow-muted">Ch. 167 · effective immediately</span>
+        </div>
+        <h3>Defective service no longer just delays — defaults from before 2024 can now be sealed.</h3>
+        <p>
+          Until last week, you raised improper service to buy time. Now, the
+          amendments to M.G.L. c. 239 §16 mean that if the original service was
+          defective, the resulting default judgment is presumptively sealable on
+          a single motion. See the next topic for the new motion language.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── § 4 · Try it (the climax — one question) ─────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 4</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">Try it</span>
+      </div>
+      <p class="prose" style="font-style:italic;color:var(--muted);">
+        One question. You'll see the answer once you choose.
+      </p>
+      <div class="tryit-box">
+        <div class="eyebrow">Scenario</div>
+        <p class="tryit-q">
+          The notice was left under Maria's door by the landlord's nephew, who is
+          16. There is no constable's return of service. Maria found it Saturday
+          evening. <strong>Is service valid?</strong>
+        </p>
+        <div class="tryit-options">
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>Yes — leaving the notice at the residence is sufficient.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>Yes, but only if the tenant actually received the notice.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="true">
+            <span class="tryit-radio"></span>
+            <span>No — service must be by a constable or sheriff using one of three methods.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>Maybe — it depends on whether the landlord also mailed it.</span>
+          </button>
+        </div>
+        <div class="answer-banner hidden">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m5 12 4 4L19 6"/>
+          </svg>
+          <span>
+            <strong>The answer:</strong> a landlord cannot serve the summons
+            themselves, and family members — especially minors — do not qualify
+            as competent adults under the rules. You are going to ask the court
+            to dismiss for defective service, and, if a default already exists,
+            to seal it.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── § 5 · Remember ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 5</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">If you remember nothing else</span>
+      </div>
+      <div class="remember-box">
+        <ul>
+          <li><strong>Who served it</strong> matters as much as <em>what it says</em>.</li>
+          <li>Only three methods qualify: in-hand, competent adult, or last-and-usual <em>plus</em> mail.</li>
+          <li>Defective service used to delay. <span class="text-rust">Now it can erase the default.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── Next up ──────────────────────────────────────────────────────── -->
+    <section class="next-up">
+      <p class="eyebrow eyebrow-muted">Up next · Topic 4 of 5</p>
+      <a class="next-up-card" href="#" data-lace="next-link">
+        <span class="nu-body">
+          <span class="cb-meta" style="display:flex;gap:8px;">
+            <span class="pill pill-rust">Drafting · 3 min</span>
+            <span class="pill pill-rust">● Law changed</span>
+          </span>
+          <span class="nu-title">Drafting the answer</span>
+          <span class="nu-sub">The new motion language under c. 167 §16. Two paragraphs you can copy.</span>
+        </span>
+        <span class="next-up-go">
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,19 +1,21 @@
 # LACE Course Template Guide
 
-A Brightspace course wrapper that feels like the LACE Learning Hub — warm
-ivory paper, Lato type, gold/sage/rust accents — so learners get no whiplash
-crossing from the hub into a course.
+A Brightspace course wrapper that feels like the LACE Learning Hub — the
+"Studio" direction: cool-gray surfaces, Geist type, one brand blue, and
+hairline structure — so learners get no whiplash crossing from the hub into a
+course.
 
 ## Template files
 
 | File | Role |
 | --- | --- |
-| `course-config.js` | **Single source of truth.** Course identity, modules, and the topic list (slug, title, `kind`, `minutes`, links). |
-| `course-style.css` | The LACE design system — tokens, chrome bar, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Lato + IBM Plex Mono. |
-| `course-nav.js` | Injects the **chrome bar** (breadcrumb + Prev/Next) and the **outline drawer**, tracks page-visit completion in `localStorage`, and runs the Try-it self-check, accordions, and tabs. |
+| `course-config.js` | **Single source of truth.** Course identity, modules, the topic list (slug, title, `kind`, `minutes`, links), plus `chromeMode` and `completeUrl`. |
+| `course-style.css` | The LACE Studio design system — tokens, chrome bar/rail, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Geist + IBM Plex Mono. |
+| `course-nav.js` | Injects the chrome (slim **bar + drawer** or fixed **rail**, per `chromeMode`), Prev/Next, the **Read · Practice** toggle + step pager, tracks page-visit completion in `localStorage`, and runs the Try-it self-check. |
 | `Home.html` | The **course outline** — lean hero, one progress-aware Continue card, course-coded topic rows (Done · In progress · Next up · Later). |
+| `Modules.html` | The **module map** — an alternate visual entry (hero + stats panel, 2-col topic cards, next-up card). |
 | `topic-template.html` | The **committed topic structure** — copy this for every topic. |
-| `Modules.html` | Legacy redirect → `Home.html` (the old separate outline page is now merged into Home). |
+| `complete.html` | The **completion screen** shown after the last topic — green check badge, stat tiles, "Back to Hub". Writes every slug complete so the hub reads 100%. |
 
 ## The committed topic structure
 
@@ -61,6 +63,8 @@ automatically — you only write the topic content.
 ## Deploying to Brightspace
 
 1. **Set deploy mode.** Build locally with `deployMode: "local"`.
+   Pick `chromeMode` while you're here: `"bar"` (slim top bar + drawer, max
+   reading width — recommended) or `"rail"` (the hub's left rail carried in).
 2. **Upload** the whole `Course-Template/` folder to Brightspace → *Manage Files*.
 3. **Create a Content topic** for `Home.html` and for each topic page.
 4. Copy each topic's Brightspace URL into the matching `url` field in

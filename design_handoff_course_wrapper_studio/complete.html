@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course complete</title>
+  <meta name="course-slug" content="complete">
+  <link rel="stylesheet" href="course-style.css">
+  <script src="course-config.js"></script>
+  <script>document.documentElement.dataset.topic = (window.COURSE_CONFIG || {}).topic || "foundations";</script>
+</head>
+<body>
+
+<div class="page">
+  <!-- Minimal terminal header — celebration pages don't need the full chrome. -->
+  <div class="wrap-chrome">
+    <div class="chrome-left">
+      <a class="chrome-mark" id="home-mark" href="#" aria-label="LACE home">
+        <span class="mk-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 8 4 15a3 3 0 0 0 6 0z"/><path d="M17 8l-3 7a3 3 0 0 0 6 0z"/></svg></span>
+        <span class="mk-name">LACE</span>
+      </a>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a class="crumb" id="crumb-hub" href="#">Hub</a>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <a class="crumb" id="crumb-course" href="#">Course</a>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <span class="crumb crumb-current">Complete</span>
+      </nav>
+    </div>
+  </div>
+
+  <main class="complete-wrap">
+    <div class="complete-badge">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+    </div>
+    <p class="complete-eyebrow" id="c-eyebrow">Course complete</p>
+    <h1 class="complete-title" id="c-title">You finished the course.</h1>
+    <p class="complete-sub" id="c-sub">Every topic done. The next time the law moves on this, we'll flag it on your hub so you know to come back.</p>
+
+    <div class="complete-stats">
+      <div class="complete-stat"><div class="cs-value" id="c-topics">5</div><div class="cs-label">Topics completed</div></div>
+      <div class="complete-stat"><div class="cs-value" id="c-minutes">12</div><div class="cs-label">Minutes invested</div></div>
+      <div class="complete-stat"><div class="cs-value" id="c-streak">13</div><div class="cs-label">Day streak</div></div>
+    </div>
+
+    <div class="complete-actions">
+      <a class="ca-primary" id="c-hub" href="#">Back to Hub
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+      <a class="ca-ghost" id="c-review" href="#">Review the course</a>
+    </div>
+
+    <div class="footer-microcopy">
+      Progress saved automatically · Hosted on Brightspace
+      <br>
+      <button type="button" onclick="if(window.COURSE_CONFIG){localStorage.removeItem('lace_progress_'+COURSE_CONFIG.courseId);} location.href=(COURSE_CONFIG&&COURSE_CONFIG.courseHomeUrl)||'Home.html';">↻ Reset course progress</button>
+    </div>
+  </main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var cfg = window.COURSE_CONFIG; if (!cfg) return;
+  var short = (cfg.courseTitle || "the course").split(":")[0].trim();
+  document.title = "Complete · " + short;
+
+  // Links
+  document.getElementById("home-mark").href = cfg.homeLinkUrl || "#";
+  document.getElementById("crumb-hub").href = cfg.homeLinkUrl || "#";
+  document.getElementById("crumb-hub").textContent = cfg.hubLabel || "Hub";
+  document.getElementById("crumb-course").href = cfg.courseHomeUrl || "Home.html";
+  document.getElementById("crumb-course").textContent = short;
+  document.getElementById("c-hub").href = cfg.homeLinkUrl || "#";
+  document.getElementById("c-review").href = cfg.courseHomeUrl || "Home.html";
+
+  // Copy
+  document.getElementById("c-title").textContent = "You finished " + short + ".";
+
+  // Stats from config + localStorage
+  var flat = [];
+  (cfg.modules || []).forEach(function (m) { (m.topics || []).forEach(function (t) { flat.push(t); }); });
+  var totalMin = flat.reduce(function (s, t) { return s + (t.minutes || 0); }, 0);
+  document.getElementById("c-topics").textContent = flat.length;
+  document.getElementById("c-minutes").textContent = totalMin;
+
+  // Mark whole course complete in localStorage so the hub reads 100%.
+  try {
+    var key = "lace_progress_" + cfg.courseId;
+    var p = JSON.parse(localStorage.getItem(key) || "{}");
+    p.completed = flat.map(function (t) { return t.slug; });
+    p.lastVisited = flat.length ? flat[flat.length - 1].slug : null;
+    localStorage.setItem(key, JSON.stringify(p));
+  } catch (e) {}
+});
+</script>
+</body>
+</html>

@@ -25,8 +25,9 @@
  */
 
 window.COURSE_CONFIG = {
-  // "local" = use `file` paths · "lms" = use Brightspace `url` paths
-  deployMode: "lms",
+  // "local" = use `file` paths · "lms" = use Brightspace `url` paths.
+  // Set to "local" for this clickable demo; flip to "lms" when you upload.
+  deployMode: "local",
 
   // Chrome treatment: "bar" (slim top bar + drawer, max reading width) or
   // "rail" (the hub's left rail carried into the course). A ?chrome= URL param
@@ -56,12 +57,13 @@ window.COURSE_CONFIG = {
   homeLinkText: "Exit to Hub",
   homeLinkUrl: "https://mcreed-mlri.github.io/lms-discovery/",
 
-  // The outline page within this package
-  courseHomeUrl: "https://mlri.brightspace.com/content/enforced/6703-course.outline/Home.html?ou=6703&d2l_body_type=3",
+  // The outline page within this package.
+  // DEMO (local): "Home.html".  PRODUCTION (lms): the Brightspace content URL —
+  //   https://mlri.brightspace.com/content/enforced/6703-course.outline/Home.html?ou=6703&d2l_body_type=3
+  courseHomeUrl: "Home.html",
 
   // The "you earned it" completion screen shown after the last topic.
-  // DEMO (local): "complete.html"
-  completeUrl: "https://mlri.brightspace.com/content/enforced/6703-course.outline/complete.html?ou=6703&d2l_body_type=3",
+  completeUrl: "complete.html",
 
   // ─── MODULES & TOPICS ───
   modules: [
