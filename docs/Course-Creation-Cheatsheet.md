@@ -76,7 +76,7 @@ window.COURSE_CONFIG = {
   logoMain: "LACE",
   logoSub: "Housing",
   homeLinkText: "Back to Hub",
-  homeLinkUrl: "https://mcreed-mlri.github.io/lms-discovery/",
+  homeLinkUrl: "https://lms-discovery.vercel.app/",
   courseHomeUrl: "Home.html",
   modules: []
 };

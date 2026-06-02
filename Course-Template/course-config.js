@@ -54,7 +54,7 @@ window.COURSE_CONFIG = {
 
   // Exit link — back to the LACE Learning Hub
   homeLinkText: "Exit to Hub",
-  homeLinkUrl: "https://mcreed-mlri.github.io/lms-discovery/",
+  homeLinkUrl: "https://lms-discovery.vercel.app/",
 
   // The outline page within this package
   courseHomeUrl: "https://mlri.brightspace.com/content/enforced/6703-course.outline/Home.html?ou=6703&d2l_body_type=3",

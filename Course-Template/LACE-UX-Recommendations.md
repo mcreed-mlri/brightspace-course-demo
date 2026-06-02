@@ -36,7 +36,7 @@ Alert attorneys immediately when a course has been updated with a critical legal
 
 ## ⚡ Technical Integration: Sharing Progress Data
 
-Because both the **LACE Discovery Hub** and your **Brightspace Course HTML pages** will be hosted under the same domain root (e.g., `https://mcreed-mlri.github.io/`), they share the same browser `localStorage` sandbox. This means your React Discovery Hub can read student progress in real-time!
+Because both the **LACE Discovery Hub** and your **Brightspace Course HTML pages** will be hosted under the same domain root (e.g., `https://lms-discovery.vercel.app/`), they share the same browser `localStorage` sandbox. This means your React Discovery Hub can read student progress in real-time!
 
 ### How to read progress in React (`lms-discovery`):
 
