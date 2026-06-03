@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your progress &amp; completion</title>
+
+  <meta name="course-slug" content="your-progress">
+
+  <link rel="stylesheet" href="course-style.css">
+  <script src="course-config.js"></script>
+  <!-- Apply the course's topic accent before paint, so there is no colour flash. -->
+  <script>document.documentElement.dataset.topic = (window.COURSE_CONFIG || {}).topic || "foundations";</script>
+  <script src="course-nav.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+  <!-- Chrome bar (breadcrumb + prev/next) injected by course-nav.js -->
+  <div id="lace-nav-container"></div>
+
+  <main class="page-body topic-body">
+
+    <!-- ── Topic header ─────────────────────────────────────────────────── -->
+    <p class="eyebrow">Topic 4 of 5 · Concept · 2 min</p>
+    <h1 class="display topic-title">Your progress &amp; completion</h1>
+    <p class="topic-standfirst">
+      You don't have to mark anything done, click a "complete" button, or submit
+      a report. LACE tracks your progress quietly as you go. Here's exactly what
+      counts, and where it shows up.
+    </p>
+    <div class="topic-progress">
+      <div class="topic-progress-track"><div data-lace="course-progress-bar"></div></div>
+      <span class="topic-progress-label"><span data-lace="course-progress">0%</span> through this course</span>
+    </div>
+
+    <!-- ── § 1 · The moment ─────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 1</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">The moment</span>
+      </div>
+      <p class="prose">
+        A required course can make you anxious about the bookkeeping: Did that
+        count? Do I have to do something to log it? Will my supervisor see I
+        finished?
+      </p>
+      <p class="prose">
+        Good news — the answer to all of it is "it's handled." Look just under this
+        topic's title: that little bar has been filling as you move through the
+        course. That's your progress, tracking itself.
+      </p>
+    </section>
+
+    <!-- ── § 2 · How it works ───────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 2</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">How completion works</span>
+      </div>
+      <p class="prose">
+        Completion in LACE is based on one simple thing: <strong>visiting a
+        topic marks it complete</strong>. Open it, and it counts. That's the whole
+        rule.
+      </p>
+      <div class="rule-box">
+        <div class="eyebrow">Where your progress shows up</div>
+        <ol>
+          <li><strong>The progress bar</strong> on each topic — the thin line under
+            the title, filling as you go.</li>
+          <li><strong>The course outline</strong> (your Home page) — finished topics
+            flip to <em>Done</em>, and the <em>Continue</em> ring shows your percent.</li>
+          <li><strong>The completion screen</strong> — finish the last topic and you
+            land on a "you're done" page with your totals.</li>
+          <li><strong>The Hub</strong> — your overall percent for the course is
+            reported back, so a required course reads as 100% once you've finished.</li>
+        </ol>
+      </div>
+      <p class="prose">
+        Because it's visit-based, you can leave anytime and your place is saved.
+        The <strong>Continue</strong> card on your Home page always points to the
+        next thing you haven't done. And if you ever want a clean slate, the Home
+        page has a small <strong>"↻ Reset course progress"</strong> link at the
+        bottom.
+      </p>
+    </section>
+
+    <!-- ── § 3 · Try it ─────────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 3</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">Try it</span>
+      </div>
+      <p class="prose" style="font-style:italic;color:var(--muted);">
+        One question. You'll see the answer once you choose.
+      </p>
+      <div class="tryit-box">
+        <div class="eyebrow">Quick check</div>
+        <p class="tryit-q">
+          You open a topic, read the first section, and close the tab to take a
+          call. <strong>Does that topic count as complete?</strong>
+        </p>
+        <div class="tryit-options">
+          <button class="tryit-option" type="button" data-correct="true">
+            <span class="tryit-radio"></span>
+            <span>Yes — visiting the topic marks it complete; your place is saved.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>No — you have to scroll all the way to the bottom first.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>No — you have to click a "Mark complete" button to log it.</span>
+          </button>
+        </div>
+        <div class="answer-banner hidden">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m5 12 4 4L19 6"/>
+          </svg>
+          <span>
+            <strong>The answer:</strong> visiting the topic is enough — it's marked
+            complete and your spot is saved. There's no button to press and no
+            report to file. (Of course, it's worth actually reading it!)
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── § 4 · Remember ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">§ 4</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">If you remember nothing else</span>
+      </div>
+      <div class="remember-box">
+        <ul>
+          <li><strong>Visiting a topic completes it</strong> — no button, no submission.</li>
+          <li>Your <strong>Home outline</strong> shows what's done and what's next.</li>
+          <li>Your percent <strong>reports back to the Hub</strong>, so required courses read as finished.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── Next up ──────────────────────────────────────────────────────── -->
+    <section class="next-up">
+      <p class="eyebrow eyebrow-muted">Up next · Topic 5 of 5</p>
+      <a class="next-up-card" href="#" data-lace="next-link">
+        <span class="nu-body">
+          <span class="cb-meta" style="display:flex;gap:8px;">
+            <span class="pill pill-accent">Reflection · 1 min</span>
+          </span>
+          <span class="nu-title">Getting help &amp; what's next</span>
+          <span class="nu-sub">Where to get unstuck, and where to go once you're done here.</span>
+        </span>
+        <span class="next-up-go">
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
