@@ -3,113 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Try-it self-checks</title>
-
+  <title>Use Try-it checks</title>
   <meta name="course-slug" content="try-it-checks">
-
   <link rel="stylesheet" href="course-style.css">
   <script src="course-config.js"></script>
-  <!-- Apply the course's topic accent before paint, so there is no colour flash. -->
   <script>document.documentElement.dataset.topic = (window.COURSE_CONFIG || {}).topic || "foundations";</script>
   <script src="course-nav.js" defer></script>
 </head>
 <body>
 
 <div class="page">
-  <!-- Chrome bar (breadcrumb + prev/next) injected by course-nav.js -->
   <div id="lace-nav-container"></div>
 
   <main class="page-body topic-body">
-
-    <!-- ── Topic header ─────────────────────────────────────────────────── -->
-    <p class="eyebrow">Topic 3 of 5 · Practice · 2 min</p>
-    <h1 class="display topic-title">The Try-it self-checks</h1>
+    <p class="eyebrow">Topic 3 of 5 &middot; Practice &middot; 2 min</p>
+    <h1 class="display topic-title">Use Try-it checks</h1>
     <p class="topic-standfirst">
-      You've already answered two of these. The single question near the end of
-      each topic is the most important part of the page — and it's worth knowing
-      exactly why it's there, and what it isn't.
+      Try-it checks are short practice moments. They are there to help the idea
+      stick, not to grade you or slow you down.
     </p>
     <div class="topic-progress">
       <div class="topic-progress-track"><div data-lace="course-progress-bar"></div></div>
       <span class="topic-progress-label"><span data-lace="course-progress">0%</span> through this course</span>
     </div>
 
-    <!-- ── § 1 · The moment ─────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 1</span>
+        <span class="sr-num">&sect; 1</span>
         <span class="sr-line"></span>
-        <span class="sr-label">The moment</span>
+        <span class="sr-label">Why they exist</span>
       </div>
       <p class="prose">
-        We've all read a page, nodded along, and realized at the bottom we couldn't
-        say what it actually told us. Re-reading <em>feels</em> like learning, but
-        it mostly builds confidence, not memory.
+        A Try-it asks you to pause for a few seconds and choose an answer. That
+        tiny act of recall is what turns "I read the page" into "I can use the
+        idea later."
       </p>
       <p class="prose">
-        The fix is small and a little uncomfortable: stop and try to recall before
-        you've got it cold. That's the whole job of the Try-it.
+        You will usually see one near the end of a topic. Choose an answer, read
+        the explanation, and keep moving.
       </p>
     </section>
 
-    <!-- ── § 2 · How it works ───────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 2</span>
+        <span class="sr-num">&sect; 2</span>
         <span class="sr-line"></span>
-        <span class="sr-label">What a Try-it is — and isn't</span>
+        <span class="sr-label">Ground rules</span>
       </div>
-      <p class="prose">
-        Every topic ends with one question. You pick an answer, and the explanation
-        appears right away — whether you were right or not. That's it.
-      </p>
       <div class="rule-box">
-        <div class="eyebrow">The ground rules</div>
+        <div class="eyebrow">What to expect</div>
         <ol>
-          <li><strong>It's not graded.</strong> No score is recorded, and a wrong
-            pick doesn't count against you anywhere.</li>
-          <li><strong>The answer always shows.</strong> The point isn't to test
-            you — it's to make the idea stick by having you reach for it.</li>
-          <li><strong>Guessing is fine.</strong> Committing to an answer, even a
-            wrong one, helps you remember the right one better than skipping ahead.</li>
-          <li><strong>One per topic.</strong> Just enough to anchor the idea, never
-            so much it feels like an exam.</li>
+          <li><strong>Not graded:</strong> no score is saved and no wrong answer counts against you.</li>
+          <li><strong>Immediate explanation:</strong> the answer appears after you choose.</li>
+          <li><strong>Best guesses are fine:</strong> choosing helps you remember, even when you miss.</li>
+          <li><strong>Short by design:</strong> one focused check, not a test bank.</li>
         </ol>
       </div>
-      <p class="prose">
-        So when you reach the Try-it below, don't skim past it. Actually choose.
-        That five seconds of effort is what turns "I read it" into "I know it."
-      </p>
     </section>
 
-    <!-- ── § 3 · Try it ─────────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 3</span>
+        <span class="sr-num">&sect; 3</span>
         <span class="sr-line"></span>
         <span class="sr-label">Try it</span>
       </div>
       <p class="prose" style="font-style:italic;color:var(--muted);">
-        One question. You'll see the answer once you choose.
+        One question. Choose an answer to reveal the explanation.
       </p>
       <div class="tryit-box">
         <div class="eyebrow">Quick check</div>
         <p class="tryit-q">
-          You're not totally sure which answer is right on a Try-it.
+          You are not sure which Try-it answer is right.
           <strong>What should you do?</strong>
         </p>
         <div class="tryit-options">
           <button class="tryit-option" type="button" data-correct="false">
             <span class="tryit-radio"></span>
-            <span>Skip it — a wrong answer will hurt your grade for the course.</span>
-          </button>
-          <button class="tryit-option" type="button" data-correct="false">
-            <span class="tryit-radio"></span>
-            <span>Re-read the whole topic until you're 100% certain, then answer.</span>
+            <span>Skip it because a wrong answer will be recorded as a bad grade.</span>
           </button>
           <button class="tryit-option" type="button" data-correct="true">
             <span class="tryit-radio"></span>
-            <span>Make your best guess — it's not graded, and the answer explains itself.</span>
+            <span>Make your best guess and read the explanation.</span>
+          </button>
+          <button class="tryit-option" type="button" data-correct="false">
+            <span class="tryit-radio"></span>
+            <span>Leave the course and start over from the beginning.</span>
           </button>
         </div>
         <div class="answer-banner hidden">
@@ -118,43 +96,39 @@
             <path d="m5 12 4 4L19 6"/>
           </svg>
           <span>
-            <strong>The answer:</strong> just commit to your best guess. Nothing is
-            graded, the explanation appears either way, and the act of choosing is
-            exactly what helps the idea stick.
+            <strong>The answer:</strong> make your best guess. Try-it checks are
+            low-stakes practice, and the explanation is the point.
           </span>
         </div>
       </div>
     </section>
 
-    <!-- ── § 4 · Remember ───────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 4</span>
+        <span class="sr-num">&sect; 4</span>
         <span class="sr-line"></span>
         <span class="sr-label">If you remember nothing else</span>
       </div>
       <div class="remember-box">
         <ul>
-          <li>Try-its are <strong>not graded</strong> — they're for recall, not judgment.</li>
-          <li>The <strong>answer always appears</strong> when you choose, right or wrong.</li>
-          <li><strong>Always commit</strong> to an answer — the reaching is the learning.</li>
+          <li>Try-it checks are <strong>practice, not grades</strong>.</li>
+          <li>The <strong>explanation appears</strong> after you choose.</li>
+          <li>A best guess is useful because <strong>recall is the learning</strong>.</li>
         </ul>
       </div>
     </section>
 
-    <!-- ── Next up ──────────────────────────────────────────────────────── -->
     <section class="next-up">
-      <p class="eyebrow eyebrow-muted">Up next · Topic 4 of 5</p>
+      <p class="eyebrow eyebrow-muted">Up next &middot; Topic 4 of 5</p>
       <a class="next-up-card" href="#" data-lace="next-link">
         <span class="nu-body">
           <span class="cb-meta" style="display:flex;gap:8px;">
-            <span class="pill pill-accent">Concept · 2 min</span>
+            <span class="pill pill-accent">Concept &middot; 2 min</span>
           </span>
-          <span class="nu-title">Your progress &amp; completion</span>
-          <span class="nu-sub">How topics get marked done, and how the Hub knows you finished.</span>
+          <span class="nu-title">Track progress and completion</span>
+          <span class="nu-sub">What counts, what Brightspace records, and how resume works.</span>
         </span>
-        <span class="next-up-go">
-          Continue
+        <span class="next-up-go">Continue
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
@@ -162,7 +136,6 @@
         </span>
       </a>
     </section>
-
   </main>
 </div>
 

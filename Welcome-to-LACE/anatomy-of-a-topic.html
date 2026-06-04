@@ -3,141 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>How a topic works</title>
-
+  <title>Find your assigned learning</title>
   <meta name="course-slug" content="anatomy-of-a-topic">
-
   <link rel="stylesheet" href="course-style.css">
   <script src="course-config.js"></script>
-  <!-- Apply the course's topic accent before paint, so there is no colour flash. -->
   <script>document.documentElement.dataset.topic = (window.COURSE_CONFIG || {}).topic || "foundations";</script>
   <script src="course-nav.js" defer></script>
 </head>
 <body>
 
 <div class="page">
-  <!-- Chrome bar (breadcrumb + prev/next) injected by course-nav.js -->
   <div id="lace-nav-container"></div>
 
   <main class="page-body topic-body">
-
-    <!-- ── Topic header ─────────────────────────────────────────────────── -->
-    <p class="eyebrow">Topic 2 of 5 · Concept · 3 min</p>
-    <h1 class="display topic-title">How a topic works</h1>
+    <p class="eyebrow">Topic 2 of 5 &middot; Concept &middot; 3 min</p>
+    <h1 class="display topic-title">Find your assigned learning</h1>
     <p class="topic-standfirst">
-      Every topic in LACE — including this one — is built to the same plan. Once
-      you can see the plan, you'll always know where to look. Here it is, using
-      the page you're reading right now as the example.
+      You should not have to guess where to click. The Hub and course wrapper are
+      built around a few repeated controls: Continue, the outline, the menu, and
+      the Read/Practice toggle.
     </p>
     <div class="topic-progress">
       <div class="topic-progress-track"><div data-lace="course-progress-bar"></div></div>
       <span class="topic-progress-label"><span data-lace="course-progress">0%</span> through this course</span>
     </div>
 
-    <!-- ── § 1 · The moment ─────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 1</span>
+        <span class="sr-num">&sect; 1</span>
         <span class="sr-line"></span>
-        <span class="sr-label">The moment</span>
+        <span class="sr-label">The main path</span>
       </div>
       <p class="prose">
-        The worst kind of training makes you hunt: where's the actual rule? Is
-        there a quiz? How long is this going to take? Every page is laid out
-        differently, so every page costs you a little energy just to get oriented.
-      </p>
-      <p class="prose">
-        LACE removes that cost by making every topic the same shape. You learn the
-        shape once — here — and then it's invisible.
-      </p>
-    </section>
-
-    <!-- ── § 2 · How it works ───────────────────────────────────────────── -->
-    <section class="section">
-      <div class="section-rule">
-        <span class="sr-num">§ 2</span>
-        <span class="sr-line"></span>
-        <span class="sr-label">The parts of a topic</span>
-      </div>
-      <p class="prose">
-        Look at the top of this page. Every topic opens the same way and moves
-        through the same numbered sections:
+        The simplest path is: open the Hub, choose assigned learning, and follow
+        Continue. On a course Home page, Continue points to the first unfinished
+        topic. Inside a topic, Next moves you forward and Previous moves you back.
       </p>
       <div class="rule-box">
-        <div class="eyebrow">What you'll always find</div>
+        <div class="eyebrow">What each control is for</div>
         <ol>
-          <li><strong>The eyebrow</strong> — the small line up top: which topic of
-            how many, the kind, and the estimated minutes.</li>
-          <li><strong>The standfirst</strong> — one short paragraph telling you why
-            this topic matters before you commit.</li>
-          <li><strong>Numbered sections (§)</strong> — the content, in a fixed
-            order. The same idea always lives in the same place.</li>
-          <li><strong>A Try-it</strong> — one question near the end. (The next
-            topic is all about these.)</li>
-          <li><strong>Remember</strong> — the two or three things that must stick.</li>
+          <li><strong>Continue card:</strong> resume the next topic you have not finished.</li>
+          <li><strong>Course outline:</strong> see every topic, time estimate, and completion status.</li>
+          <li><strong>Menu button:</strong> jump to another topic without clicking Previous over and over.</li>
+          <li><strong>Exit to Hub:</strong> leave the course and return to the larger Hub dashboard.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-rule">
+        <span class="sr-num">&sect; 2</span>
+        <span class="sr-line"></span>
+        <span class="sr-label">Read vs Practice</span>
+      </div>
+      <p class="prose">
+        The <strong>Read / Practice</strong> toggle changes how a topic is paced.
+        It does not change the requirements, your completion, or the content you
+        receive. It only changes the way the page is presented.
+      </p>
+      <div class="rule-box">
+        <div class="eyebrow">Use the mode that fits the moment</div>
+        <ol>
+          <li><strong>Read:</strong> shows the full topic on one page. Use it when you want to skim, review, search, or move quickly.</li>
+          <li><strong>Practice:</strong> shows one section at a time. Use it when you want fewer distractions or want the idea to stick.</li>
+          <li><strong>Switch anytime:</strong> your progress is not reset. The toggle is just a reading preference.</li>
         </ol>
       </div>
       <p class="prose">
-        Moving around is just as predictable. Use <strong>Next</strong> and
-        <strong>Previous</strong> in the bar at the top to step through a course.
-        The <strong>menu</strong> in that same bar opens the full outline so you
-        can jump to any topic.
+        If you are in a rush, Read is probably right. If you are learning
+        something new or easy to mix up, Practice gives you a little more focus.
       </p>
     </section>
 
-    <!-- ── § 3 · Two ways to read ───────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 3</span>
-        <span class="sr-line"></span>
-        <span class="sr-label">Two ways to read</span>
-      </div>
-      <p class="prose">
-        The top bar has a <strong>Read · Practice</strong> toggle. It doesn't change
-        the content — only the pace:
-      </p>
-      <div class="rule-box">
-        <div class="eyebrow">Same topic, two speeds</div>
-        <ol>
-          <li><strong>Read</strong> — the whole topic on one page. Best for skimming
-            or coming back for reference.</li>
-          <li><strong>Practice</strong> — one section at a time with Back / Continue.
-            Best for focus, when you want it to stick.</li>
-        </ol>
-      </div>
-      <p class="prose">
-        It's not a quiz — just a pace — and LACE remembers your choice for next time.
-      </p>
-    </section>
-
-    <!-- ── § 4 · Try it ─────────────────────────────────────────────────── -->
-    <section class="section">
-      <div class="section-rule">
-        <span class="sr-num">§ 4</span>
+        <span class="sr-num">&sect; 3</span>
         <span class="sr-line"></span>
         <span class="sr-label">Try it</span>
       </div>
       <p class="prose" style="font-style:italic;color:var(--muted);">
-        One question. You'll see the answer once you choose.
+        One question. Choose an answer to reveal the explanation.
       </p>
       <div class="tryit-box">
         <div class="eyebrow">Quick check</div>
         <p class="tryit-q">
-          You're three topics into a course and want to re-read the key rule from
-          topic one. <strong>What's the fastest way there?</strong>
+          You need to re-open topic one, and you are currently on topic four.
+          <strong>What is the fastest course control to use?</strong>
         </p>
         <div class="tryit-options">
           <button class="tryit-option" type="button" data-correct="false">
             <span class="tryit-radio"></span>
-            <span>Hit Previous repeatedly until you land back on topic one.</span>
+            <span>Click Previous until you eventually get there.</span>
           </button>
           <button class="tryit-option" type="button" data-correct="true">
             <span class="tryit-radio"></span>
-            <span>Open the menu in the top bar and jump straight to topic one.</span>
+            <span>Open the menu and jump directly to topic one.</span>
           </button>
           <button class="tryit-option" type="button" data-correct="false">
             <span class="tryit-radio"></span>
-            <span>Start the course over from the Hub.</span>
+            <span>Switch from Read to Practice mode.</span>
           </button>
         </div>
         <div class="answer-banner hidden">
@@ -146,43 +110,39 @@
             <path d="m5 12 4 4L19 6"/>
           </svg>
           <span>
-            <strong>The answer:</strong> the menu in the top bar opens the whole
-            outline, so you can jump to any topic in one move. Previous/Next are
-            for stepping one at a time — handy, but slower for jumps.
+            <strong>The answer:</strong> use the menu for jumps. Read and Practice
+            change the pace of the page, not where you are in the course.
           </span>
         </div>
       </div>
     </section>
 
-    <!-- ── § 5 · Remember ───────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-rule">
-        <span class="sr-num">§ 5</span>
+        <span class="sr-num">&sect; 4</span>
         <span class="sr-line"></span>
         <span class="sr-label">If you remember nothing else</span>
       </div>
       <div class="remember-box">
         <ul>
-          <li>Every topic has the <strong>same shape</strong> — eyebrow, standfirst, numbered sections, Try-it, Remember.</li>
-          <li><strong>Next / Previous</strong> step through; the <strong>menu</strong> jumps anywhere.</li>
-          <li><strong>Read · Practice</strong> switches between one page and one-section-at-a-time.</li>
+          <li><strong>Continue</strong> resumes your next unfinished topic.</li>
+          <li>The <strong>menu</strong> is for jumping; Next and Previous are for stepping.</li>
+          <li><strong>Read</strong> is full-page review; <strong>Practice</strong> is one section at a time.</li>
         </ul>
       </div>
     </section>
 
-    <!-- ── Next up ──────────────────────────────────────────────────────── -->
     <section class="next-up">
-      <p class="eyebrow eyebrow-muted">Up next · Topic 3 of 5</p>
+      <p class="eyebrow eyebrow-muted">Up next &middot; Topic 3 of 5</p>
       <a class="next-up-card" href="#" data-lace="next-link">
         <span class="nu-body">
           <span class="cb-meta" style="display:flex;gap:8px;">
-            <span class="pill pill-accent">Practice · 2 min</span>
+            <span class="pill pill-accent">Practice &middot; 2 min</span>
           </span>
-          <span class="nu-title">The Try-it self-checks</span>
-          <span class="nu-sub">You've used two already. Here's what they're for — and what they're not.</span>
+          <span class="nu-title">Use Try-it checks</span>
+          <span class="nu-sub">Quick practice without grades, scores, or penalties.</span>
         </span>
-        <span class="next-up-go">
-          Continue
+        <span class="next-up-go">Continue
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
@@ -190,7 +150,6 @@
         </span>
       </a>
     </section>
-
   </main>
 </div>
 
