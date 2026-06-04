@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!steps.stage) return;
     i = Math.max(0, Math.min(steps.sections.length - 1, i));
     steps.idx = i;
-    steps.sections.forEach(function (s, k) { s.style.display = k === i ? "" : "none"; });
+    steps.sections.forEach(function (s, k) { s.style.display = k === i ? "block" : "none"; });
     var segs = steps.stage.querySelectorAll(".step-segments .seg");
     segs.forEach(function (seg, k) { seg.classList.toggle("done", k < i); seg.classList.toggle("current", k === i); });
     var label = steps.sections[i].querySelector(".sr-label");

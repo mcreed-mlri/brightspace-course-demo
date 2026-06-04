@@ -694,7 +694,6 @@ a.crumb:hover { color: var(--ink); }
 .step-counter { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-soft); }
 .step-card { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 30px 30px 26px; min-height: 320px; display: flex; flex-direction: column; }
 .step-card .section { margin-top: 0; }
-.step-card .section + .section { display: none; }   /* one section visible at a time */
 .step-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; gap: 12px; }
 .step-controls .sc-prev { font-family: var(--font); font-size: 13.5px; font-weight: 600; color: var(--muted); background: transparent; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
 .step-controls .sc-prev:hover { color: var(--ink); }
