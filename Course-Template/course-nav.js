@@ -127,6 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
       play: '<path d="m8 5 11 7-11 7z"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>',
+      moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     };
     return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" ' +
       'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -197,6 +199,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ── Light · Dark theme toggle (every page, including the outline) ─────────
+  // Per-course preference, mirroring the mode toggle. A returning dark user is
+  // already dark before paint (course-config.js applies it); this just lets
+  // them flip it. URL ?theme= is handy for previews/screenshots.
+  var themeKey = "lace_theme_" + config.courseId;
+  function getTheme() {
+    var t = urlParams.get("theme");
+    if (t === "dark" || t === "light") return t;
+    try { var s = localStorage.getItem(themeKey); if (s === "dark" || s === "light") return s; } catch (e) {}
+    return "light";
+  }
+  function setTheme(t) {
+    try { localStorage.setItem(themeKey, t); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t);
+    syncThemeToggle();
+  }
+  function themeToggleHtml() {
+    return '<button class="chrome-icon-btn" data-theme-btn type="button" aria-pressed="false" aria-label="Switch to dark mode">' + icon("moon", 18) + "</button>";
+  }
+  function syncThemeToggle() {
+    var dark = document.documentElement.getAttribute("data-theme") === "dark";
+    document.querySelectorAll("[data-theme-btn]").forEach(function (b) {
+      b.innerHTML = icon(dark ? "sun" : "moon", 18);
+      b.setAttribute("aria-pressed", dark ? "true" : "false");
+      b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    });
+  }
+  function wireThemeToggle() {
+    document.querySelectorAll("[data-theme-btn]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+      });
+    });
+  }
+
   // ── Chrome bar (chrome="bar") ────────────────────────────────────────────
   function renderChromeBar(m) {
     var container = document.getElementById("lace-nav-container");
@@ -229,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
           '<a class="chrome-mark" href="' + config.homeLinkUrl + '" aria-label="LACE home">' + MARK + '<span class="mk-name">LACE</span></a>' +
           '<nav class="crumbs" aria-label="Breadcrumb">' + crumbHtml + "</nav>" +
         "</div>" +
-        '<div class="chrome-actions">' + modeHtml + prevHtml + nextHtml + "</div>" +
+        '<div class="chrome-actions">' + themeToggleHtml() + modeHtml + prevHtml + nextHtml + "</div>" +
       "</div>";
   }
 
@@ -269,7 +306,8 @@ document.addEventListener("DOMContentLoaded", function () {
     rail.className = "course-rail";
     rail.setAttribute("aria-label", "Course navigation");
     rail.innerHTML =
-      '<div class="rail-brand">' + MARK + '<span class="mk-name">LACE</span></div>' +
+      '<div class="rail-brand">' + MARK + '<span class="mk-name">LACE</span>' +
+        '<span style="margin-left:auto">' + themeToggleHtml() + "</span></div>" +
       '<a class="rail-back" href="' + config.homeLinkUrl + '">' + icon("arrowLeft", 16) + '<span class="rb-label">' + esc(config.homeLinkText || "Back to Hub") + "</span></a>" +
       '<div class="rail-course">' +
         '<div class="rc-eyebrow">' + esc(config.courseArea || "Course") + "</div>" +
@@ -505,6 +543,9 @@ document.addEventListener("DOMContentLoaded", function () {
     wireDrawer(parts.drawer, parts.scrim);
   }
   wireModeToggle();
+  document.documentElement.setAttribute("data-theme", getTheme());
+  wireThemeToggle();
+  syncThemeToggle();
   fillProgressHooks();
 
   // Apply the saved reading mode on topic pages (also builds the step stage).

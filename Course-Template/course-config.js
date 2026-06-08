@@ -121,3 +121,13 @@ window.COURSE_CONFIG = {
     },
   ],
 };
+
+// Pre-paint dark-mode application. This file loads synchronously in <head>
+// before first paint (and before the deferred course-nav.js), so a returning
+// learner who chose dark never sees a white flash. course-nav.js owns the
+// toggle UI and writes the same per-course key.
+try {
+  if (localStorage.getItem("lace_theme_" + (window.COURSE_CONFIG.courseId || "")) === "dark") {
+    document.documentElement.dataset.theme = "dark";
+  }
+} catch (e) {}

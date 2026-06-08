@@ -97,6 +97,54 @@
 [data-topic="trauma"]      { --accent: var(--topic-trauma);      --accent-soft: var(--topic-trauma-soft);      --accent-ink: var(--topic-trauma-ink); }
 [data-topic="foundations"] { --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink); }
 
+/* ── Dark mode — opt-in via the chrome toggle (sets <html data-theme="dark">).
+ *    Only TOKEN VALUES are redefined here; every component rule reads the tokens,
+ *    so the whole course re-skins from this one block. The var(--accent…)
+ *    indirection means redefining the topic/status *-soft / *-ink tokens flows
+ *    straight through to the page accent. Surfaces are a warm-tinted near-black
+ *    (calmer for tired eyes than pure #000); the gold brand is lightened so links
+ *    and "you are here" stay legible. ──────────────────────────────────────── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* neutral base */
+  --bg: #15171c;          --paper: #1c1f26;       --surface: #22262e;
+  --warm: #262a33;        --ivory: #20242b;       --chrome-bg: rgba(20, 22, 27, 0.82);
+
+  /* text */
+  --ink: #f3f4f6;         --ink-soft: #d9dce3;    --muted: #a3a9b5;   --muted-soft: #767d8b;
+
+  /* structure */
+  --hair: #2e333d;        --hair-strong: #3a4049;
+
+  /* brand — gold lightened for text/active state; tint darkened for chips/rows */
+  --brand: #e0992e;       --brand-fill: #b8740f;  --brand-tint: #3a2c10;  --brand-ink: #e0992e;
+
+  /* topic families — base lightened a touch, soft → deep tint, ink → light text */
+  --topic-court: #d06a4d;        --topic-court-soft: #3a1f17;        --topic-court-ink: #e8957a;
+  --topic-client: #1faf82;       --topic-client-soft: #133029;       --topic-client-ink: #5fc9a8;
+  --topic-ethics: #7480e0;       --topic-ethics-soft: #1f2340;       --topic-ethics-ink: #9aa3ec;
+  --topic-research: #5aa6db;     --topic-research-soft: #14283a;     --topic-research-ink: #7cc0ec;
+  --topic-drafting: #9573e8;     --topic-drafting-soft: #251a40;     --topic-drafting-ink: #b49af0;
+  --topic-trauma: #df6e9b;       --topic-trauma-soft: #3a1c2a;       --topic-trauma-ink: #ef9bbd;
+  --topic-foundations: #e0992e;  --topic-foundations-soft: #3a2c10;  --topic-foundations-ink: #e0992e;
+
+  /* status families — same soft→deep / ink→light transform */
+  --status-progress: #1faf82;    --status-progress-soft: #133029;    --status-progress-ink: #5fc9a8;
+  --status-next: #c08319;        --status-next-soft: #3a2c10;        --status-next-ink: #e0992e;
+  --status-done: #7c889b;        --status-done-soft: #262a33;        --status-done-ink: #aab4c4;
+  --status-new: #e0992e;         --status-new-soft: #3a2c10;         --status-new-ink: #e0992e;
+  --status-updated: #5aa6db;     --status-updated-soft: #14283a;     --status-updated-ink: #7cc0ec;
+  --status-changed: #db5d4e;     --status-changed-soft: #3a1c18;     --status-changed-ink: #ec8275;
+  --status-later: #9aa0ad;       --status-later-soft: #262a33;       --status-later-ink: #9aa0ad;
+}
+/* The LACE badge is a dark chip with a hardcoded-white leaf mark. In dark mode
+ * its var(--ink) background flips to near-white and the mark vanishes — give it
+ * the brand gold so the white mark stays legible. (Extra specificity keeps it
+ * winning over the .chrome-mark/.rail-brand rules defined later in the file.) */
+[data-theme="dark"] .chrome-mark .mk-badge,
+[data-theme="dark"] .rail-brand .mk-badge { background: var(--brand-fill); }
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
