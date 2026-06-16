@@ -86,14 +86,18 @@
   --lace-hairline: var(--hair);
 }
 
-/* Per-course topic accent (set via <html data-topic="…">). */
-[data-topic="court"]       { --accent: var(--topic-court);       --accent-soft: var(--topic-court-soft);       --accent-ink: var(--topic-court-ink); }
-[data-topic="client"]      { --accent: var(--topic-client);      --accent-soft: var(--topic-client-soft);      --accent-ink: var(--topic-client-ink); }
-[data-topic="ethics"]      { --accent: var(--topic-ethics);      --accent-soft: var(--topic-ethics-soft);      --accent-ink: var(--topic-ethics-ink); }
-[data-topic="research"]    { --accent: var(--topic-research);    --accent-soft: var(--topic-research-soft);    --accent-ink: var(--topic-research-ink); }
-[data-topic="drafting"]    { --accent: var(--topic-drafting);    --accent-soft: var(--topic-drafting-soft);    --accent-ink: var(--topic-drafting-ink); }
-[data-topic="trauma"]      { --accent: var(--topic-trauma);      --accent-soft: var(--topic-trauma-soft);      --accent-ink: var(--topic-trauma-ink); }
-[data-topic="foundations"] { --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink); }
+/* Per-course topic accent (set via <html data-topic="…">). Re-skins the whole
+   course: --accent for orientation touches, plus the --brand family so the
+   primary chrome (§ numbers, progress, buttons, callouts, quotes) follows the
+   topic colour too. --brand=ink (links/active text), --brand-fill=mid (button
+   fill), --brand-tint=soft (chips/tints). */
+[data-topic="court"]       { --accent: var(--topic-court);       --accent-soft: var(--topic-court-soft);       --accent-ink: var(--topic-court-ink);       --brand: var(--topic-court-ink);       --brand-fill: var(--topic-court);       --brand-tint: var(--topic-court-soft);       --brand-ink: var(--topic-court-ink); }
+[data-topic="client"]      { --accent: var(--topic-client);      --accent-soft: var(--topic-client-soft);      --accent-ink: var(--topic-client-ink);      --brand: var(--topic-client-ink);      --brand-fill: var(--topic-client);      --brand-tint: var(--topic-client-soft);      --brand-ink: var(--topic-client-ink); }
+[data-topic="ethics"]      { --accent: var(--topic-ethics);      --accent-soft: var(--topic-ethics-soft);      --accent-ink: var(--topic-ethics-ink);      --brand: var(--topic-ethics-ink);      --brand-fill: var(--topic-ethics);      --brand-tint: var(--topic-ethics-soft);      --brand-ink: var(--topic-ethics-ink); }
+[data-topic="research"]    { --accent: var(--topic-research);    --accent-soft: var(--topic-research-soft);    --accent-ink: var(--topic-research-ink);    --brand: var(--topic-research-ink);    --brand-fill: var(--topic-research);    --brand-tint: var(--topic-research-soft);    --brand-ink: var(--topic-research-ink); }
+[data-topic="drafting"]    { --accent: var(--topic-drafting);    --accent-soft: var(--topic-drafting-soft);    --accent-ink: var(--topic-drafting-ink);    --brand: var(--topic-drafting-ink);    --brand-fill: var(--topic-drafting);    --brand-tint: var(--topic-drafting-soft);    --brand-ink: var(--topic-drafting-ink); }
+[data-topic="trauma"]      { --accent: var(--topic-trauma);      --accent-soft: var(--topic-trauma-soft);      --accent-ink: var(--topic-trauma-ink);      --brand: var(--topic-trauma-ink);      --brand-fill: var(--topic-trauma);      --brand-tint: var(--topic-trauma-soft);      --brand-ink: var(--topic-trauma-ink); }
+[data-topic="foundations"] { --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink); --brand: var(--topic-foundations-ink); --brand-fill: var(--topic-foundations); --brand-tint: var(--topic-foundations-soft); --brand-ink: var(--topic-foundations-ink); }
 
 /* ── Dark mode — opt-in via the chrome toggle (sets <html data-theme="dark">).
  *    Only TOKEN VALUES are redefined here; every component rule reads the tokens,
