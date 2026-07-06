@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Course preview</title>
+</head>
+<body>
+  <p>Loading preview…</p>
+  <script src="lib/course-store.js"></script>
+  <script>
+    var params = new URLSearchParams(location.search);
+    var id = params.get("course");
+    var course = LaceCourseStore.get(id);
+    if (course && course.files && course.files["Home.html"]) {
+      var blob = new Blob([course.files["Home.html"]], { type: "text/html" });
+      location.replace(URL.createObjectURL(blob));
+    } else {
+      document.body.textContent = "Course not found in Studio storage.";
+    }
+  </script>
+</body>
+</html>

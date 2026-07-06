@@ -20,6 +20,9 @@ The project has been organized into a clean folder structure:
 2.  **[Interactive-Elements-Demo](file:///c:/dev/brightspace-courses/Interactive-Elements-Demo/)**: A sandbox containing individual HTML components and wrappers from the original demo. Use these to copy/paste specific interactive layouts (Accordions, Tabs, Callout alerts, Flip Cards, Sorting Galleries, Sequencing, and Login Page overrides).
 3.  **[docs](file:///c:/dev/brightspace-courses/docs/)**: Course creation checklists and sample course metadata. Roadmaps live in [`notes/LMS Roadmaps/`](../notes/LMS%20Roadmaps/) (Obsidian); `docs/` holds stubs that link there.
 4.  **[Brightspace-Admin-Guide.md](file:///c:/dev/brightspace-courses/Brightspace-Admin-Guide.md)**: A Standard Operating Procedure (SOP) written for you to manage course creation, updates via file overwriting, and the attorney content-ingestion pipeline.
+5.  **[Brightspace-Ready](file:///c:/dev/brightspace-courses/Brightspace-Ready/)**: Local preflight checker before Brightspace upload.
+6.  **[LACE-Course-Studio](file:///c:/dev/brightspace-courses/LACE-Course-Studio/)**: Shell factory, structured topic editor, preflight, and ZIP export.
+7.  **[Sustainability-Demo](file:///c:/dev/brightspace-courses/Sustainability-Demo/)**: Stakeholder demo for release workflow and sustainable editing boundaries.
 
 ---
 

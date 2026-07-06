@@ -1,0 +1,270 @@
+:root {
+  --bg: #f5f6f8;
+  --paper: #ffffff;
+  --ink: #14161b;
+  --muted: #5b6270;
+  --hair: #e1e5ec;
+  --brand: #1c3fb0;
+  --brand-fill: #2a5bff;
+  --brand-tint: #eaf0ff;
+  --green: #177a58;
+  --green-tint: #e2f4ed;
+  --amber: #9b6514;
+  --amber-tint: #fbf0dc;
+  --gray-tint: #eef0f4;
+  --shadow: 0 1px 2px rgba(20, 22, 27, 0.05), 0 12px 28px rgba(20, 22, 27, 0.08);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+a { color: inherit; }
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 36px clamp(20px, 4vw, 56px) 28px;
+  border-bottom: 1px solid var(--hair);
+  background: var(--paper);
+}
+
+.topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.course-row-highlight {
+  outline: 2px solid var(--brand-fill);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+h1, h2, p { margin-top: 0; }
+
+h1 {
+  margin-bottom: 10px;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 22px;
+  letter-spacing: 0;
+}
+
+.lede {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ghost-link,
+button,
+select {
+  min-height: 40px;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.ghost-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.secondary {
+  padding: 0 13px;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 20px;
+  padding: 24px clamp(20px, 4vw, 56px);
+}
+
+.panel,
+.script-panel {
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.panel { padding: 20px; }
+
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.helper {
+  margin-bottom: 18px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.admin-list,
+.hub-list {
+  display: grid;
+  gap: 12px;
+}
+
+.course-row,
+.course-card {
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.course-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 14px;
+  padding: 16px;
+}
+
+.course-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pill,
+.count-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 9px;
+  border-radius: 7px;
+  background: var(--gray-tint);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 740;
+}
+
+.pill.published {
+  background: var(--green-tint);
+  color: var(--green);
+}
+
+.pill.review {
+  background: var(--amber-tint);
+  color: var(--amber);
+}
+
+.status-control {
+  display: grid;
+  gap: 8px;
+}
+
+.status-control label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+select {
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+}
+
+.course-card {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.course-card:hover {
+  border-color: var(--brand-fill);
+  transform: translateY(-1px);
+}
+
+.empty-state {
+  padding: 26px;
+  border: 1px dashed var(--hair);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.script-panel {
+  margin: 0 clamp(20px, 4vw, 56px) 36px;
+  padding: 20px 24px;
+}
+
+.script-panel ol {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+@media (max-width: 860px) {
+  .topbar,
+  .panel-head {
+    display: block;
+  }
+
+  .ghost-link,
+  .secondary {
+    margin-top: 14px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .course-row {
+    grid-template-columns: 1fr;
+  }
+}

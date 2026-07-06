@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LACE Blank Course Release Demo</title>
+  <link rel="stylesheet" href="admin-release-demo.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Proof of possibility</p>
+      <h1>LACE blank course release demo</h1>
+      <p class="lede">
+        Prepared Brightspace shells stay hidden until an admin changes their status to Published.
+        Staff edit content in Brightspace; the hub only controls visibility.
+      </p>
+    </div>
+    <div class="topbar-actions">
+      <a class="ghost-link" href="Blank-Course-A/Home.html">Open Course A</a>
+      <a class="ghost-link" href="../Brightspace-Ready/index.html">Brightspace Ready</a>
+      <a class="ghost-link" href="../LACE-Course-Studio/index.html">LACE Course Studio</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Admin view</p>
+          <h2>Release control</h2>
+        </div>
+        <button class="secondary" id="reset-demo" type="button">Reset demo</button>
+      </div>
+      <p class="helper">
+        This is the small admin action you are proving: change a prepared course from Draft
+        or Ready for Review to Published. No course files are generated here.
+      </p>
+      <div class="admin-list" id="admin-list"></div>
+    </section>
+
+    <section class="panel hub-panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Learner view</p>
+          <h2>Learning Hub preview</h2>
+        </div>
+        <span class="count-pill" id="published-count">0 published</span>
+      </div>
+      <p class="helper">
+        Only Published courses appear here. Draft, review, and archived shells remain invisible
+        to learners.
+      </p>
+      <div class="hub-list" id="hub-list"></div>
+    </section>
+  </main>
+
+  <section class="script-panel">
+    <p class="eyebrow">Meeting script</p>
+    <ol>
+      <li>Open Course A and show the prepared wrapper shell.</li>
+      <li>Explain that staff edit only the visible course content in Brightspace.</li>
+      <li>Return here and change Course A to Published.</li>
+      <li>Show that it appears in the Learning Hub preview.</li>
+      <li>Click the published course and show the learner-facing LACE wrapper.</li>
+      <li>Open Brightspace Ready and run a preflight check on the course folder.</li>
+      <li>Optional: open LACE Course Studio to show shell creation and topic editing.</li>
+    </ol>
+  </section>
+
+  <script src="admin-release-demo.js"></script>
+</body>
+</html>

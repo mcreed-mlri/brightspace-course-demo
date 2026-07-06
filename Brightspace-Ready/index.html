@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brightspace Ready</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-brand" aria-hidden="true">
+      <span class="brand-mark">BR</span>
+    </div>
+    <div>
+      <p class="eyebrow"><span class="eyebrow-dot"></span>LACE · Preflight</p>
+      <h1>Brightspace Ready</h1>
+      <p class="lede">
+        Select a LACE course folder, paste the Brightspace URL for Home.html,
+        and check whether files, slugs, navigation URLs, try-it blocks, and local links line up.
+      </p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls-panel panel-accent-blue">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Inputs</p>
+      <h2>Course package</h2>
+
+      <label class="field">
+        <span>Course folder</span>
+        <input id="folder-input" type="file" webkitdirectory multiple>
+      </label>
+
+      <label class="field">
+        <span>Brightspace Home.html URL</span>
+        <input id="home-url" type="url" placeholder="https://mlri.brightspace.com/content/enforced/.../Home.html?ou=...&d2l_body_type=3">
+      </label>
+
+      <label class="field">
+        <span>Other courseIds in use (optional, comma or newline)</span>
+        <textarea id="registry-ids" rows="2" placeholder="housing-court-2026, legal-research-v2"></textarea>
+      </label>
+
+      <button id="run-check" type="button">Run readiness check</button>
+
+      <div class="note">
+        This runs locally in your browser. It does not upload files or change the course.
+      </div>
+    </section>
+
+    <section class="panel summary-panel panel-accent-green" id="summary-panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span>Readiness</p>
+          <h2 id="summary-title">Waiting for a folder</h2>
+        </div>
+        <span class="score score-idle" id="score">-</span>
+      </div>
+      <div class="summary-grid">
+        <div class="stat-tile stat-errors">
+          <strong id="count-errors">0</strong>
+          <span>errors</span>
+        </div>
+        <div class="stat-tile stat-warnings">
+          <strong id="count-warnings">0</strong>
+          <span>warnings</span>
+        </div>
+        <div class="stat-tile stat-passed">
+          <strong id="count-passed">0</strong>
+          <span>passed</span>
+        </div>
+      </div>
+      <div id="next-step" class="next-step">
+        Choose a folder and run the check.
+      </div>
+      <div id="fix-first" class="fix-first empty-state">
+        Priority fixes appear here after a check.
+      </div>
+    </section>
+
+    <section class="panel results-panel panel-accent-violet">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span>Report</p>
+          <h2>Checks</h2>
+        </div>
+        <button id="copy-checklist" class="secondary" type="button" disabled>Copy checklist</button>
+      </div>
+      <div id="results" class="results empty-state">
+        No results yet.
+      </div>
+    </section>
+
+    <section class="panel output-panel panel-accent-sky">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span>URL map</p>
+          <h2>Generated file URLs</h2>
+        </div>
+        <button id="copy-map" class="secondary" type="button" disabled>Copy map</button>
+      </div>
+      <pre id="url-map">Paste the Home.html URL to generate matching file URLs.</pre>
+    </section>
+
+    <section class="panel output-panel panel-accent-amber">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span>Config helper</p>
+          <h2>URL snippet for course-config.js</h2>
+        </div>
+        <button id="copy-config-snippet" class="secondary" type="button" disabled>Copy config URLs</button>
+      </div>
+      <pre id="config-snippet">Run a check with a Home URL to generate config URL snippets.</pre>
+    </section>
+  </main>
+
+  <script src="../LACE-Course-Studio/lib/lace-checker.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

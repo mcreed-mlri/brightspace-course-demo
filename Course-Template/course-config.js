@@ -56,6 +56,17 @@ window.COURSE_CONFIG = {
   homeLinkText: "Exit to Hub",
   homeLinkUrl: "https://lms-discovery.vercel.app/",
 
+  // ─── ANALYTICS BEACON (optional — OFF by default) ───
+  // course-beacon.js sends anonymous, item-scoped engagement events (page
+  // views, video progress, session heartbeats, exits) to the LACE data layer.
+  // Never any names or Brightspace user IDs — the event registry lives in
+  // learning-hub/docs/planning/supabase-analytics.sql. With `enabled: true`
+  // and an empty endpoint, events log to the console (local dev mode).
+  beacon: {
+    enabled: false,
+    endpoint: "", // e.g. "https://lms-discovery.vercel.app/api/events"
+  },
+
   // The outline page within this package
   courseHomeUrl: "https://mlri.brightspace.com/content/enforced/6703-course.outline/Home.html?ou=6703&d2l_body_type=3",
 

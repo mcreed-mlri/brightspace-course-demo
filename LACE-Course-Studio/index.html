@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LACE Course Studio</title>
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">LACE tooling</p>
+      <h1>LACE Course Studio</h1>
+      <p class="lede">Create course shells, edit topic content in forms, run Brightspace preflight, and export upload-ready ZIP packages — no HTML required for authors.</p>
+    </div>
+    <div class="header-links">
+      <a class="ghost-link" href="../Brightspace-Ready/index.html">Brightspace Ready</a>
+      <a class="ghost-link" href="../Sustainability-Demo/admin-release-demo.html">Release demo</a>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" type="button" data-tab="courses">Courses</button>
+    <button class="tab" type="button" data-tab="outline">Outline</button>
+    <button class="tab" type="button" data-tab="topics">Topics</button>
+    <button class="tab" type="button" data-tab="preflight">Preflight</button>
+    <button class="tab" type="button" data-tab="export">Export</button>
+    <button class="tab" type="button" data-tab="hub">Hub bridge</button>
+  </nav>
+
+  <main class="layout">
+    <!-- Courses -->
+    <section class="panel" data-panel="courses">
+      <p class="eyebrow">Drafts</p>
+      <h2>Your courses</h2>
+      <div class="btn-row">
+        <button type="button" id="btn-new-course">New course shell</button>
+        <button type="button" class="secondary" id="btn-import-folder">Import folder</button>
+      </div>
+      <input id="import-folder" type="file" webkitdirectory multiple class="hidden">
+      <div class="course-list" id="course-list"></div>
+    </section>
+
+    <section class="panel" data-panel="courses">
+      <p class="eyebrow">Active course</p>
+      <h2 id="active-title">No course selected</h2>
+      <p id="active-meta" class="lede">Create or select a course to begin.</p>
+      <div class="note" id="active-note">Shell Factory copies the Blank-Course framework. Topic Editor writes only the five author sections.</div>
+    </section>
+
+    <!-- Outline -->
+    <section class="panel span-2 hidden" data-panel="outline">
+      <p class="eyebrow">Shell factory</p>
+      <h2>Course outline &amp; config</h2>
+      <form id="outline-form">
+        <div class="layout" style="padding:0;grid-template-columns:1fr 1fr;">
+          <div>
+            <label class="field"><span>courseId</span><input name="courseId" required></label>
+            <label class="field"><span>Course title</span><input name="courseTitle" required></label>
+            <label class="field"><span>Subtitle</span><input name="courseSubtitle"></label>
+            <label class="field"><span>Blurb (HTML ok)</span><textarea name="courseBlurb" rows="2"></textarea></label>
+            <label class="field"><span>Practice area</span><input name="courseArea"></label>
+          </div>
+          <div>
+            <label class="field"><span>Accent topic</span>
+              <select name="topic">
+                <option value="foundations">foundations</option>
+                <option value="court">court</option>
+                <option value="client">client</option>
+                <option value="ethics">ethics</option>
+                <option value="research">research</option>
+                <option value="drafting">drafting</option>
+                <option value="trauma">trauma</option>
+              </select>
+            </label>
+            <label class="field"><span>Chrome mode</span>
+              <select name="chromeMode"><option value="bar">bar</option><option value="rail">rail</option></select>
+            </label>
+            <label class="field"><span>deployMode</span>
+              <select name="deployMode"><option value="local">local</option><option value="lms">lms</option></select>
+            </label>
+            <label class="field"><span>Module title</span><input name="moduleTitle"></label>
+            <label class="field"><span>Module description</span><input name="moduleDescription"></label>
+          </div>
+        </div>
+        <h3>Topics</h3>
+        <div id="topic-rows"></div>
+        <div class="btn-row">
+          <button type="button" class="secondary" id="btn-add-topic">Add topic</button>
+          <button type="submit">Save outline</button>
+          <button type="button" class="secondary" id="btn-regenerate-shell">Regenerate shell files</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Topics editor -->
+    <section class="panel span-2 hidden" data-panel="topics">
+      <p class="eyebrow">Topic editor</p>
+      <h2>Edit topic content</h2>
+      <label class="field"><span>Topic file</span><select id="topic-select"></select></label>
+      <div class="editor-grid">
+        <form id="topic-form">
+          <label class="field"><span>Title</span><input name="title"></label>
+          <label class="field"><span>Standfirst</span><textarea name="standfirst" rows="2"></textarea></label>
+          <h3>§1 Scenario</h3>
+          <div id="scenario-fields"></div>
+          <button type="button" class="secondary" id="btn-add-scenario">Add paragraph</button>
+          <h3>§2 Rule</h3>
+          <div id="rule-fields"></div>
+          <button type="button" class="secondary" id="btn-add-rule">Add paragraph</button>
+          <label class="field"><span><input type="checkbox" id="rule-box-enabled"> Rule box (numbered list)</span></label>
+          <div id="rule-box-fields"></div>
+          <h3>§3 What changed (optional)</h3>
+          <label class="field"><span><input type="checkbox" id="changed-enabled"> Include section</span></label>
+          <div id="changed-fields" class="hidden">
+            <label class="field"><span>Pill label</span><input id="changed-pill"></label>
+            <label class="field"><span>Citation</span><input id="changed-citation"></label>
+            <label class="field"><span>Heading</span><input id="changed-heading"></label>
+            <label class="field"><span>Body</span><textarea id="changed-body" rows="3"></textarea></label>
+          </div>
+          <h3>§4 Try it</h3>
+          <label class="field"><span>Prompt (HTML ok)</span><textarea name="tryPrompt" rows="2"></textarea></label>
+          <div id="try-options"></div>
+          <button type="button" class="secondary" id="btn-add-option">Add option</button>
+          <label class="field"><span>Correct option index (0-based)</span><input type="number" name="correctIndex" min="0" value="1"></label>
+          <label class="field"><span>Explanation (HTML ok)</span><textarea name="tryExplanation" rows="2"></textarea></label>
+          <h3>§5 Remember</h3>
+          <div id="remember-fields"></div>
+          <button type="button" class="secondary" id="btn-add-remember">Add bullet</button>
+          <div class="btn-row">
+            <button type="submit">Save topic</button>
+          </div>
+        </form>
+        <div>
+          <p class="eyebrow">Live preview</p>
+          <iframe id="topic-preview" class="preview-frame" title="Topic preview"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preflight -->
+    <section class="panel hidden" data-panel="preflight">
+      <p class="eyebrow">Brightspace Ready</p>
+      <h2>Preflight check</h2>
+      <label class="field"><span>Home.html URL (optional)</span><input id="preflight-home-url" type="url" placeholder="https://.../Home.html?ou=..."></label>
+      <label class="field"><span>Brightspace Content URLs (paste JSON or file=url lines)</span><textarea id="preflight-api-urls" rows="4" placeholder="topic-1.html -> https://...&#10;topic-2.html -> https://..."></textarea></label>
+      <button type="button" id="btn-run-preflight">Run preflight</button>
+      <p id="preflight-summary" class="note" style="margin-top:14px;">Run preflight on the active course package.</p>
+    </section>
+
+    <section class="panel hidden" data-panel="preflight">
+      <p class="eyebrow">Results</p>
+      <h2>Checks</h2>
+      <div id="preflight-fix-first" class="note hidden"></div>
+      <div class="check-list" id="preflight-results"></div>
+    </section>
+
+    <!-- Export -->
+    <section class="panel span-2 hidden" data-panel="export">
+      <p class="eyebrow">Export</p>
+      <h2>Download upload package</h2>
+      <p class="lede">Exports a ZIP with all course files for Brightspace Manage Files.</p>
+      <div class="btn-row">
+        <button type="button" id="btn-download-zip">Download ZIP</button>
+        <button type="button" class="secondary" id="btn-copy-checklist">Copy upload checklist</button>
+        <button type="button" class="secondary" id="btn-copy-config-snippet">Copy config URL snippet</button>
+      </div>
+      <pre class="code-block" id="export-config-preview" style="margin-top:16px;">Save outline and topics first.</pre>
+    </section>
+
+    <!-- Hub bridge -->
+    <section class="panel span-2 hidden" data-panel="hub">
+      <p class="eyebrow">Discovery Hub bridge</p>
+      <h2>Release workflow</h2>
+      <label class="field"><span>Release status</span>
+        <select id="hub-status">
+          <option>Draft</option>
+          <option>Ready for Review</option>
+          <option>Published</option>
+          <option>Archived</option>
+        </select>
+      </label>
+      <label class="field"><span>Brightspace org unit ID</span><input id="hub-ou" placeholder="6707"></label>
+      <label class="field"><span>API proxy URL (optional, for live Content fetch)</span><input id="hub-proxy" placeholder="https://your-proxy.example.com/brightspace"></label>
+      <label class="field"><span>API token (optional, sent to proxy only)</span><input id="hub-token" type="password" autocomplete="off"></label>
+      <div class="btn-row">
+        <button type="button" id="btn-sync-release">Sync to release demo</button>
+        <button type="button" class="secondary" id="btn-open-release">Open release demo</button>
+        <button type="button" class="secondary" id="btn-export-manifest">Copy hub manifest JSON</button>
+        <button type="button" class="secondary" id="btn-fetch-api">Fetch via proxy</button>
+      </div>
+      <pre class="code-block" id="hub-manifest-preview" style="margin-top:16px;"></pre>
+      <p class="note">Live Brightspace API calls require a server proxy (CORS). Manual URL paste works in Preflight without a proxy.</p>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="lib/lace-checker.js"></script>
+  <script src="lib/topic-parser.js"></script>
+  <script src="lib/topic-serializer.js"></script>
+  <script src="lib/config-builder.js"></script>
+  <script src="lib/course-store.js"></script>
+  <script src="lib/shell-factory.js"></script>
+  <script src="lib/zip-export.js"></script>
+  <script src="lib/brightspace-api.js"></script>
+  <script src="lib/hub-bridge.js"></script>
+  <script src="studio.js"></script>
+</body>
+</html>
