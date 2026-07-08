@@ -375,7 +375,7 @@ Always perform updates locally and push files to the LMS using file overwrites:
 Attorneys will supply content in Microsoft Word docs, PDFs, or emails. Use this ingestion workflow to protect your time and keep layouts consistent:
 
 ### Step 1: Provide a Ingestion Template
-Give attorneys a simple Word template or structure. Ask them to write content in standard text, but use bracketed highlights for visual blocks. E.g.:
+Start with [`docs/Faculty-Content-Creation-Template.md`](docs/Faculty-Content-Creation-Template.md), then copy it into Word or Google Docs if faculty or content owners need an editable document. Ask them to write content in standard text, but use bracketed highlights for visual blocks. E.g.:
 > `[CALLOUT SAGE: Make sure the tenant signs the answer form before 5:00 PM on the 5th day.]`
 >
 > `[ACCORDION: FAQ - What if the landlord refuses rent?]`

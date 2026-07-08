@@ -13,5 +13,6 @@ Do not duplicate full roadmap text in this folder — link to Obsidian instead.
 
 ## Course-specific docs (stay here)
 
+- [Faculty-Content-Creation-Template.md](./Faculty-Content-Creation-Template.md) - faculty/content owner drafting template with LACE component and assessment prompts
 - [Course-Creation-Cheatsheet.md](./Course-Creation-Cheatsheet.md) — step-by-step new course checklist
 - [sample-course-info.md](./sample-course-info.md) — demo course URLs and metadata

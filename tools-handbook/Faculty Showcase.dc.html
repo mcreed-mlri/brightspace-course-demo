@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html data-topic="foundations">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  /* ============================================================================
+     Inlined from Course-Template/course-style.css so this page stays
+     self-contained when it moves to the wiki (a relative <link> would break
+     outside this repo's folder layout, and this content also has to survive
+     being extracted as a standalone dc-runtime template). Keep in sync with
+     the source file if the shared wrapper's tokens/components change.
+     ========================================================================= */
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;450;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #f5f6f8; --paper: #ffffff; --surface: #ffffff; --warm: #eef0f4; --ivory: #f4f6f9;
+    --chrome-bg: rgba(255, 255, 255, 0.82);
+    --ink: #14161b; --ink-soft: #24272e; --muted: #565c69; --muted-soft: #8b909d;
+    --hair: #e4e7ed; --hair-strong: #d4d8e0;
+    --brand: #1c3fb0; --brand-fill: #2a5bff; --brand-tint: #eaf0ff; --brand-ink: #1c3fb0;
+    --topic-court: #bb573b; --topic-court-soft: #fbe8e2; --topic-court-ink: #8d472e;
+    --topic-client: #179a72; --topic-client-soft: #e2f4ed; --topic-client-ink: #0f6e52;
+    --topic-ethics: #5563d6; --topic-ethics-soft: #ebedfc; --topic-ethics-ink: #3a45a8;
+    --topic-research: #3a8ec9; --topic-research-soft: #e7f3fb; --topic-research-ink: #2b6c99;
+    --topic-drafting: #7a4fe0; --topic-drafting-soft: #efeafd; --topic-drafting-ink: #5a32b0;
+    --topic-trauma: #d24d83; --topic-trauma-soft: #fce9f1; --topic-trauma-ink: #a83464;
+    --topic-foundations: #c8791b; --topic-foundations-soft: #fbf0dc; --topic-foundations-ink: #8a5512;
+    --status-progress: #179a72; --status-progress-soft: #e2f4ed; --status-progress-ink: #0f6e52;
+    --status-next: #2a5bff; --status-next-soft: #eaf0ff; --status-next-ink: #1c3fb0;
+    --status-done: #64748b; --status-done-soft: #eef0f4; --status-done-ink: #475569;
+    --status-new: #c8791b; --status-new-soft: #fbf0dc; --status-new-ink: #8a5512;
+    --status-updated: #3a8ec9; --status-updated-soft: #e7f3fb; --status-updated-ink: #2b6c99;
+    --status-changed: #c8493b; --status-changed-soft: #fbe9e6; --status-changed-ink: #9a3528;
+    --status-later: #8b909d; --status-later-soft: #eef0f4; --status-later-ink: #5e6472;
+    --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink);
+    --font: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'Geist', system-ui, sans-serif;
+    --font-mono: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --radius-card: 14px; --radius-control: 10px;
+    --shadow-soft: 0 1px 2px rgba(20, 22, 27, 0.04), 0 6px 18px rgba(20, 22, 27, 0.06);
+    --shadow-lift: 0 1px 2px rgba(20, 22, 27, 0.05), 0 14px 34px rgba(20, 22, 27, 0.10);
+    --shadow-card: 0 1px 2px rgba(20, 22, 27, 0.04), 0 4px 12px rgba(20, 22, 27, 0.05);
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #15171c; --paper: #1c1f26; --surface: #22262e;
+    --warm: #262a33; --ivory: #20242b; --chrome-bg: rgba(20, 22, 27, 0.82);
+    --ink: #f3f4f6; --ink-soft: #d9dce3; --muted: #a3a9b5; --muted-soft: #767d8b;
+    --hair: #2e333d; --hair-strong: #3a4049;
+    --brand: #e0992e; --brand-fill: #b8740f; --brand-tint: #3a2c10; --brand-ink: #e0992e;
+    --topic-court: #d06a4d; --topic-court-soft: #3a1f17; --topic-court-ink: #e8957a;
+    --topic-client: #1faf82; --topic-client-soft: #133029; --topic-client-ink: #5fc9a8;
+    --topic-ethics: #7480e0; --topic-ethics-soft: #1f2340; --topic-ethics-ink: #9aa3ec;
+    --topic-research: #5aa6db; --topic-research-soft: #14283a; --topic-research-ink: #7cc0ec;
+    --topic-drafting: #9573e8; --topic-drafting-soft: #251a40; --topic-drafting-ink: #b49af0;
+    --topic-trauma: #df6e9b; --topic-trauma-soft: #3a1c2a; --topic-trauma-ink: #ef9bbd;
+    --topic-foundations: #e0992e; --topic-foundations-soft: #3a2c10; --topic-foundations-ink: #e0992e;
+    --status-progress: #1faf82; --status-progress-soft: #133029; --status-progress-ink: #5fc9a8;
+    --status-next: #c08319; --status-next-soft: #3a2c10; --status-next-ink: #e0992e;
+    --status-done: #7c889b; --status-done-soft: #262a33; --status-done-ink: #aab4c4;
+    --status-new: #e0992e; --status-new-soft: #3a2c10; --status-new-ink: #e0992e;
+    --status-updated: #5aa6db; --status-updated-soft: #14283a; --status-updated-ink: #7cc0ec;
+    --status-changed: #db5d4e; --status-changed-soft: #3a1c18; --status-changed-ink: #ec8275;
+    --status-later: #9aa0ad; --status-later-soft: #262a33; --status-later-ink: #9aa0ad;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--font); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--brand-tint); }
+  :focus-visible { outline: 2px solid var(--brand-fill); outline-offset: 2px; border-radius: 4px; }
+
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand); }
+  .eyebrow-muted { color: var(--muted-soft); font-weight: 600; }
+  .display { font-family: var(--font-display); font-weight: 720; letter-spacing: -0.035em; line-height: 1.04; color: var(--ink); }
+
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 7px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1.3; white-space: nowrap; }
+  .pill-accent { color: var(--accent-ink); background: var(--accent-soft); }
+  .pill-later { color: var(--status-later-ink); background: var(--status-later-soft); }
+
+  .wrap-chrome { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 14px; height: 58px; padding: 0 22px; background: var(--chrome-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--hair); }
+  .chrome-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+  .chrome-mark { display: flex; align-items: center; gap: 9px; flex-shrink: 0; padding-right: 2px; }
+  .chrome-mark .mk-badge { width: 28px; height: 28px; border-radius: 7px; background: var(--ink); display: grid; place-items: center; flex-shrink: 0; }
+  .chrome-mark .mk-name { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  [data-theme="dark"] .chrome-mark .mk-badge { background: var(--brand-fill); }
+  .crumb-sep { color: var(--muted-soft); font-size: 13px; flex-shrink: 0; }
+  .crumb-current { font-weight: 650; font-size: 14px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; min-width: 0; flex-shrink: 1; }
+
+  .page { min-height: 100vh; background: var(--bg); }
+  .page-body { max-width: 760px; margin: 0 auto; padding: 46px 28px 72px; }
+
+  .rule-box { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius-card); box-shadow: var(--shadow-card); padding: 22px 24px; }
+  .step-card { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 30px 30px 26px; display: flex; flex-direction: column; }
+
+  .callout { margin: 20px 0; padding: 16px 18px 16px 20px; background: var(--brand-tint); border-left: 4px solid var(--brand-fill); border-radius: 0 12px 12px 0; }
+  .callout-sage { background: var(--status-progress-soft); border-left-color: var(--status-progress); }
+  .callout-rust { background: var(--status-changed-soft); border-left-color: var(--status-changed); }
+  .callout-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand); margin: 0; }
+  .callout-sage .callout-title { color: var(--status-progress-ink); }
+  .callout-rust .callout-title { color: var(--status-changed-ink); }
+  .callout-body { margin: 6px 0 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); }
+
+  .stylized-quote { padding: 4px 0 4px 22px; border-left: 3px solid var(--brand-fill); font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); }
+  .quote-author { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted-soft); }
+
+  .accordion-container { display: flex; flex-direction: column; gap: 8px; }
+  .accordion-item { border: 1px solid var(--hair); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-card); overflow: hidden; }
+  .accordion-header { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: transparent; border: 0; cursor: pointer; font-family: var(--font); font-size: 15px; font-weight: 650; color: var(--ink); text-align: left; }
+  .accordion-item.active .accordion-header { color: var(--brand); background: var(--brand-tint); }
+  .accordion-chevron { color: var(--brand-fill); transition: transform 0.22s; font-size: 12px; }
+  .accordion-item.active .accordion-chevron { transform: rotate(180deg); }
+  .accordion-body { padding: 2px 16px 16px; font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
+
+  .tabs-container { }
+  .tab-buttons { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tab-btn { padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 700; border: 1px solid var(--hair); background: var(--paper); color: var(--muted); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .tab-btn.active { border-color: var(--brand-fill); background: var(--brand-tint); color: var(--brand); }
+  .tab-panel { border: 1px solid var(--hair); border-radius: 12px; background: var(--warm); padding: 18px; min-height: 96px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto; } }
+
+  /* ── Handbook-specific additions — new content, but every value still comes
+     from the tokens above, so nothing here forks the palette. ── */
+  .handbook-wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .handbook-code {
+    margin: 0; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.65; color: var(--ink);
+    background: var(--warm); border: 1px solid var(--hair); border-radius: var(--radius-card);
+    padding: 14px 16px; white-space: pre-wrap; overflow: auto;
+  }
+  .callout-accent { background: var(--accent-soft); border-left-color: var(--accent); }
+  .callout-accent .callout-title { color: var(--accent-ink); }
+  .handbook-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .handbook-dot.on { background: var(--brand-fill); }
+  .handbook-dot.off { border: 1px solid var(--hair-strong); }
+</style>
+</helmet>
+<div class="page">
+
+  <!-- ── TOP BAR — same chrome look as a course topic, no prev/next since this
+       isn't a step in a course sequence. ── -->
+  <nav class="wrap-chrome">
+    <div class="chrome-left">
+      <span class="chrome-mark">
+        <span class="mk-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 8 4 15a3 3 0 0 0 6 0z"/><path d="M17 8l-3 7a3 3 0 0 0 6 0z"/></svg></span>
+        <span class="mk-name">LACE</span>
+      </span>
+      <span class="crumb-sep">/</span>
+      <span class="crumb-current">Faculty Handbook · Interactive Elements</span>
+    </div>
+  </nav>
+
+  <main class="handbook-wrap" style="padding-top:46px; padding-bottom:72px;">
+
+    <!-- ── INTRO ── -->
+    <header style="padding-top:12px;">
+      <p class="eyebrow">Faculty content handbook</p>
+      <h1 class="display" style="font-size:clamp(30px,4vw,42px); margin:12px 0 0;">Interactive Elements</h1>
+      <p style="margin:18px 0 0; font-size:16.5px; line-height:1.6; color:var(--muted); max-width:72ch;">This handbook helps you recommend interactive elements while you draft or revise course content. You do not build anything in Brightspace yourself — you decide what a section needs, note it in your draft, and hand it to the LACE builder.</p>
+      <p style="margin:14px 0 0; font-size:16.5px; line-height:1.6; color:var(--muted); max-width:72ch;">Use it in this order: decide whether a section should be interactive at all, choose the element that fits the learning purpose, then copy its handoff template into your draft.</p>
+
+      <div class="rule-box" style="margin-top:22px; max-width:72ch;">
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">How a request looks</p>
+        <p style="margin:0 0 12px; font-size:15px; line-height:1.55; color:var(--muted);">Write your content in plain language, then mark where an element belongs with a bracket tag. No HTML, no Brightspace steps.</p>
+        <code class="pill pill-accent" style="font-size:12.5px; padding:7px 11px;">[ACCORDION: What if the client missed the answer deadline?]</code>
+      </div>
+    </header>
+
+    <!-- ── CONTENTS ── -->
+    <nav aria-label="Contents" style="margin-top:26px;">
+      <div class="rule-box">
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 14px;">On this page</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px 30px;">
+          <div>
+            <p class="eyebrow" style="margin:0 0 8px;">Deciding</p>
+            <a href="#s-decide" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Should this be interactive?</a>
+            <a href="#s-chooser" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Quick chooser</a>
+            <a href="#s-tags" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">How to tag content</a>
+          </div>
+          <div>
+            <p class="eyebrow" style="margin:0 0 8px;">Available now</p>
+            <a href="#e-accordion" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Accordion</a>
+            <a href="#e-tabs" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Tabs</a>
+            <a href="#e-callouts" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Callouts</a>
+            <a href="#e-quotes" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Stylized quotes</a>
+          </div>
+          <div>
+            <p class="eyebrow" style="margin:0 0 8px;">Available now</p>
+            <a href="#e-flip" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Flip cards</a>
+            <a href="#e-sorting" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Sorting gallery</a>
+            <a href="#e-sequencing" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Sequencing</a>
+            <a href="#e-fillblank" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Fill in the blanks</a>
+            <a href="#e-dayone" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted);">Day One Experience</a>
+            <a href="#s-soon" style="display:block; padding:3px 0; font-size:14.5px; color:var(--muted-soft);">Coming soon</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ══ SHOULD THIS BE INTERACTIVE? ══ -->
+    <section style="margin-top:40px; padding-top:28px; border-top:1px solid var(--hair);">
+      <p class="eyebrow" style="margin:0 0 10px;">Step 1 · Deciding</p>
+      <h2 id="s-decide" class="display" style="font-size:clamp(22px,2.8vw,28px); margin:0 0 12px; scroll-margin-top:84px;">Should this be interactive?</h2>
+      <p style="font-size:15.5px; color:var(--muted); margin:0 0 24px; max-width:66ch;">Interactivity should earn its place. Before you add an element, check what you actually want the learner to do with the content.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+        <div style="border:1px solid color-mix(in srgb, var(--brand-fill) 30%, var(--hair)); border-radius:var(--radius-card); background:var(--brand-tint); padding:20px 22px;">
+          <p class="eyebrow" style="margin:0 0 12px;">Use an element when learners need to</p>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;">
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Compare two or more things</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Recall a term or definition</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Sort examples into categories</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Sequence steps in order</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Check their own understanding</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Notice an important exception</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--ink);"><span style="color:var(--brand-fill); font-weight:700;">+</span>Explore optional detail</li>
+          </ul>
+        </div>
+        <div class="rule-box">
+          <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Use plain text when learners simply need to</p>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;">
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--muted);"><span style="color:var(--muted-soft); font-weight:700;">–</span>Read a required explanation</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--muted);"><span style="color:var(--muted-soft); font-weight:700;">–</span>Follow a short instruction</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--muted);"><span style="color:var(--muted-soft); font-weight:700;">–</span>Understand one main idea</li>
+            <li style="display:flex; gap:10px; font-size:15px; color:var(--muted);"><span style="color:var(--muted-soft); font-weight:700;">–</span>Move ahead without extra clicks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stylized-quote" style="margin-top:16px;">Not every page needs an interactive element. If the content is already clear, plain text may be the strongest choice.</div>
+    </section>
+
+    <!-- ══ QUICK CHOOSER ══ -->
+    <section style="margin-top:40px; padding-top:28px; border-top:1px solid var(--hair);">
+      <p class="eyebrow" style="margin:0 0 10px;">Step 2 · Choosing</p>
+      <h2 id="s-chooser" class="display" style="font-size:clamp(22px,2.8vw,28px); margin:0 0 12px; scroll-margin-top:84px;">Quick chooser</h2>
+      <p style="font-size:15.5px; color:var(--muted); margin:0 0 22px; max-width:66ch;">Match what the content needs to do to the element that does it. Full details for each are in the reference below.</p>
+
+      <div style="border:1px solid var(--hair); border-radius:var(--radius-card); overflow:hidden; background:var(--surface); box-shadow:var(--shadow-card);">
+        <div style="display:grid; grid-template-columns:1.6fr 1fr auto; gap:14px; padding:12px 20px; background:var(--warm); border-bottom:1px solid var(--hair);" class="eyebrow eyebrow-muted">
+          <span>If the content needs to…</span><span>Recommended element</span><span>Tag</span>
+        </div>
+        <sc-for list="{{ chooserRows }}" as="row" hint-placeholder-count="9">
+          <div style="{{ row.rowStyle }}">
+            <span style="font-size:14.5px; color:var(--ink);">{{ row.need }}</span>
+            <a href="{{ row.href }}" style="font-size:14.5px; font-weight:700; color:var(--muted);">{{ row.element }}</a>
+            <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="justify-self:start; white-space:nowrap;">{{ row.tag }}</code></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- ══ HOW TO TAG ══ -->
+    <section style="margin-top:40px; padding-top:28px; border-top:1px solid var(--hair);">
+      <p class="eyebrow" style="margin:0 0 10px;">Step 3 · Requesting</p>
+      <h2 id="s-tags" class="display" style="font-size:clamp(22px,2.8vw,28px); margin:0 0 12px; scroll-margin-top:84px;">How to tag content</h2>
+      <p style="font-size:15.5px; color:var(--muted); margin:0 0 20px; max-width:66ch;">In your draft, mark where you want an element by writing its bracket tag right in the text, followed by the content the builder should place there. Each element below includes a handoff template you can copy.</p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:9px; margin-bottom:18px;">
+        <code class="pill pill-accent">[ACCORDION]</code>
+        <code class="pill pill-accent">[TABS]</code>
+        <code class="pill pill-accent">[CALLOUT]</code>
+        <code class="pill pill-accent">[QUOTE]</code>
+        <code class="pill pill-accent">[FLIPCARDS]</code>
+        <code class="pill pill-accent">[SORTING]</code>
+        <code class="pill pill-accent">[SEQUENCE]</code>
+        <code class="pill pill-accent">[FILLBLANK]</code>
+        <code class="pill pill-accent">[DAY ONE]</code>
+      </div>
+
+      <div class="callout" style="max-width:72ch;">
+        <p style="margin:0; font-size:14.5px; color:var(--ink-soft);">Tags are recommendations, not final build requirements. If another format fits the content better, the builder may adjust the element — so focus on the learning purpose, and let the tag express your intent.</p>
+      </div>
+    </section>
+
+    <!-- ══ ELEMENT REFERENCE HEADER ══ -->
+    <section style="margin-top:46px; padding-top:28px; border-top:1px solid var(--hair);">
+      <p class="eyebrow" style="margin:0 0 10px;">Reference</p>
+      <h2 class="display" style="font-size:clamp(22px,2.8vw,28px); margin:0 0 12px;">Element reference</h2>
+      <p style="font-size:15.5px; color:var(--muted); margin:0; max-width:66ch;">Each element below follows the same layout: what it does, when to reach for it, when to avoid it, what you provide, how much planning it takes, a live example, and a handoff template to copy.</p>
+    </section>
+
+    <!-- ══ AVAILABLE NOW: LAYOUT & EMPHASIS ══ -->
+    <section style="margin-top:20px;">
+      <div style="display:flex; align-items:center; gap:14px; margin:16px 0 22px;">
+        <span class="eyebrow" style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap;"><span style="width:8px; height:8px; border-radius:50%; background:var(--brand-fill);"></span>Available now · Layout &amp; emphasis</span>
+        <span style="height:1px; flex:1; background:var(--hair);"></span>
+      </div>
+
+      <!-- ACCORDION -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-accordion" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Accordion</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Stacked headers that expand on click, so optional or supporting detail stays available without crowding the page.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[ACCORDION]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">FAQs, optional details, supporting definitions, or extra examples.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The information is required or must be read in order.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">A heading or question for each item, plus the answer text.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot off"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Low</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · try it</p>
+        <div class="accordion-container">
+          <div class="accordion-item{{ acc0active }}">
+            <div class="accordion-header" onClick="{{ onAcc0 }}"><span>What if the client missed the answer deadline?</span><span class="accordion-chevron">{{ accChev0 }}</span></div>
+            <sc-if value="{{ acc0open }}" hint-placeholder-val="{{ false }}"><div class="accordion-body">Move quickly: a late answer can often still be filed, but the risk of a default judgment rises by the day. Confirm the court's practice, prepare a motion to remove any default, and document the reason for the delay.</div></sc-if>
+          </div>
+          <div class="accordion-item{{ acc1active }}">
+            <div class="accordion-header" onClick="{{ onAcc1 }}"><span>Which deadlines are calendar days vs. court days?</span><span class="accordion-chevron">{{ accChev1 }}</span></div>
+            <sc-if value="{{ acc1open }}" hint-placeholder-val="{{ false }}"><div class="accordion-body">Always confirm before advising. Some clocks run on calendar days including weekends and holidays; others count only business or court days. When in doubt, calculate both and act on the earlier date.</div></sc-if>
+          </div>
+          <div class="accordion-item{{ acc2active }}">
+            <div class="accordion-header" onClick="{{ onAcc2 }}"><span>Optional reading: the history of summary process</span><span class="accordion-chevron">{{ accChev2 }}</span></div>
+            <sc-if value="{{ acc2open }}" hint-placeholder-val="{{ false }}"><div class="accordion-body">Summary process was designed as a fast, streamlined court procedure. Understanding why it moves quickly helps advocates anticipate the compressed timeline their clients face — tuck background like this into an accordion so it's there for the curious without overwhelming everyone.</div></sc-if>
+          </div>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[ACCORDION: What if the client missed the answer deadline?]
+Explain the options, risks, and next steps here.
+[/ACCORDION]</pre></div></sc-if>
+      </article>
+
+      <!-- TABS -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-tabs" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Tabs</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Switch between related content in place — ideal for comparing two or more options, such as notice types or procedural stages.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[TABS]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Side-by-side comparisons: 14-day vs. 30-day notice, before court vs. day of court.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Learners need to see everything at once, or the items don't really compare.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">A short label and the content for each tab.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot off"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Low</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · try it</p>
+        <div class="tabs-container">
+          <div class="tab-buttons">
+            <button type="button" class="tab-btn{{ tabH0active }}" onClick="{{ onTabH0 }}">14-day notice</button>
+            <button type="button" class="tab-btn{{ tabH1active }}" onClick="{{ onTabH1 }}">30-day notice</button>
+          </div>
+          <sc-if value="{{ tabH0on }}" hint-placeholder-val="{{ true }}"><div class="tab-panel active"><p style="margin:0 0 6px; font-weight:700; color:var(--ink);">Nonpayment of rent</p><p style="margin:0; font-size:15px; color:var(--muted);">Used when the tenant is behind on rent. The 14-day clock starts when proper notice is served — and the tenant may have a right to cure by paying what's owed.</p></div></sc-if>
+          <sc-if value="{{ tabH1on }}" hint-placeholder-val="{{ false }}"><div class="tab-panel active"><p style="margin:0 0 6px; font-weight:700; color:var(--ink);">No-fault termination</p><p style="margin:0; font-size:15px; color:var(--muted);">Used to end a tenancy at will without alleging fault. The 30-day (or full rental-period) notice must be timed correctly — errors in timing are a common, winnable defense.</p></div></sc-if>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[TABS: Compare notice types]
+[TAB: 14-day notice] Use for nonpayment cases.
+[TAB: 30-day notice] Use for no-fault termination.
+[/TABS]</pre></div></sc-if>
+      </article>
+
+      <!-- CALLOUTS -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-callouts" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Callouts</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Lift a deadline, warning, exception, or practice tip out of the flow so it can't be missed. Four tones to match the message.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[CALLOUT]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Deadlines, warnings, exceptions, reminders, key rules, and practice tips.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">It's ordinary body text. Overusing callouts weakens the ones that matter.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The tone (warning, tip, key rule, or deadline) and one or two sentences.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot off"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Low</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · four tones</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;">
+          <div class="callout callout-rust" style="margin:0;">
+            <p class="callout-title">⚠ Warning</p>
+            <p class="callout-body">Never advise a client to ignore a court date. A missed hearing can result in an immediate default.</p>
+          </div>
+          <div class="callout callout-sage" style="margin:0;">
+            <p class="callout-title">✎ Practice tip</p>
+            <p class="callout-body">Bring two copies of every document to court — one for the clerk, one for the client's file.</p>
+          </div>
+          <div class="callout callout-accent" style="margin:0;">
+            <p class="callout-title">§ Key rule</p>
+            <p class="callout-body">Service must be complete and proper before the case can proceed. Defects in service are a real defense.</p>
+          </div>
+          <div class="callout callout-rust" style="margin:0;">
+            <p class="callout-title">⏱ Deadline</p>
+            <p class="callout-body">The answer is generally due the Monday before the hearing date. Calculate it the moment you get the case.</p>
+          </div>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[CALLOUT DEADLINE: The answer is generally due the Monday before the hearing date.]
+
+Tones: [CALLOUT WARNING] · [CALLOUT TIP] · [CALLOUT KEY RULE] · [CALLOUT DEADLINE]</pre></div></sc-if>
+      </article>
+
+      <!-- QUOTES -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-quotes" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Stylized quotes</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Give short expert language, a guiding principle, or a client-centered reminder visual weight.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[QUOTE]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Short expert language, guiding principles, statutes, or client-centered reminders.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The passage is long, or the content is a required procedural step.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The quote text and its source or attribution.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot off"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Low</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 4px;">Example</p>
+        <figure style="margin:16px 0 0;">
+          <blockquote class="stylized-quote" style="margin:0; max-width:40ch;">The purpose of the interview is not only to collect facts, but to identify the client's goal.</blockquote>
+          <figcaption class="quote-author">— Advocacy handbook, intake chapter</figcaption>
+        </figure>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:24px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[QUOTE: "The purpose of the interview is not only to collect facts, but to identify the client's goal." — Advocacy handbook]</pre></div></sc-if>
+      </article>
+    </section>
+
+    <!-- ══ AVAILABLE NOW: ACTIVE RECALL ══ -->
+    <section style="margin-top:14px;">
+      <div style="display:flex; align-items:center; gap:14px; margin:20px 0 22px;">
+        <span class="eyebrow" style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap;"><span style="width:8px; height:8px; border-radius:50%; background:var(--brand-fill);"></span>Available now · Active recall</span>
+        <span style="height:1px; flex:1; background:var(--hair);"></span>
+      </div>
+
+      <!-- FLIP CARDS -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-flip" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Flip cards</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Digital flashcards for quick recall — see the term, guess the meaning, then click to check.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[FLIPCARDS]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Quick recall of terms, definitions, or concepts — e.g. notice to quit, summary process, the answer.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The explanation is long or the rule is complicated.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">A term for the front and a short definition for the back of each card.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot on"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Medium</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · click a card to flip →</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px;">
+          <div onClick="{{ onFlip0 }}" style="perspective:1200px; height:186px; cursor:pointer;">
+            <div style="position:relative; width:100%; height:100%; transition:transform .55s cubic-bezier(.2,.8,.2,1); transform-style:preserve-3d; transform:{{ flip0 }}">
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:1px solid var(--hair); border-radius:var(--radius-card); background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span class="display" style="font-size:20px;">Notice to quit</span>
+                <span class="eyebrow eyebrow-muted" style="margin-top:14px;">Flip</span>
+              </div>
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateY(180deg); border:1px solid color-mix(in srgb, var(--brand-fill) 34%, transparent); border-radius:var(--radius-card); background:var(--brand-tint); display:flex; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span style="font-size:14.5px; line-height:1.5; color:var(--ink);">A written notice that ends the tenancy and starts the clock for the next step.</span>
+              </div>
+            </div>
+          </div>
+          <div onClick="{{ onFlip1 }}" style="perspective:1200px; height:186px; cursor:pointer;">
+            <div style="position:relative; width:100%; height:100%; transition:transform .55s cubic-bezier(.2,.8,.2,1); transform-style:preserve-3d; transform:{{ flip1 }}">
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:1px solid var(--hair); border-radius:var(--radius-card); background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span class="display" style="font-size:20px;">Summary process</span>
+                <span class="eyebrow eyebrow-muted" style="margin-top:14px;">Flip</span>
+              </div>
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateY(180deg); border:1px solid color-mix(in srgb, var(--brand-fill) 34%, transparent); border-radius:var(--radius-card); background:var(--brand-tint); display:flex; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span style="font-size:14.5px; line-height:1.5; color:var(--ink);">The formal court procedure used to evict a tenant in Massachusetts.</span>
+              </div>
+            </div>
+          </div>
+          <div onClick="{{ onFlip2 }}" style="perspective:1200px; height:186px; cursor:pointer;">
+            <div style="position:relative; width:100%; height:100%; transition:transform .55s cubic-bezier(.2,.8,.2,1); transform-style:preserve-3d; transform:{{ flip2 }}">
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:1px solid var(--hair); border-radius:var(--radius-card); background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span class="display" style="font-size:20px;">The answer</span>
+                <span class="eyebrow eyebrow-muted" style="margin-top:14px;">Flip</span>
+              </div>
+              <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateY(180deg); border:1px solid color-mix(in srgb, var(--brand-fill) 34%, transparent); border-radius:var(--radius-card); background:var(--brand-tint); display:flex; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <span style="font-size:14.5px; line-height:1.5; color:var(--ink);">The tenant's written response to the complaint, raising any defenses.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[FLIPCARDS]
+Notice to quit :: A written notice that ends the tenancy and starts the clock.
+Summary process :: The formal court procedure used to evict a tenant.
+[/FLIPCARDS]</pre></div></sc-if>
+      </article>
+
+      <!-- SORTING GALLERY -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-sorting" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Sorting gallery</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Learners classify examples into categories. Tap each scenario to file it under the right notice type.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[SORTING]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Categorizing examples — e.g. proper notice / defective notice / needs review.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">There is no clearly correct category for each item.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The category names and each item paired with its correct category.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot on"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Medium</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · tap to sort</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin:0 0 14px;" class="eyebrow eyebrow-muted">
+          <span style="display:inline-flex; align-items:center; gap:7px;"><span style="width:11px; height:11px; border-radius:3px; background:var(--brand-tint); border:1px solid color-mix(in srgb, var(--brand-fill) 34%, transparent);"></span>14-day (nonpayment)</span>
+          <span style="display:inline-flex; align-items:center; gap:7px;"><span style="width:11px; height:11px; border-radius:3px; background:var(--status-updated-soft); border:1px solid color-mix(in srgb, var(--status-updated) 40%, transparent);"></span>30-day (no-fault)</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;">
+          <sc-for list="{{ sortItems }}" as="item" hint-placeholder-count="4">
+            <div onClick="{{ item.onClick }}" style="{{ item.chipStyle }}"><span>{{ item.label }}</span><span style="font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; opacity:.8;">{{ item.tag }}</span></div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ sortSolved }}" hint-placeholder-val="{{ false }}"><p style="margin:16px 0 0; font-size:14px; font-weight:700; color:var(--status-progress-ink);">✓ All sorted correctly — nicely done.</p></sc-if>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[SORTING: File each scenario under the right notice]
+Categories: 14-day (nonpayment) | 30-day (no-fault)
+Tenant is behind on rent -> 14-day
+Lease ended, owner move-in -> 30-day
+[/SORTING]</pre></div></sc-if>
+      </article>
+
+      <!-- SEQUENCING -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-sequencing" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Sequencing</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Learners put steps in the right order. Best for procedures that must run in a fixed sequence.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[SEQUENCE]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Steps that must happen in order — confirm deadline, check service, save copy, review form.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The steps can reasonably happen in more than one order.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The steps written out in their correct order.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot on"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Medium</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 12px;">Example · order the steps before filing an answer</p>
+        <div style="display:flex; flex-direction:column; gap:9px;">
+          <sc-for list="{{ seqItems }}" as="item" hint-placeholder-count="4">
+            <div style="{{ item.rowStyle }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:var(--brand); width:22px; flex-shrink:0;">{{ item.num }}</span>
+              <span style="flex:1; font-size:15px; color:var(--ink);">{{ item.label }}</span>
+              <span style="{{ item.tick }}">✓</span>
+              <span style="display:flex; flex-direction:column; gap:3px;">
+                <button type="button" onClick="{{ item.up }}" style="cursor:pointer; width:26px; height:20px; border-radius:6px; border:1px solid var(--hair); background:var(--paper); color:var(--muted); font-size:11px; line-height:1; padding:0;">▲</button>
+                <button type="button" onClick="{{ item.down }}" style="cursor:pointer; width:26px; height:20px; border-radius:6px; border:1px solid var(--hair); background:var(--paper); color:var(--muted); font-size:11px; line-height:1; padding:0;">▼</button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ seqSolved }}" hint-placeholder-val="{{ false }}"><p style="margin:16px 0 0; font-size:14px; font-weight:700; color:var(--status-progress-ink);">✓ Correct order — that's the workflow.</p></sc-if>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[SEQUENCE: Steps before filing an answer]
+1. Confirm the filing deadline
+2. Review the required form
+3. Check whether service is complete
+4. Save a copy for the client file
+[/SEQUENCE]</pre></div></sc-if>
+      </article>
+
+      <!-- FILL IN THE BLANKS -->
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:52ch;">
+            <h3 id="e-fillblank" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Fill in the blanks</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">Learners complete a sentence from memory — a low-stakes check on a key term or exact wording.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[FILLBLANK]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0; padding:18px 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Key terms, phrases, or a short recall check on exact wording.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">Several answers could reasonably be correct — unless you list the accepted alternatives.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The sentence with blanks marked, plus the accepted answer(s).</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot on"></span><span class="handbook-dot off"></span></span><span style="font-size:14px; color:var(--muted);">Medium</span></span></div>
+        </div>
+
+        <p class="eyebrow eyebrow-muted" style="margin:0 0 4px;">Example · type your answers</p>
+        <div style="margin-top:14px; font-size:18px; line-height:2.2; color:var(--ink);">
+          A notice to quit usually states the
+          <input type="text" value="{{ b1 }}" onInput="{{ onB1 }}" placeholder="? ? ?" style="{{ blank1Style }}"/>
+          for termination and the
+          <input type="text" value="{{ b2 }}" onInput="{{ onB2 }}" placeholder="? ? ?" style="{{ blank2Style }}"/>
+          for the next step.
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:22px; flex-wrap:wrap;">
+          <button type="button" onClick="{{ onCheck }}" style="cursor:pointer; padding:10px 20px; border-radius:999px; border:1px solid var(--ink); background:var(--ink); color:var(--paper); font-family:var(--font); font-weight:700; font-size:14px;">Check answer</button>
+          <button type="button" onClick="{{ onReset }}" style="cursor:pointer; padding:10px 18px; border-radius:999px; border:1px solid var(--hair); background:transparent; color:var(--muted); font-family:var(--font); font-weight:700; font-size:14px;">Reset</button>
+          <sc-if value="{{ blanksAllRight }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px; font-weight:700; color:var(--status-progress-ink);">✓ Exactly right — reason &amp; timeline.</span></sc-if>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:24px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[FILLBLANK: A notice to quit usually states the ___ for termination and the ___ for the next step.]
+Answers: reason ; timeline (accept: deadline)
+[/FILLBLANK]</pre></div></sc-if>
+      </article>
+    </section>
+
+    <!-- ══ AVAILABLE NOW: FULL-PAGE ══ -->
+    <section style="margin-top:14px;">
+      <div style="display:flex; align-items:center; gap:14px; margin:20px 0 22px;">
+        <span class="eyebrow" style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap;"><span style="width:8px; height:8px; border-radius:50%; background:var(--brand-fill);"></span>Available now · Full-page</span>
+        <span style="height:1px; flex:1; background:var(--hair);"></span>
+      </div>
+      <article class="step-card" style="margin-bottom:26px; min-height:0;">
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px;">
+          <div style="max-width:56ch;">
+            <h3 id="e-dayone" class="display" style="font-size:clamp(24px,3vw,30px); margin:0 0 8px; scroll-margin-top:84px;">Day One Experience</h3>
+            <p style="margin:0; font-size:16px; color:var(--muted);">A full-page course or module opener that sets expectations, explains how to proceed, and orients learners before they begin.</p>
+          </div>
+          <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><code class="pill pill-accent" style="white-space:nowrap;">[DAY ONE]</code></sc-if>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px 28px; margin:20px 0 0; padding:18px 0 0; border-top:1px solid var(--hair);">
+          <div><p class="eyebrow" style="margin:0 0 6px;">Best for</p><p style="margin:0; font-size:14.5px; color:var(--muted);">The beginning of a course or module, to set expectations and orient learners.</p></div>
+          <div><p class="eyebrow" style="margin:0 0 6px; color:var(--status-changed-ink);">Avoid when</p><p style="margin:0; font-size:14.5px; color:var(--muted);">It's normal lesson content in the middle of a module.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Faculty provides</p><p style="margin:0; font-size:14.5px; color:var(--muted);">A welcome message, what to expect, how to proceed, and the first step.</p></div>
+          <div><p class="eyebrow eyebrow-muted" style="margin:0 0 6px;">Effort</p><span style="display:inline-flex; align-items:center; gap:9px;"><span style="display:inline-flex; gap:4px; align-items:center;"><span class="handbook-dot on"></span><span class="handbook-dot on"></span><span class="handbook-dot on"></span></span><span style="font-size:14px; color:var(--muted);">High</span></span></div>
+        </div>
+
+        <sc-if value="{{ tagsOn }}" hint-placeholder-val="{{ true }}"><div style="margin-top:22px;"><p class="eyebrow eyebrow-muted" style="margin:0 0 10px;">Handoff template</p><pre class="handbook-code">[DAY ONE]
+Welcome: One or two sentences that greet the learner.
+What to expect: Length, topics, any required activities.
+How to proceed: Where to start and what to do first.
+[/DAY ONE]</pre></div></sc-if>
+      </article>
+    </section>
+
+    <!-- ══ COMING SOON ══ -->
+    <sc-if value="{{ roadmapOn }}" hint-placeholder-val="{{ true }}">
+    <section style="margin-top:14px;">
+      <div style="display:flex; align-items:center; gap:14px; margin:30px 0 22px;">
+        <span class="eyebrow eyebrow-muted" style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap;"><span style="width:8px; height:8px; border-radius:50%; border:1px solid var(--muted-soft);"></span>Coming soon</span>
+        <span style="height:1px; flex:1; background:var(--hair);"></span>
+      </div>
+      <p id="s-soon" style="font-size:15px; color:var(--muted); margin:0 0 18px; max-width:66ch; scroll-margin-top:84px;">These elements are not yet available for faculty requests. You can note interest, but please don't tag them in a draft you're submitting for build.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+        <div style="border:1px dashed var(--hair-strong); border-radius:var(--radius-card); padding:22px; background:transparent;">
+          <span class="pill pill-later">Not yet available</span>
+          <h4 class="display" style="font-size:19px; margin:12px 0 8px; color:var(--muted);">Image hotspots</h4>
+          <p style="margin:0 0 12px; font-size:14.5px; color:var(--muted);"><span style="font-weight:700; color:var(--ink-soft);">Possible future use:</span> click points on a form, notice, or diagram to reveal an explanation in context.</p>
+          <p class="eyebrow eyebrow-muted" style="margin:0;">Status: Coming soon — not yet available for faculty requests.</p>
+        </div>
+        <div style="border:1px dashed var(--hair-strong); border-radius:var(--radius-card); padding:22px; background:transparent;">
+          <span class="pill pill-later">Not yet available</span>
+          <h4 class="display" style="font-size:19px; margin:12px 0 8px; color:var(--muted);">Integrated video</h4>
+          <p style="margin:0 0 12px; font-size:14.5px; color:var(--muted);"><span style="font-weight:700; color:var(--ink-soft);">Possible future use:</span> captioned video woven into the page flow, with checkpoints along the way.</p>
+          <p class="eyebrow eyebrow-muted" style="margin:0;">Status: Coming soon — not yet available for faculty requests.</p>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ══ CLOSING ══ -->
+    <footer style="margin-top:40px; padding:22px 0 40px; border-top:1px solid var(--hair); display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <span style="font-size:14px; color:var(--muted); max-width:60ch;">As you draft, note each element with its tag and paste the matching handoff template. The LACE builder assembles them in Brightspace — and may adjust an element if another format fits the content better.</span>
+      <span class="chrome-mark">
+        <span class="mk-badge" style="width:24px; height:24px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 8 4 15a3 3 0 0 0 6 0z"/><path d="M17 8l-3 7a3 3 0 0 0 6 0z"/></svg></span>
+        <span class="mk-name" style="font-size:16px;">LACE</span>
+        <span class="eyebrow eyebrow-muted">MLRI</span>
+      </span>
+    </footer>
+
+  </main>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1200, &quot;height&quot;: 900 },
+  &quot;showTags&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Look&quot; },
+  &quot;showRoadmap&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Content&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    acc: -1,
+    tabH: 0,
+    flips: [false, false, false],
+    seq: [2, 0, 3, 1],
+    sortB: [null, null, null, null],
+    b1: "", b2: "", checked: false
+  };
+
+  SEQ = [
+    "Confirm the filing deadline",
+    "Review the required form",
+    "Check whether service is complete",
+    "Save a copy for the client file"
+  ];
+  SORT = [
+    { label: "Tenant is behind on rent", ans: "A" },
+    { label: "Lease ended, owner move-in", ans: "B" },
+    { label: "Nonpayment after a demand", ans: "A" },
+    { label: "No-fault termination, proper notice", ans: "B" }
+  ];
+  CHOOSER = [
+    { need: "FAQ or optional explanation", element: "Accordion", href: "#e-accordion", tag: "[ACCORDION]" },
+    { need: "Side-by-side comparison", element: "Tabs", href: "#e-tabs", tag: "[TABS]" },
+    { need: "Warning, deadline, exception, or practice tip", element: "Callout", href: "#e-callouts", tag: "[CALLOUT]" },
+    { need: "Short expert language or guiding principle", element: "Stylized quote", href: "#e-quotes", tag: "[QUOTE]" },
+    { need: "Definition or vocabulary recall", element: "Flip card", href: "#e-flip", tag: "[FLIPCARDS]" },
+    { need: "Categorizing examples", element: "Sorting gallery", href: "#e-sorting", tag: "[SORTING]" },
+    { need: "Ordered process", element: "Sequencing", href: "#e-sequencing", tag: "[SEQUENCE]" },
+    { need: "Key term or exact-wording check", element: "Fill in the blanks", href: "#e-fillblank", tag: "[FILLBLANK]" },
+    { need: "Course or module orientation", element: "Day One Experience", href: "#e-dayone", tag: "[DAY ONE]" }
+  ];
+
+  moveSeq(pos, dir) {
+    var np = pos + dir;
+    if (np < 0 || np >= this.state.seq.length) return;
+    var seq = this.state.seq.slice();
+    var t = seq[pos]; seq[pos] = seq[np]; seq[np] = t;
+    this.setState({ seq: seq });
+  }
+
+  cycleSort(i) {
+    var order = [null, "A", "B"];
+    var cur = this.state.sortB[i];
+    var next = order[(order.indexOf(cur) + 1) % 3];
+    var sb = this.state.sortB.slice(); sb[i] = next;
+    this.setState({ sortB: sb });
+  }
+
+  renderVals() {
+    var s = this.state;
+
+    var chooserRows = this.CHOOSER.map((r, idx) => {
+      return {
+        need: r.need, element: r.element, href: r.href, tag: r.tag,
+        rowStyle: {
+          display: "grid", gridTemplateColumns: "1.6fr 1fr auto", gap: "14px",
+          alignItems: "center", padding: "13px 20px",
+          borderTop: idx === 0 ? "none" : "1px solid var(--hair)"
+        }
+      };
+    });
+
+    var sortItems = this.SORT.map((it, idx) => {
+      var b = s.sortB[idx];
+      var base = {
+        cursor: "pointer", border: "1px solid var(--hair)", borderRadius: "12px",
+        padding: "13px 15px", fontSize: "14.5px", fontWeight: 600,
+        display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px",
+        transition: "all .15s", background: "var(--surface)", color: "var(--ink)"
+      };
+      var tag = "Tap to sort";
+      if (b === "A") { base.background = "var(--brand-tint)"; base.borderColor = "var(--brand-fill)"; base.color = "var(--brand)"; tag = "14-day"; }
+      if (b === "B") { base.background = "var(--status-updated-soft)"; base.borderColor = "var(--status-updated)"; base.color = "var(--status-updated-ink)"; tag = "30-day"; }
+      return { label: it.label, tag: tag, chipStyle: base, onClick: () => this.cycleSort(idx) };
+    });
+    var sortSolved = this.SORT.every((it, idx) => s.sortB[idx] === it.ans);
+
+    var seqItems = s.seq.map((val, pos) => {
+      var correct = val === pos;
+      return {
+        label: this.SEQ[val],
+        num: pos + 1,
+        rowStyle: {
+          display: "flex", alignItems: "center", gap: "12px",
+          padding: "12px 14px", borderRadius: "12px",
+          border: "1px solid " + (correct ? "var(--status-progress)" : "var(--hair)"),
+          background: correct ? "var(--status-progress-soft)" : "var(--warm)",
+          transition: "all .2s"
+        },
+        tick: {
+          fontSize: "13px", fontWeight: 700, color: "var(--status-progress)",
+          display: correct ? "inline" : "none"
+        },
+        up: () => this.moveSeq(pos, -1),
+        down: () => this.moveSeq(pos, 1)
+      };
+    });
+    var seqSolved = s.seq.every((v, i) => v === i);
+
+    var b1ok = s.checked && /reason/i.test(s.b1);
+    var b2ok = s.checked && /tim/i.test(s.b2);
+    var blankStyle = (ok) => ({
+      width: "8.5ch", margin: "0 4px", padding: "4px 8px", fontSize: "16px",
+      fontFamily: "var(--font-mono)", textAlign: "center",
+      border: "none", borderBottom: "2px solid " + (s.checked ? (ok ? "var(--status-progress)" : "var(--status-changed)") : "var(--brand-fill)"),
+      background: s.checked ? (ok ? "var(--status-progress-soft)" : "var(--status-changed-soft)") : "var(--brand-tint)",
+      borderRadius: "6px 6px 0 0", color: "var(--ink)"
+    });
+
+    return {
+      tagsOn: this.props.showTags !== false,
+      roadmapOn: this.props.showRoadmap !== false,
+
+      chooserRows: chooserRows,
+
+      acc0open: s.acc === 0, acc1open: s.acc === 1, acc2open: s.acc === 2,
+      acc0active: s.acc === 0 ? " active" : "", acc1active: s.acc === 1 ? " active" : "", acc2active: s.acc === 2 ? " active" : "",
+      accChev0: s.acc === 0 ? "−" : "+", accChev1: s.acc === 1 ? "−" : "+", accChev2: s.acc === 2 ? "−" : "+",
+      onAcc0: () => this.setState({ acc: s.acc === 0 ? -1 : 0 }),
+      onAcc1: () => this.setState({ acc: s.acc === 1 ? -1 : 1 }),
+      onAcc2: () => this.setState({ acc: s.acc === 2 ? -1 : 2 }),
+
+      tabH0active: s.tabH === 0 ? " active" : "", tabH1active: s.tabH === 1 ? " active" : "",
+      tabH0on: s.tabH === 0, tabH1on: s.tabH === 1,
+      onTabH0: () => this.setState({ tabH: 0 }), onTabH1: () => this.setState({ tabH: 1 }),
+
+      flip0: s.flips[0] ? "rotateY(180deg)" : "rotateY(0deg)",
+      flip1: s.flips[1] ? "rotateY(180deg)" : "rotateY(0deg)",
+      flip2: s.flips[2] ? "rotateY(180deg)" : "rotateY(0deg)",
+      onFlip0: () => { var f = s.flips.slice(); f[0] = !f[0]; this.setState({ flips: f }); },
+      onFlip1: () => { var f = s.flips.slice(); f[1] = !f[1]; this.setState({ flips: f }); },
+      onFlip2: () => { var f = s.flips.slice(); f[2] = !f[2]; this.setState({ flips: f }); },
+
+      sortItems: sortItems, sortSolved: sortSolved,
+      seqItems: seqItems, seqSolved: seqSolved,
+
+      b1: s.b1, b2: s.b2,
+      blank1Style: blankStyle(b1ok), blank2Style: blankStyle(b2ok),
+      blanksAllRight: b1ok && b2ok,
+      onB1: (e) => this.setState({ b1: e.target.value, checked: false }),
+      onB2: (e) => this.setState({ b2: e.target.value, checked: false }),
+      onCheck: () => this.setState({ checked: true }),
+      onReset: () => this.setState({ b1: "", b2: "", checked: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
