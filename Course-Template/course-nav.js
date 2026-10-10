@@ -385,6 +385,7 @@ document.addEventListener("DOMContentLoaded", function () {
           '<a href="' + hubHref("/") + '" target="_top">Home</a>' +
           (config.binder ? '<a href="' + binderInfo().contents + '" target="_top">' + esc(config.binder.name) + "</a>" : "") +
           '<a href="' + hubHref("/my-learning/") + '" target="_top">My learning</a>' +
+          '<a href="' + hubHref("/updates/") + '" target="_top">Updates</a>' +
           '<a href="' + hubHref("/search/") + '" target="_top">Search</a>' +
         "</nav>"
       : "";
@@ -604,10 +605,13 @@ document.addEventListener("DOMContentLoaded", function () {
     container.innerHTML =
       '<header class="hub-header">' +
         '<a class="hub-wordmark" href="' + hubHref("/") + '" target="_top">Learning Hub</a>' +
+        // The open binder beside the wordmark, as in the hub's header.
+        (b.name ? '<span class="hub-crumb-sep" aria-hidden="true">/</span>' +
+          '<a class="hub-binder-btn" href="' + b.contents + '" target="_top"><span class="hub-swatch" aria-hidden="true"></span>' + esc(b.name) + "</a>" : "") +
         '<nav class="hub-nav" aria-label="Learning Hub">' +
           '<a href="' + hubHref("/") + '" target="_top">Home</a>' +
-          (b.name ? '<a class="hub-binder-btn" href="' + b.contents + '" target="_top"><span class="hub-swatch" aria-hidden="true"></span>' + esc(b.name) + "</a>" : "") +
           '<a href="' + hubHref("/my-learning/") + '" target="_top">My learning</a>' +
+          '<a href="' + hubHref("/updates/") + '" target="_top">Updates</a>' +
         "</nav>" +
         '<a class="hub-search" href="' + hubHref("/search/") + '" target="_top" aria-label="Search">' + icon("search", 17) + '<span class="hub-search-label" aria-hidden="true">Search</span></a>' +
         themeToggleHtml() +
@@ -726,7 +730,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var nav = document.createElement("nav");
     nav.className = "lace-binder-tabs";
     nav.setAttribute("aria-label", b.name + " tabs");
-    var html = '<p class="lbt-name" aria-hidden="true"><span class="lbt-swatch"></span>' + esc(b.name) + "</p>";
+    var html = "";
     b.tabs.forEach(function (t) {
       var open = t.id === b.currentTab;
       html += '<a class="lbt-tab' + (open ? " lbt-open" : "") + '" href="' + hubHref(t.href) + '" target="_top"' +

@@ -11,7 +11,8 @@ feels like turning a page.
 | File | Role |
 | --- | --- |
 | `course-config.js` | **Single source of truth.** Course identity, modules, the topic list (slug, title, `kind`, `minutes`, links), plus `chromeMode` and `completeUrl`. |
-| `course-style.css` | The binder design system — tokens copied from the hub, chrome bar/rail, binder tabs, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Public Sans. |
+| `course-style.css` | The binder design system — tokens copied from the hub, chrome bar/rail, binder tabs, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Public Sans from `fonts/`. |
+| `fonts/` | Public Sans (SIL Open Font License), shipped with the course rather than loaded from Google Fonts so it works where outside fonts are blocked. **Upload it with the course**, or pages fall back to the system font. |
 | `course-nav.js` | Injects the chrome (slim **bar + drawer** or fixed **rail**, per `chromeMode`), Prev/Next, the **Read · Practice** toggle + step pager, tracks page-visit completion in `localStorage`, and runs the Try-it self-check. |
 | `course-beacon.js` | **Optional analytics, OFF by default** (`beacon.enabled` in config). Sends anonymous page-view / video-progress / session-heartbeat events to the LACE data layer — the in-course signals Brightspace can't see. No user identity, ever; failures never break the course. Enabled with an empty `endpoint`, it logs to the console (dev mode). |
 | `Home.html` | The **course outline** — lean hero, one progress-aware Continue card, course-coded topic rows (Done · In progress · Next up · Later). |
