@@ -28,10 +28,12 @@ window.COURSE_CONFIG = {
   // "local" = use `file` paths · "lms" = use Brightspace `url` paths
   deployMode: "lms",
 
-  // Chrome treatment: "bar" (slim top bar + drawer, max reading width) or
-  // "rail" (the hub's left rail carried into the course). A ?chrome= URL param
-  // overrides this — handy for the side-by-side preview.
-  chromeMode: "bar",
+  // Chrome treatment: "hub" (the course as a page of the Learning Hub: its
+  // header, breadcrumb and binder rule, the reading beside a practice card),
+  // "bar" (slim top bar + drawer) or "rail" (a left rail). Leave it out and a
+  // course filed in a `binder` gets "hub", any other "bar". A ?chrome= URL
+  // param overrides this, handy for comparing.
+  chromeMode: "hub",
 
   // Unique id — namespaces localStorage progress. Change it for every course.
   courseId: "eviction-defense-48h",
@@ -45,6 +47,9 @@ window.COURSE_CONFIG = {
   // Breadcrumb + chrome labels
   hubLabel: "Hub",
   courseArea: "Court Skills", // the practice area this course sits under
+  courseShortTitle: "Eviction defense course", // the course in the hub breadcrumb
+  // Shown beside each part's reading time, e.g. while content awaits review.
+  contentNote: "Prototype, not reviewed",
 
   // Topic family — sets the page accent colour (orientation signal). One of:
   // 'court' | 'client' | 'ethics' | 'research' | 'drafting' | 'trauma' |
@@ -137,6 +142,16 @@ window.COURSE_CONFIG = {
           kind: "Practice",
           minutes: 3,
           description: "How the notice got there matters as much as what it says.",
+          // Optional: the card that sends learners to practise in the hub. A
+          // built level lists its steps; "coming" says so and links somewhere
+          // that exists. Paths are on hubBaseUrl.
+          practice: {
+            status: "coming",
+            title: "Practise checking service",
+            text: "Practice for this part is being written in the hub.",
+            href: "/binder/litigation/pre-trial/",
+            linkText: "See Case Prep in the hub",
+          },
         },
         {
           slug: "drafting-answer",

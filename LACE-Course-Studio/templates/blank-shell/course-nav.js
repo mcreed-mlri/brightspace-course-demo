@@ -10,6 +10,11 @@
  *   chromeMode = "rail"  → the hub's left rail carried into the course; holds
  *                          the wordmark, the full outline, exit-to-hub and
  *                          prev/next. Collapses to a 72px icon strip.
+ *   chromeMode = "hub"   → the course as a page of the Learning Hub: the hub's
+ *                          header, its breadcrumb and binder rule, the reading
+ *                          beside a "Practise it in the hub" card and the list
+ *                          of parts. DEFAULT for a course filed in a binder.
+ *                          No Read · Practice toggle: practice is in the hub.
  *
  * Also injects the Read · Practice mode toggle on topic pages (article vs
  * one-section-per-screen), tracks page-visit completion in localStorage, fills
@@ -32,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ── Chrome mode: ?chrome= URL override → config → default "bar" ───────────
   var urlParams = new URLSearchParams(window.location.search);
-  var chromeMode = urlParams.get("chrome") || config.chromeMode || "bar";
-  if (chromeMode !== "rail") chromeMode = "bar";
+  var chromeMode = urlParams.get("chrome") || config.chromeMode || (config.binder ? "hub" : "bar");
+  if (chromeMode !== "rail" && chromeMode !== "hub") chromeMode = "bar";
   document.documentElement.setAttribute("data-chrome", chromeMode);
   // Rail starts collapsed if the URL says so (used by previews).
   if (chromeMode === "rail" && urlParams.get("rail") === "min") {
@@ -86,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
           slug: t.slug, title: t.title, url: resolveTopicUrl(t),
           kind: t.kind || "", minutes: t.minutes || 0, updated: t.updated || "",
           description: t.description || "", moduleId: mod.id, moduleTitle: mod.title,
+          practice: t.practice || null,
         });
       });
     });
@@ -127,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       play: '<path d="m8 5 11 7-11 7z"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
       moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
       sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     };
@@ -370,10 +377,21 @@ document.addEventListener("DOMContentLoaded", function () {
     drawer.className = "outline-drawer";
     drawer.id = "lace-drawer";
     drawer.setAttribute("role", "dialog");
-    drawer.setAttribute("aria-label", "Course outline");
+    drawer.setAttribute("aria-label", chromeMode === "hub" ? "Menu" : "Course outline");
+    // In the hub layout the drawer is the phone menu, so it leads with the
+    // hub's own places.
+    var hubLinks = chromeMode === "hub"
+      ? '<nav class="drawer-hub" aria-label="Learning Hub">' +
+          '<a href="' + hubHref("/") + '" target="_top">Home</a>' +
+          (config.binder ? '<a href="' + binderInfo().contents + '" target="_top">' + esc(config.binder.name) + "</a>" : "") +
+          '<a href="' + hubHref("/my-learning/") + '" target="_top">My learning</a>' +
+          '<a href="' + hubHref("/search/") + '" target="_top">Search</a>' +
+        "</nav>"
+      : "";
     drawer.innerHTML =
-      '<div class="drawer-head"><span class="eyebrow">Course outline</span>' +
+      '<div class="drawer-head"><span class="eyebrow">' + (chromeMode === "hub" ? "Menu" : "Course outline") + "</span>" +
         '<button class="drawer-close" id="lace-drawer-close" type="button" aria-label="Close outline">' + icon("close", 16) + "</button></div>" +
+      hubLinks +
       '<div class="drawer-title">' + esc(config.courseTitle) + "</div>" +
       '<div><div class="drawer-track"><div style="width:' + pct + '%"></div></div>' +
         '<div class="dt-meta" style="margin-top:6px;">' + done + " of " + total + " complete</div></div>" +
@@ -385,14 +403,32 @@ document.addEventListener("DOMContentLoaded", function () {
     return { drawer: drawer, scrim: scrim };
   }
   function wireDrawer(drawer, scrim) {
-    function open() { drawer.classList.add("open"); scrim.classList.add("open"); var c = document.getElementById("lace-drawer-close"); if (c) c.focus(); }
-    function close() { drawer.classList.remove("open"); scrim.classList.remove("open"); }
     var toggle = document.getElementById("lace-drawer-toggle");
+    function open() {
+      drawer.classList.add("open"); scrim.classList.add("open");
+      if (toggle) toggle.setAttribute("aria-expanded", "true");
+      var c = document.getElementById("lace-drawer-close"); if (c) c.focus();
+    }
+    function close() {
+      if (!drawer.classList.contains("open")) return;
+      drawer.classList.remove("open"); scrim.classList.remove("open");
+      if (toggle) { toggle.setAttribute("aria-expanded", "false"); toggle.focus(); }
+    }
     if (toggle) toggle.addEventListener("click", open);
     scrim.addEventListener("click", close);
     var closeBtn = document.getElementById("lace-drawer-close");
     if (closeBtn) closeBtn.addEventListener("click", close);
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!drawer.classList.contains("open")) return;
+      if (e.key === "Escape") { close(); return; }
+      // Keep Tab inside the open drawer.
+      if (e.key !== "Tab") return;
+      var f = drawer.querySelectorAll("a[href], button");
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
 
   // ── Progress hooks ────────────────────────────────────────────────────────
@@ -546,6 +582,140 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── Reset (demo / testing) ───────────────────────────────────────────────
   window.resetLaceProgress = function () { localStorage.removeItem(storageKey); window.location.reload(); };
 
+
+  // ── Hub layout (chrome="hub") ─────────────────────────────────────────────
+  // The course as a page of the Learning Hub, so moving between them feels
+  // like turning a page. The hub's header; on topic pages the hub's heading
+  // (breadcrumb, title, binder rule), then the reading beside a card that sends
+  // the learner to practise in the hub and the list of the course's parts.
+  // Authors keep writing the same topic markup: this rearranges it.
+  function binderInfo() {
+    var b = config.binder || {};
+    var tabs = b.tabs || [];
+    var contents = tabs[0] ? hubHref(tabs[0].href) : homeHref;
+    var open = tabs.filter(function (t) { return t.id === b.currentTab; })[0];
+    return { name: b.name, contents: contents, openLabel: open ? open.label : "" };
+  }
+
+  function renderHubHeader() {
+    var container = document.getElementById("lace-nav-container");
+    if (!container) return;
+    var b = binderInfo();
+    container.innerHTML =
+      '<header class="hub-header">' +
+        '<a class="hub-wordmark" href="' + hubHref("/") + '" target="_top">Learning Hub</a>' +
+        '<nav class="hub-nav" aria-label="Learning Hub">' +
+          '<a href="' + hubHref("/") + '" target="_top">Home</a>' +
+          (b.name ? '<a class="hub-binder-btn" href="' + b.contents + '" target="_top"><span class="hub-swatch" aria-hidden="true"></span>' + esc(b.name) + "</a>" : "") +
+          '<a href="' + hubHref("/my-learning/") + '" target="_top">My learning</a>' +
+        "</nav>" +
+        '<a class="hub-search" href="' + hubHref("/search/") + '" target="_top" aria-label="Search">' + icon("search", 17) + '<span class="hub-search-label" aria-hidden="true">Search</span></a>' +
+        themeToggleHtml() +
+        '<button class="chrome-icon-btn hub-menu-btn" id="lace-drawer-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="lace-drawer">' + icon("menu", 18) + "</button>" +
+      "</header>" +
+      // Phones have no room for the divider tabs: one manila strip names the
+      // binder and tab, and leads to the binder's contents.
+      (b.name
+        ? '<a class="hub-binder-bar" href="' + b.contents + '" target="_top"><span class="hub-swatch" aria-hidden="true"></span>' +
+          esc(b.name) + (b.openLabel ? " · " + esc(b.openLabel) : "") + '<span class="hub-binder-bar-more">Contents</span></a>'
+        : "");
+  }
+
+  function practiceCardHtml(p) {
+    var steps = "";
+    (p.steps || []).forEach(function (st, i) {
+      steps += '<li><span class="hub-practice-dot' + (i === 0 ? " first" : "") + '" aria-hidden="true"></span>' +
+        "<span><strong>" + esc(st.label) + "</strong> " + '<span class="hub-practice-sub">' + esc(st.text) + "</span></span></li>";
+    });
+    return '<section class="hub-practice" id="hub-practice" aria-labelledby="hub-practice-h">' +
+      '<p class="hub-practice-kicker">' + (p.status === "coming" ? "Practice for this part" : "Practise it in the hub") + "</p>" +
+      '<h2 id="hub-practice-h">' + esc(p.title) + "</h2>" +
+      (p.text ? '<p class="hub-practice-text">' + esc(p.text) + "</p>" : "") +
+      (steps ? '<ol class="hub-practice-steps">' + steps + "</ol>" : "") +
+      (p.href ? '<a class="hub-practice-go" href="' + hubHref(p.href) + '" target="_top">' + esc(p.linkText || "Start") + icon("arrow", 16) + "</a>" : "") +
+      (p.note ? '<p class="hub-practice-note">' + esc(p.note) + "</p>" : "") +
+      "</section>";
+  }
+
+  function partsNavHtml() {
+    var items = "";
+    flatTopics.forEach(function (t, i) {
+      var here = t.slug === currentSlug, done = !!completedSet[t.slug];
+      items += "<li><a" + (here ? ' class="here" aria-current="page"' : "") + ' href="' + withParams(t.url) + '">' +
+        '<span class="hub-part-mark" aria-hidden="true">' + (done && !here ? icon("check", 14) : i + 1) + "</span>" +
+        "<span>" + esc(t.title) + (done && !here ? '<span class="hub-sr"> (read)</span>' : "") + "</span></a></li>";
+    });
+    return '<nav class="hub-parts" aria-labelledby="hub-parts-h">' +
+      '<h2 id="hub-parts-h"><a href="' + withParams(config.courseHomeUrl) + '">' + esc(config.courseShortTitle || config.courseTitle) + "</a></h2>" +
+      "<ol>" + items + "</ol>" +
+      '<p class="hub-parts-note">' + doneCount() + " of " + flatTopics.length + " read. Reading a part counts toward your training record.</p>" +
+      "</nav>";
+  }
+
+  function layoutTopicAsHubPage(m) {
+    var body = document.querySelector(".topic-body");
+    var h1 = body && body.querySelector(".topic-title");
+    if (!h1) return;
+    var t = flatTopics[m.idx] || {};
+    var stand = body.querySelector(".topic-standfirst");
+    // The old heading furniture: the hub's heading replaces it.
+    Array.prototype.forEach.call(body.querySelectorAll(":scope > .eyebrow, :scope > .topic-progress, :scope > .next-up"), function (el) { el.remove(); });
+
+    var crumbs = (config.binder && config.binder.crumbs || []).map(function (c) {
+      return '<li><a href="' + hubHref(c.href) + '" target="_top">' + esc(c.label) + "</a></li>";
+    }).join("");
+    crumbs += '<li><a href="' + withParams(config.courseHomeUrl) + '">' + esc(config.courseShortTitle || m.shortTitle) + "</a></li>";
+    crumbs += '<li><span aria-current="page">Part ' + (m.idx + 1) + " of " + flatTopics.length + "</span></li>";
+    var meta = [];
+    if (t.minutes) meta.push(t.minutes + " min read");
+    if (config.contentNote) meta.push(config.contentNote);
+
+    var head = document.createElement("div");
+    head.className = "hub-head";
+    head.innerHTML = '<nav class="hub-crumbs" aria-label="Breadcrumb"><ol>' + crumbs + "</ol></nav>" +
+      '<div class="hub-title-row"><div class="hub-title-main"></div>' +
+      (meta.length ? '<p class="hub-meta">' + esc(meta.join(" · ")) + "</p>" : "") + "</div>";
+    var main = head.querySelector(".hub-title-main");
+    h1.classList.remove("display");
+    main.appendChild(h1);
+    if (stand) main.appendChild(stand);
+
+    var layout = document.createElement("div");
+    layout.className = "hub-layout";
+    var article = document.createElement("article");
+    article.className = "hub-reading";
+    while (body.firstChild) article.appendChild(body.firstChild);
+    // On phones the practice card comes after the reading, so offer a way
+    // straight to it for someone who already knows the material.
+    if (t.practice && t.practice.href && t.practice.status !== "coming") {
+      var jump = document.createElement("a");
+      jump.className = "hub-jump";
+      jump.href = "#hub-practice";
+      jump.innerHTML = "Already know it? Go to practice" + icon("arrow", 16);
+      article.insertBefore(jump, article.firstChild);
+    }
+
+    var prev = m.prev, nextTopic = m.idx < flatTopics.length - 1 ? flatTopics[m.idx + 1] : null;
+    var pager = document.createElement("div");
+    pager.className = "hub-pager";
+    pager.innerHTML =
+      (prev ? '<a class="hub-pager-back" href="' + withParams(prev.url) + '">Back: ' + esc(prev.title) + "</a>" : "<span></span>") +
+      '<a class="hub-pager-next" href="' + withParams(nextTopic ? nextTopic.url : (config.completeUrl || config.courseHomeUrl)) + '">' +
+        (nextTopic ? "Next: " + esc(nextTopic.title) : "Finish the course") + icon("arrow", 16) + "</a>";
+    article.appendChild(pager);
+
+    var aside = document.createElement("aside");
+    aside.className = "hub-aside";
+    aside.setAttribute("aria-label", "Practice and parts");
+    aside.innerHTML = (t.practice ? practiceCardHtml(t.practice) : "") + partsNavHtml();
+
+    layout.appendChild(article);
+    layout.appendChild(aside);
+    body.appendChild(head);
+    body.appendChild(layout);
+    body.classList.add("hub-page");
+  }
+
   // ── Binder tabs: the hub's divider tabs, carried into the course ─────────
   // On wide screens the binder this course is filed in shows on the right, as
   // in the hub, with its tab open. Each tab returns to that page in the hub,
@@ -575,7 +745,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   renderBinderTabs();
   var model = navModel();
-  if (chromeMode === "rail") {
+  if (chromeMode === "hub") {
+    renderHubHeader();
+    if (!isOutline) layoutTopicAsHubPage(model);
+    var hubParts = buildDrawer();
+    wireDrawer(hubParts.drawer, hubParts.scrim);
+  } else if (chromeMode === "rail") {
     renderRail(model);
     // Rail mode keeps a minimal top bar element absent; provide a drawer too
     // so nothing breaks if a page only has the bar toggle — but it's optional.
@@ -591,7 +766,8 @@ document.addEventListener("DOMContentLoaded", function () {
   fillProgressHooks();
 
   // Apply the saved reading mode on topic pages (also builds the step stage).
-  if (!isOutline) {
+  // The hub layout has no Practice mode: practice is in the hub.
+  if (!isOutline && chromeMode !== "hub") {
     var startMode = getMode();
     document.documentElement.setAttribute("data-mode", startMode);
     if (startMode === "practice") buildSteps();

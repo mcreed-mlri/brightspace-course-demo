@@ -79,6 +79,31 @@ on it. Tab ids and paths must match the hub's `lib/binder.ts`. Without a
 `binder` block the course takes its colour from `topic` and its breadcrumb
 from `courseArea`, as before.
 
+### 4. The hub layout and practice cards
+
+A course filed in a binder is laid out as a page of the hub (`chromeMode:
+"hub"`, the default when there is a `binder` block): the hub's header, its
+breadcrumb (binder › tab › … › course › Part N of M), the title over the
+binder's colour rule, then the reading beside a **Practise it in the hub**
+card and the list of the course's parts, with Back and Next at the end. You
+write topic pages exactly as before; `course-nav.js` rearranges them.
+
+The course is for reading. Practice lives in the hub, so a topic can name it:
+
+```javascript
+practice: {
+  title: "Hearsay, level 1: a written objection",
+  href: "/binder/litigation/trial-skills/objections/hearsay/level-1/watch/",
+  linkText: "Start level 1",
+  steps: [{ label: "Watch", text: "an expert answer it" }, ...],
+  note: "About 15 minutes.",
+}
+```
+
+When the hub's practice is not built yet, set `status: "coming"` with a `text`
+and link to a hub page that exists. Set `courseShortTitle` (the course in the
+breadcrumb) and, while content awaits review, `contentNote`.
+
 ## Deploying to Brightspace
 
 1. **Set deploy mode.** Build locally with `deployMode: "local"`.
