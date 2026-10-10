@@ -35,6 +35,7 @@ Every course should start from a copied course template folder.
 | `course-config.js` | Yes | Single source of truth for LACE navigation |
 | `course-style.css` | Yes | Shared course styling |
 | `course-nav.js` | Yes | Shared navigation/progress behavior |
+| `fonts/` | Yes | Public Sans, loaded by `course-style.css` |
 | `images/` | As needed | Screenshots, diagrams, visual assets |
 | `assets/` | As needed | PDFs, downloads, handouts |
 
@@ -121,6 +122,7 @@ Checklist:
 - [ ] Upload `course-config.js`
 - [ ] Upload `course-style.css`
 - [ ] Upload `course-nav.js`
+- [ ] Upload the `fonts/` folder
 - [ ] Upload images/assets folders
 - [ ] Confirm pages load from Manage Files
 - [ ] Do not edit custom HTML in the Brightspace WYSIWYG editor

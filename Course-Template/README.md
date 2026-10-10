@@ -1,16 +1,18 @@
 # LACE Course Template Guide
 
-A Brightspace course wrapper that feels like the LACE Learning Hub — the
-"Studio" direction: cool-gray surfaces, Geist type, one brand blue, and
-hairline structure — so learners get no whiplash crossing from the hub into a
-course.
+A Brightspace course wrapper that looks like the LACE Learning Hub's binder:
+a white page, near-black ink, Public Sans, solid ink buttons, and the binder's
+colour on rules and progress bars. A course filed in a binder also shows that
+binder's divider tabs on the right, so moving between the hub and a course
+feels like turning a page.
 
 ## Template files
 
 | File | Role |
 | --- | --- |
 | `course-config.js` | **Single source of truth.** Course identity, modules, the topic list (slug, title, `kind`, `minutes`, links), plus `chromeMode` and `completeUrl`. |
-| `course-style.css` | The LACE Studio design system — tokens, chrome bar/rail, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Geist. |
+| `course-style.css` | The binder design system — tokens copied from the hub, chrome bar/rail, binder tabs, outline rows, the 5-section topic layout, callouts/accordions/tabs. Loads Public Sans from `fonts/`. |
+| `fonts/` | Public Sans (SIL Open Font License), shipped with the course rather than loaded from Google Fonts so it works where outside fonts are blocked. **Upload it with the course**, or pages fall back to the system font. |
 | `course-nav.js` | Injects the chrome (slim **bar + drawer** or fixed **rail**, per `chromeMode`), Prev/Next, the **Read · Practice** toggle + step pager, tracks page-visit completion in `localStorage`, and runs the Try-it self-check. |
 | `course-beacon.js` | **Optional analytics, OFF by default** (`beacon.enabled` in config). Sends anonymous page-view / video-progress / session-heartbeat events to the LACE data layer — the in-course signals Brightspace can't see. No user identity, ever; failures never break the course. Enabled with an empty `endpoint`, it logs to the console (dev mode). |
 | `Home.html` | The **course outline** — lean hero, one progress-aware Continue card, course-coded topic rows (Done · In progress · Next up · Later). |
@@ -60,6 +62,48 @@ Edit `course-config.js`. Set `courseId` (unique — it namespaces progress),
 
 The chrome bar, breadcrumb, Prev/Next, and outline drawer are all injected
 automatically — you only write the topic content.
+
+### 3. File it in a binder (optional)
+
+Add a `binder` block to `course-config.js` to say where the course lives in
+the hub (the template ships one, filed under Litigation › Case Prep). With it:
+
+- the binder's divider tabs show on the right on wide screens, with this
+  course's tab open; each tab goes back to that page in the hub, breaking out
+  of Brightspace's frame;
+- the breadcrumb is the hub's (Litigation › Case Prep › this course);
+- the binder's `colour` edges the course: rules, progress bars, the open tab.
+  It is never behind text, so any binder colour is safe.
+
+Set `hubBaseUrl` to the hub's address; every hub link in the config is a path
+on it. Tab ids and paths must match the hub's `lib/binder.ts`. Without a
+`binder` block the course takes its colour from `topic` and its breadcrumb
+from `courseArea`, as before.
+
+### 4. The hub layout and practice cards
+
+A course filed in a binder is laid out as a page of the hub (`chromeMode:
+"hub"`, the default when there is a `binder` block): the hub's header, its
+breadcrumb (binder › tab › … › course › Part N of M), the title over the
+binder's colour rule, then the reading beside a **Practice it in the hub**
+card and the list of the course's parts, with Back and Next at the end. You
+write topic pages exactly as before; `course-nav.js` rearranges them.
+
+The course is for reading. Practice lives in the hub, so a topic can name it:
+
+```javascript
+practice: {
+  title: "Hearsay, level 1: a written objection",
+  href: "/binder/litigation/trial-skills/objections/hearsay/level-1/watch/",
+  linkText: "Start level 1",
+  steps: [{ label: "Watch", text: "an expert answer it" }, ...],
+  note: "About 15 minutes.",
+}
+```
+
+When the hub's practice is not built yet, set `status: "coming"` with a `text`
+and link to a hub page that exists. Set `courseShortTitle` (the course in the
+breadcrumb) and, while content awaits review, `contentNote`.
 
 ## Deploying to Brightspace
 

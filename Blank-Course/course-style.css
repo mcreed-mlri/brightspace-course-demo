@@ -1,73 +1,92 @@
 /* ============================================================================
-   LACE Course Wrapper — design system  ·  "STUDIO" (matches A2 hub)
+   LACE Course Wrapper — design system  ·  "BINDER" (matches the Learning Hub)
    ----------------------------------------------------------------------------
-   Restyled to the LACE Learning Hub "Studio + rail" direction (A2): Geist type,
-   cool stone-gray surfaces, a confident brand blue for every primary action,
-   hairline structure, ONE shadow tier, an 8-hue topic palette. The goal is
-   zero whiplash crossing from the hub into a Brightspace-hosted course — the
-   course reads as one more screen of the same product.
+   The Learning Hub files training in binders: a white page, near-black ink,
+   Public Sans, manila dividers, and one binder colour that edges the page.
+   This file carries that look into the course so crossing from the hub into
+   Brightspace reads as turning a page, not opening a different product.
 
-   All class names from the previous (editorial) system are preserved, so every
+   - Colour is the binder's, and it is used for strokes only: rules, borders,
+     progress bars, the open tab. Text never sits on it.
+   - Primary actions are solid ink with white text, like the hub's buttons.
+   - The token values are copied from the hub's app/globals.css. If the hub
+     changes a value, change it here too.
+
+   All class names from the previous (Studio) system are preserved, so every
    existing topic page, the outline, and course-nav.js keep working untouched.
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;450;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300..900&display=swap');
 
 :root {
-  /* ── Neutral base — cool stone canvas, exactly the hub's surfaces ─────── */
-  --bg: #f5f6f8;          /* page canvas */
+  /* ── Neutral base — the hub's white page sheet with warm greys ────────── */
+  --bg: #ffffff;          /* page */
   --paper: #ffffff;       /* cards, drawer, rail, panels */
   --surface: #ffffff;     /* raised rows, rule boxes */
-  --warm: #eef0f4;        /* sunken — progress tracks, controls, chips */
-  --ivory: #f4f6f9;       /* whisper hover tint */
-  --chrome-bg: rgba(255, 255, 255, 0.82);
+  --warm: #f2f2ee;        /* sunken — tracks, controls, chips, case files */
+  --ivory: #f6f6f2;       /* whisper hover tint */
+  --chrome-bg: rgba(255, 255, 255, 0.94);
 
-  --ink: #14161b;         /* primary text */
-  --ink-soft: #24272e;    /* softened ink */
-  --muted: #565c69;       /* body copy */
-  --muted-soft: #8b909d;  /* metadata — eyebrows, captions */
+  --ink: #16161a;         /* primary text */
+  --ink-soft: #2a2a30;    /* softened ink */
+  --muted: #45454d;       /* body copy */
+  --muted-soft: #66666e;  /* metadata — eyebrows, captions (5.6:1 on white) */
 
-  --hair: #e4e7ed;        /* hairline */
-  --hair-strong: #d4d8e0;
+  --hair: #e2e2dc;        /* hairline */
+  --hair-strong: #cfcfc7;
 
-  /* ── Brand — the hub's blue. Drives every primary action + "you are here". */
-  --brand: #1c3fb0;       /* deep blue — links, active text */
-  --brand-fill: #2a5bff;  /* interactive fill — buttons, continue, next */
-  --brand-tint: #eaf0ff;  /* tint — chips, active rows */
-  --brand-ink: #1c3fb0;
+  /* ── Solid action — the hub's ink buttons ─────────────────────────────── */
+  --solid-bg: #16161a;
+  --solid-ink: #ffffff;
 
-  /* ── Topic families — disciplined 8-hue palette (same S/L feel as hub) ── */
-  --topic-court: #bb573b;        --topic-court-soft: #fbe8e2;        --topic-court-ink: #8d472e;
-  --topic-client: #179a72;       --topic-client-soft: #e2f4ed;       --topic-client-ink: #0f6e52;
-  --topic-ethics: #5563d6;       --topic-ethics-soft: #ebedfc;       --topic-ethics-ink: #3a45a8;
-  --topic-research: #3a8ec9;     --topic-research-soft: #e7f3fb;     --topic-research-ink: #2b6c99;
-  --topic-drafting: #7a4fe0;     --topic-drafting-soft: #efeafd;     --topic-drafting-ink: #5a32b0;
-  --topic-trauma: #d24d83;       --topic-trauma-soft: #fce9f1;       --topic-trauma-ink: #a83464;
-  --topic-foundations: #c8791b;  --topic-foundations-soft: #fbf0dc;  --topic-foundations-ink: #8a5512;
+  /* ── Brand — text stays ink; colour comes from the binder (below). ────── */
+  --brand: #16161a;       /* links, active text, eyebrows */
+  --brand-fill: var(--binder); /* strokes only: rules, bars, borders */
+  --brand-tint: #f2f2ee;  /* active rows, callouts */
+  --brand-ink: #16161a;
+
+  /* ── The binder — board and manila dividers, as in the hub ────────────── */
+  --board: #c9c4bb;               /* warm-grey chipboard */
+  --board-deep: #b8b2a8;
+  --sheet-edge: #2a2622;          /* page and tab outline */
+  --divider-manila: #ede4cc;      /* --ink 14.3:1 */
+  --divider-manila-alt: #e4d8b9;  /* --ink 12.8:1 */
+  /* The binder colour. course-nav.js sets it from course-config.js
+     (binder.colour); without one it follows the course's topic. */
+  --binder: var(--accent);
+
+  /* ── Topic families — the hub's eight hues ────────────────────────────── */
+  --topic-court: #2f45b5;        --topic-court-soft: #eceefa;        --topic-court-ink: #2b3fa6;
+  --topic-client: #3f7f2e;       --topic-client-soft: #e9f3e4;       --topic-client-ink: #366d27;
+  --topic-ethics: #45454d;       --topic-ethics-soft: #ececea;       --topic-ethics-ink: #3a3a41;
+  --topic-research: #0b6b6b;     --topic-research-soft: #e2f1f1;     --topic-research-ink: #0a5e5e;
+  --topic-drafting: #6b3fa0;     --topic-drafting-soft: #f1eaf8;     --topic-drafting-ink: #61398f;
+  --topic-trauma: #dc6a3c;       --topic-trauma-soft: #fbe9e1;       --topic-trauma-ink: #a03f19;
+  --topic-foundations: #8a5a3c;  --topic-foundations-soft: #f4ece5;  --topic-foundations-ink: #7a4f34;
 
   /* ── Status — lifecycle / progress signal, kept distinct from topics ──── */
-  --status-progress: #179a72;    --status-progress-soft: #e2f4ed;    --status-progress-ink: #0f6e52;
-  --status-next: #2a5bff;        --status-next-soft: #eaf0ff;        --status-next-ink: #1c3fb0;
-  --status-done: #64748b;        --status-done-soft: #eef0f4;        --status-done-ink: #475569;
-  --status-new: #c8791b;         --status-new-soft: #fbf0dc;         --status-new-ink: #8a5512;
-  --status-updated: #3a8ec9;     --status-updated-soft: #e7f3fb;     --status-updated-ink: #2b6c99;
-  --status-changed: #c8493b;     --status-changed-soft: #fbe9e6;     --status-changed-ink: #9a3528;
-  --status-later: #8b909d;       --status-later-soft: #eef0f4;       --status-later-ink: #5e6472;
+  --status-progress: #179a72;    --status-progress-soft: #e2f4ed;    --status-progress-ink: #0f6e51;
+  --status-next: #1c63b0;        --status-next-soft: #e8eff8;        --status-next-ink: #12447c;
+  --status-done: #179a72;        --status-done-soft: #e2f4ed;        --status-done-ink: #0f6e51;
+  --status-new: #c8791b;         --status-new-soft: #fbf0dc;         --status-new-ink: #99610f;
+  --status-updated: #c8791b;     --status-updated-soft: #fbf0dc;     --status-updated-ink: #99610f;
+  --status-changed: #c8493b;     --status-changed-soft: #fbe9e6;     --status-changed-ink: #9c3528;
+  --status-later: #8b909d;       --status-later-soft: #efede7;       --status-later-ink: #565c69;
 
   /* ── Topic accent — the page-level orientation colour ─────────────────── */
   --accent: var(--topic-foundations);
   --accent-soft: var(--topic-foundations-soft);
   --accent-ink: var(--topic-foundations-ink);
 
-  --font: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Geist', system-ui, sans-serif;
-  --font-mono: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Public Sans', 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font);
+  --font-mono: var(--font);
 
   --radius-card: 14px;
-  --radius-control: 10px;
-  --shadow-soft: 0 1px 2px rgba(20, 22, 27, 0.04), 0 6px 18px rgba(20, 22, 27, 0.06);
-  --shadow-lift: 0 1px 2px rgba(20, 22, 27, 0.05), 0 14px 34px rgba(20, 22, 27, 0.10);
-  --shadow-card: 0 1px 2px rgba(20, 22, 27, 0.04), 0 4px 12px rgba(20, 22, 27, 0.05);
+  --radius-control: 9px;
+  --shadow-soft: 0 1px 2px rgba(22, 22, 26, 0.05), 0 4px 14px rgba(22, 22, 26, 0.05);
+  --shadow-lift: 0 1px 2px rgba(22, 22, 26, 0.05), 0 6px 18px rgba(22, 22, 26, 0.06);
+  --shadow-card: 0 1px 2px rgba(22, 22, 26, 0.05), 0 4px 14px rgba(22, 22, 26, 0.05);
 
   /* ── Rail metrics (chrome="rail" mode) ────────────────────────────────── */
   --rail-w: 264px;
@@ -86,7 +105,9 @@
   --lace-hairline: var(--hair);
 }
 
-/* Per-course topic accent (set via <html data-topic="…">). */
+/* Per-course topic accent (set via <html data-topic="…">). The topic colour
+   becomes the binder colour when course-config.js names no binder. It is a
+   stroke colour only; text and buttons stay ink. */
 [data-topic="court"]       { --accent: var(--topic-court);       --accent-soft: var(--topic-court-soft);       --accent-ink: var(--topic-court-ink); }
 [data-topic="client"]      { --accent: var(--topic-client);      --accent-soft: var(--topic-client-soft);      --accent-ink: var(--topic-client-ink); }
 [data-topic="ethics"]      { --accent: var(--topic-ethics);      --accent-soft: var(--topic-ethics-soft);      --accent-ink: var(--topic-ethics-ink); }
@@ -96,52 +117,52 @@
 [data-topic="foundations"] { --accent: var(--topic-foundations); --accent-soft: var(--topic-foundations-soft); --accent-ink: var(--topic-foundations-ink); }
 
 /* ── Dark mode — opt-in via the chrome toggle (sets <html data-theme="dark">).
- *    Only TOKEN VALUES are redefined here; every component rule reads the tokens,
- *    so the whole course re-skins from this one block. The var(--accent…)
- *    indirection means redefining the topic/status *-soft / *-ink tokens flows
- *    straight through to the page accent. Surfaces are a warm-tinted near-black
- *    (calmer for tired eyes than pure #000); the gold brand is lightened so links
- *    and "you are here" stay legible. ──────────────────────────────────────── */
+ *    Only TOKEN VALUES are redefined here; every component rule reads the
+ *    tokens. Values match the hub's dark theme: a soft near-black page, a deep
+ *    board, and the solid action flipped to near-white with dark ink. ─────── */
 [data-theme="dark"] {
   color-scheme: dark;
 
   /* neutral base */
   --bg: #15171c;          --paper: #1c1f26;       --surface: #22262e;
-  --warm: #262a33;        --ivory: #20242b;       --chrome-bg: rgba(20, 22, 27, 0.82);
+  --warm: #262a33;        --ivory: #20242b;       --chrome-bg: rgba(28, 31, 38, 0.86);
 
   /* text */
-  --ink: #f3f4f6;         --ink-soft: #d9dce3;    --muted: #a3a9b5;   --muted-soft: #767d8b;
+  --ink: #f3f4f6;         --ink-soft: #d9dce3;    --muted: #a3a9b5;   --muted-soft: #8991a1;
 
   /* structure */
   --hair: #2e333d;        --hair-strong: #3a4049;
 
-  /* brand — gold lightened for text/active state; tint darkened for chips/rows */
-  --brand: #e0992e;       --brand-fill: #b8740f;  --brand-tint: #3a2c10;  --brand-ink: #e0992e;
+  --solid-bg: #eceef2;    --solid-ink: #14161b;
+  --brand: #f3f4f6;       --brand-tint: #262a33;  --brand-ink: #f3f4f6;
 
-  /* topic families — base lightened a touch, soft → deep tint, ink → light text */
-  --topic-court: #d06a4d;        --topic-court-soft: #3a1f17;        --topic-court-ink: #e8957a;
-  --topic-client: #1faf82;       --topic-client-soft: #133029;       --topic-client-ink: #5fc9a8;
-  --topic-ethics: #7480e0;       --topic-ethics-soft: #1f2340;       --topic-ethics-ink: #9aa3ec;
-  --topic-research: #5aa6db;     --topic-research-soft: #14283a;     --topic-research-ink: #7cc0ec;
-  --topic-drafting: #9573e8;     --topic-drafting-soft: #251a40;     --topic-drafting-ink: #b49af0;
-  --topic-trauma: #df6e9b;       --topic-trauma-soft: #3a1c2a;       --topic-trauma-ink: #ef9bbd;
-  --topic-foundations: #e0992e;  --topic-foundations-soft: #3a2c10;  --topic-foundations-ink: #e0992e;
+  --board: #2b2926;       --board-deep: #23211f;  --sheet-edge: #4a4640;
+  --divider-manila: #3b372f;                      --divider-manila-alt: #343028;
 
-  /* status families — same soft→deep / ink→light transform */
-  --status-progress: #1faf82;    --status-progress-soft: #133029;    --status-progress-ink: #5fc9a8;
-  --status-next: #c08319;        --status-next-soft: #3a2c10;        --status-next-ink: #e0992e;
-  --status-done: #7c889b;        --status-done-soft: #262a33;        --status-done-ink: #aab4c4;
-  --status-new: #e0992e;         --status-new-soft: #3a2c10;         --status-new-ink: #e0992e;
-  --status-updated: #5aa6db;     --status-updated-soft: #14283a;     --status-updated-ink: #7cc0ec;
-  --status-changed: #db5d4e;     --status-changed-soft: #3a1c18;     --status-changed-ink: #ec8275;
-  --status-later: #9aa0ad;       --status-later-soft: #262a33;       --status-later-ink: #9aa0ad;
+  /* topic families — saturated strokes plus deep fills */
+  --topic-court: #8b9cf0;        --topic-court-soft: #1b2350;        --topic-court-ink: #8b9cf0;
+  --topic-client: #8fc77a;       --topic-client-soft: #1d2e16;       --topic-client-ink: #8fc77a;
+  --topic-ethics: #b4b4bc;       --topic-ethics-soft: #2a2a2f;       --topic-ethics-ink: #b4b4bc;
+  --topic-research: #5fc4c4;     --topic-research-soft: #0e2f31;     --topic-research-ink: #5fc4c4;
+  --topic-drafting: #b897e6;     --topic-drafting-soft: #2a1d40;     --topic-drafting-ink: #b897e6;
+  --topic-trauma: #f0926a;       --topic-trauma-soft: #3a1c10;       --topic-trauma-ink: #f0926a;
+  --topic-foundations: #d4a283;  --topic-foundations-soft: #33241a;  --topic-foundations-ink: #d4a283;
+
+  /* status families */
+  --status-progress: #5fc9a8;    --status-progress-soft: #133029;    --status-progress-ink: #5fc9a8;
+  --status-next: #7fb3ee;        --status-next-soft: #13304d;        --status-next-ink: #98c2f3;
+  --status-done: #5fc9a8;        --status-done-soft: #133029;        --status-done-ink: #5fc9a8;
+  --status-new: #e0a552;         --status-new-soft: #3a2c10;         --status-new-ink: #e0a552;
+  --status-updated: #e0a552;     --status-updated-soft: #3a2c10;     --status-updated-ink: #e0a552;
+  --status-changed: #ec8275;     --status-changed-soft: #3a1c18;     --status-changed-ink: #ec8275;
+  --status-later: #9aa0ad;       --status-later-soft: #262a33;       --status-later-ink: #c0c6d1;
 }
-/* The LACE badge is a dark chip with a hardcoded-white leaf mark. In dark mode
- * its var(--ink) background flips to near-white and the mark vanishes — give it
- * the brand gold so the white mark stays legible. (Extra specificity keeps it
- * winning over the .chrome-mark/.rail-brand rules defined later in the file.) */
+/* The LACE badge is a dark chip with a hardcoded-white mark. In dark mode its
+ * var(--ink) background flips to near-white and the mark vanishes, so it keeps
+ * a fixed dark chip. (Extra specificity keeps it winning over the
+ * .chrome-mark/.rail-brand rules defined later in the file.) */
 [data-theme="dark"] .chrome-mark .mk-badge,
-[data-theme="dark"] .rail-brand .mk-badge { background: var(--brand-fill); }
+[data-theme="dark"] .rail-brand .mk-badge { background: #2a2622; box-shadow: inset 0 0 0 1px #4a4640; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -163,7 +184,7 @@ a { color: inherit; text-decoration: none; }
 ::selection { background: var(--brand-tint); }
 
 :focus-visible {
-  outline: 2px solid var(--brand-fill);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -179,7 +200,7 @@ a { color: inherit; text-decoration: none; }
 }
 .eyebrow-muted { color: var(--muted-soft); font-weight: 600; }
 
-/* Display = Geist heavy + tight tracking (NOT a light serif). */
+/* Display = Public Sans heavy + tight tracking (NOT a light serif). */
 .display {
   font-family: var(--font-display);
   font-weight: 720;
@@ -308,15 +329,15 @@ a.crumb:hover { color: var(--ink); }
   height: 38px; padding: 0 14px 0 16px;
   display: inline-flex; align-items: center; gap: 10px;
   border: 0; border-radius: var(--radius-control);
-  background: var(--brand-fill); color: #fff;
+  background: var(--solid-bg); color: var(--solid-ink);
   font-family: var(--font); font-weight: 600; font-size: 13.5px;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(42, 91, 255, 0.3);
+  box-shadow: none;
   transition: filter 0.15s, transform 0.1s;
 }
 .chrome-next:hover { filter: brightness(1.06); }
 .chrome-next:active { transform: translateY(1px); }
-.chrome-next.finish { background: var(--status-progress); box-shadow: 0 1px 2px rgba(23,154,114,0.3); }
+.chrome-next.finish { background: var(--status-progress-ink); box-shadow: none; }
 .chrome-next-label { text-align: left; line-height: 1.1; }
 .chrome-next-hint {
   display: block; font-family: var(--font-mono); font-size: 9px; font-weight: 500;
@@ -415,14 +436,15 @@ a.crumb:hover { color: var(--ink); }
   position: fixed; top: 0; left: 0; bottom: 0; z-index: 51;
   width: 328px; max-width: 86vw;
   background: var(--paper); border-right: 1px solid var(--hair);
-  box-shadow: 12px 0 40px rgba(20, 22, 27, 0.12);
   padding: 22px 20px 24px;
   display: flex; flex-direction: column; gap: 12px;
   transform: translateX(-104%);
   transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-y: auto;
 }
-.outline-drawer.open { transform: translateX(0); }
+/* The shadow only while open: closed, it would leak a grey band onto the
+   page's left edge. */
+.outline-drawer.open { transform: translateX(0); box-shadow: 12px 0 40px rgba(22, 22, 26, 0.12); }
 
 .drawer-head { display: flex; align-items: center; justify-content: space-between; }
 .drawer-title { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; line-height: 1.25; }
@@ -452,8 +474,8 @@ a.crumb:hover { color: var(--ink); }
   font-family: var(--font-mono); font-size: 11px; font-weight: 700;
   border: 1.5px solid var(--hair-strong); background: transparent; color: var(--muted);
 }
-.node.done { background: var(--status-progress); border-color: var(--status-progress); color: #fff; }
-.node.active { background: var(--brand-fill); border-color: var(--brand-fill); color: #fff; }
+.node.done { background: var(--status-progress-ink); border-color: var(--status-progress-ink); color: var(--solid-ink); }
+.node.active { background: var(--solid-bg); border-color: var(--solid-bg); color: var(--solid-ink); }
 
 /* ============================================================================
    PAGE SHELL
@@ -491,7 +513,7 @@ a.crumb:hover { color: var(--ink); }
 }
 #continue-ring-arc { stroke: var(--brand-fill); transition: stroke-dashoffset 0.4s ease; }
 .continue-card.is-complete #continue-ring-arc { stroke: var(--status-progress); }
-.continue-card.is-complete .continue-go { background: var(--status-progress); color: #fff; }
+.continue-card.is-complete .continue-go { background: var(--status-progress-ink); color: var(--solid-ink); }
 .continue-meta { flex: 1; min-width: 0; }
 .continue-kicker {
   display: block;
@@ -504,9 +526,9 @@ a.crumb:hover { color: var(--ink); }
   flex-shrink: 0; height: 44px; padding: 0 18px;
   display: inline-flex; align-items: center; gap: 8px;
   border: 0; border-radius: 12px;
-  background: var(--brand-fill); color: #fff;
+  background: var(--solid-bg); color: var(--solid-ink);
   font-family: var(--font); font-weight: 600; font-size: 14px; cursor: pointer;
-  box-shadow: 0 1px 2px rgba(42,91,255,0.3);
+  box-shadow: none;
   transition: filter 0.15s, transform 0.1s;
 }
 .continue-go:hover { filter: brightness(1.06); }
@@ -661,7 +683,7 @@ a.crumb:hover { color: var(--ink); }
   transition: border-color 0.12s, background 0.12s;
 }
 .tryit-option:hover { border-color: var(--hair-strong); background: var(--ivory); }
-.tryit-radio { width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--hair-strong); display: grid; place-items: center; margin-top: 1px; color: #fff; }
+.tryit-radio { width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--hair-strong); display: grid; place-items: center; margin-top: 1px; color: var(--solid-ink); }
 .tryit-option.correct { border-color: var(--status-progress); background: var(--status-progress-soft); }
 .tryit-option.correct .tryit-radio { border-color: var(--status-progress); background: var(--status-progress); }
 .tryit-option.wrong { border-color: var(--status-changed); background: var(--status-changed-soft); }
@@ -691,8 +713,8 @@ a.crumb:hover { color: var(--ink); }
 .next-up-card .nu-sub { font-size: 14px; color: var(--muted); line-height: 1.45; }
 .next-up-go {
   flex-shrink: 0; height: 44px; padding: 0 16px; display: inline-flex; align-items: center; gap: 8px;
-  border: 0; border-radius: 12px; background: var(--brand-fill); color: #fff;
-  font-family: var(--font); font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: 0 1px 2px rgba(42,91,255,0.3);
+  border: 0; border-radius: 12px; background: var(--solid-bg); color: var(--solid-ink);
+  font-family: var(--font); font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: none;
 }
 
 /* ============================================================================
@@ -746,7 +768,7 @@ a.crumb:hover { color: var(--ink); }
 .step-controls .sc-prev { font-family: var(--font); font-size: 13.5px; font-weight: 600; color: var(--muted); background: transparent; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
 .step-controls .sc-prev:hover { color: var(--ink); }
 .step-controls .sc-prev[disabled] { opacity: 0.35; pointer-events: none; }
-.step-controls .sc-next { height: 46px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--brand-fill); color: #fff; font-family: var(--font); font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 9px; box-shadow: 0 1px 2px rgba(42,91,255,0.3); transition: filter 0.15s, transform 0.1s; }
+.step-controls .sc-next { height: 46px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--solid-bg); color: var(--solid-ink); font-family: var(--font); font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 9px; box-shadow: none; transition: filter 0.15s, transform 0.1s; }
 .step-controls .sc-next:hover { filter: brightness(1.06); }
 .step-controls .sc-next:active { transform: translateY(1px); }
 .step-controls .sc-next.finish { background: var(--status-progress); box-shadow: 0 1px 2px rgba(23,154,114,0.3); }
@@ -766,7 +788,7 @@ a.crumb:hover { color: var(--ink); }
 .complete-stat .cs-label { margin-top: 8px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted-soft); }
 .complete-actions { display: flex; gap: 12px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
 .complete-actions a { height: 48px; padding: 0 22px; display: inline-flex; align-items: center; gap: 9px; border-radius: 12px; font-family: var(--font); font-weight: 600; font-size: 15px; cursor: pointer; }
-.complete-actions .ca-primary { background: var(--brand-fill); color: #fff; box-shadow: 0 1px 2px rgba(42,91,255,0.3); }
+.complete-actions .ca-primary { background: var(--solid-bg); color: var(--solid-ink); box-shadow: none; }
 .complete-actions .ca-primary:hover { filter: brightness(1.06); }
 .complete-actions .ca-ghost { background: var(--paper); color: var(--ink); border: 1px solid var(--hair); }
 .complete-actions .ca-ghost:hover { border-color: var(--hair-strong); background: var(--ivory); }
@@ -818,6 +840,214 @@ a.crumb:hover { color: var(--ink); }
   .complete-stats { grid-template-columns: 1fr; }
 }
 
+/* Phones: the bar can't fit the way home, the theme switch, Read · Practice,
+   Back and Continue. The theme switch and breadcrumb give way (the theme is
+   remembered, and the page title says where you are);
+   the Learning Hub mark stays, since it is the way back. */
+@media (max-width: 420px) {
+  .chrome-actions [data-theme-btn] { display: none; }
+  .crumbs { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; scroll-behavior: auto; }
+}
+
+/* ── Binder tabs ───────────────────────────────────────────────────────────
+   The hub's divider tabs, carried into the course (course-nav.js,
+   renderBinderTabs, from course-config.js `binder`) so moving between the hub
+   and a course feels like one binder. Manila dividers on a chipboard strip,
+   the open tab white with the binder's colour on its edge. Wide screens only,
+   as in the hub; on phones the breadcrumb leads back instead. */
+.lace-binder-tabs { display: none; }
+
+@media (min-width: 1024px) {
+  html.has-binder-tabs body { padding-right: 60px; }
+
+  .lace-binder-tabs {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 44;
+    display: flex; flex-direction: column; gap: 4px;
+    width: 60px; padding: 22px 10px 24px 0;
+    overflow-y: auto; scrollbar-width: none;
+    background: var(--board);
+  }
+}
+
+.lbt-name {
+  display: flex; align-items: center; gap: 6px;
+  margin: 0 0 6px; padding-left: 12px;
+  writing-mode: vertical-rl;
+  font-size: 12px; font-weight: 800; color: var(--ink); white-space: nowrap;
+}
+.lbt-swatch { width: 14px; height: 10px; border-radius: 0 2px 2px 0; background: var(--binder); }
+
+.lbt-tab {
+  display: flex; align-items: center; justify-content: center;
+  flex: 1 0 6.5rem; max-height: 11rem; width: 44px; padding: 18px 0;
+  border-radius: 0 10px 10px 0;
+  background: var(--divider-manila); color: var(--ink);
+  transition: width 180ms ease;
+}
+.lbt-tab:nth-of-type(even) { background: var(--divider-manila-alt); }
+.lbt-tab:hover { width: 48px; }
+.lbt-tab:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.lbt-tab.lbt-open {
+  width: 50px; margin-left: -1.5px;
+  background: var(--bg); border-right: 4px solid var(--binder);
+}
+.lbt-label { writing-mode: vertical-rl; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.lbt-open .lbt-label { font-size: 14px; font-weight: 800; }
+
+/* ============================================================================
+   HUB LAYOUT  (chrome="hub", the default for a course filed in a binder)
+   The course as a page of the Learning Hub: the hub's header, its heading
+   (breadcrumb, title, binder rule), the reading beside a card that sends the
+   learner to practise in the hub, and the list of parts. course-nav.js builds
+   it from the usual topic markup (layoutTopicAsHubPage).
+   ========================================================================= */
+/* A closed drawer is off screen; keep its links out of the Tab order too. */
+.outline-drawer { visibility: hidden; transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.26s; }
+.outline-drawer.open { visibility: visible; transition-delay: 0s; }
+
+.hub-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.hub-header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px;
+  padding: 12px 40px; background: var(--bg); border-bottom: 1px solid var(--hair);
+}
+.hub-wordmark { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
+.hub-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; flex: 1 1 auto; }
+.hub-nav a { font-size: 15px; color: var(--muted); }
+.hub-nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.hub-binder-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  border: 1.5px solid var(--ink); border-radius: var(--radius-control);
+  font-weight: 700; color: var(--ink) !important;
+}
+.hub-swatch { flex: none; width: 10px; height: 14px; border-radius: 2px; background: var(--binder); }
+.hub-search {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--hair-strong); border-radius: var(--radius-control);
+  font-size: 14px; color: var(--muted);
+}
+.hub-search:hover { color: var(--ink); border-color: var(--ink); }
+.hub-header .chrome-icon-btn { width: 44px; height: 44px; border-color: var(--hair-strong); }
+.hub-menu-btn, .hub-binder-bar, .hub-jump { display: none; }
+
+.drawer-hub { display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid var(--hair); }
+.drawer-hub a { display: flex; align-items: center; min-height: 44px; padding: 0 10px; border-radius: 8px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.drawer-hub a:hover { background: var(--ivory); }
+
+/* ── The page ─────────────────────────────────────────────────────────────── */
+.topic-body.hub-page { max-width: 1120px; padding: 36px 40px 72px; }
+.hub-crumbs ol { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+.hub-crumbs li + li::before { content: "›"; margin-right: 6px; color: var(--muted); }
+.hub-crumbs a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--hair-strong); text-underline-offset: 3px; }
+.hub-crumbs a:hover { color: var(--ink); }
+.hub-crumbs [aria-current] { color: var(--ink); font-weight: 700; }
+.hub-title-row {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px;
+  margin-top: 10px; padding-bottom: 24px; border-bottom: 4px solid var(--binder);
+}
+.hub-title-main { flex: 1 1 560px; min-width: 0; }
+.hub-page .topic-title { margin: 0; font-size: 44px; line-height: 1.08; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
+.hub-page .topic-standfirst { margin: 14px 0 0; max-width: 640px; font-size: 18px; line-height: 1.55; font-weight: 400; color: var(--muted); }
+.hub-meta { margin: 0; font-size: 14px; font-weight: 700; color: var(--muted); }
+
+.hub-layout { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px; margin-top: 32px; }
+.hub-reading { flex: 999 1 560px; min-width: 0; }
+.hub-aside { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+/* Reading blocks authors use inside a hub page. */
+.hub-reading > :first-child { margin-top: 0; }
+.hub-reading .prose { font-size: 17px; line-height: 1.65; color: var(--ink); }
+.hub-reading a:not([class]) { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.hub-reading h2 { margin: 36px 0 0; font-size: 26px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.hub-reading h3 { margin: 24px 0 0; font-size: 19px; line-height: 1.3; font-weight: 800; color: var(--ink); }
+.read-list { margin: 12px 0 0; padding-left: 22px; font-size: 17px; line-height: 1.65; }
+.read-list li + li { margin-top: 6px; }
+.read-panel { padding: 18px 22px; border-radius: 12px; background: var(--warm); }
+.read-panel-title { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+.read-panel ul { margin: 8px 0 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
+.read-steps { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; counter-reset: read-step; }
+.read-steps li {
+  display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px;
+  border: 1px solid var(--hair); border-radius: 12px; font-size: 16.5px; line-height: 1.5;
+  counter-increment: read-step;
+}
+.read-steps li::before {
+  content: counter(read-step); flex: none; width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--solid-bg); color: var(--solid-ink);
+  font-size: 13px; font-weight: 700;
+}
+.read-frame { margin: 14px 0 0; padding: 16px 18px; border-left: 4px solid var(--binder); border-radius: 0 12px 12px 0; background: var(--warm); font-size: 16.5px; line-height: 1.6; }
+.read-note { margin: 16px 0 0; font-size: 15px; line-height: 1.55; color: var(--muted); }
+
+.hub-pager {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;
+  margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--hair);
+}
+.hub-pager-back { font-size: 15px; font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.hub-pager-next {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px;
+  border-radius: var(--radius-control); background: var(--solid-bg); color: var(--solid-ink);
+  font-size: 15px; font-weight: 700;
+}
+.hub-pager-next:hover { filter: brightness(1.15); }
+
+/* ── Practise it in the hub ──────────────────────────────────────────────── */
+.hub-practice { padding: 22px; border-radius: var(--radius-card); background: #17181c; color: #ffffff; }
+.hub-practice-kicker { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #b9bbc0; }
+.hub-practice h2 { margin: 8px 0 0; font-size: 21px; line-height: 1.25; font-weight: 800; color: #ffffff; }
+.hub-practice-text { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #d9dbe0; }
+.hub-practice-steps { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; font-size: 15px; line-height: 1.4; }
+.hub-practice-steps li { display: flex; gap: 12px; }
+.hub-practice-dot { flex: none; width: 22px; height: 22px; box-sizing: border-box; border-radius: 50%; border: 2px solid #6b6d74; }
+.hub-practice-dot.first { border-color: var(--binder); }
+.hub-practice-sub { color: #b9bbc0; }
+.hub-practice-go {
+  display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 48px; margin-top: 20px;
+  border-radius: var(--radius-control); background: #ffffff; color: #17181c; font-size: 15px; font-weight: 800;
+}
+.hub-practice-go:hover { background: #ececea; }
+.hub-practice-go:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+.hub-practice-note { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: #b9bbc0; }
+[data-theme="dark"] .hub-practice { background: #23262c; box-shadow: inset 0 0 0 1px #41464f; }
+
+/* ── The course's parts ──────────────────────────────────────────────────── */
+.hub-parts { padding: 20px 22px; border: 1px solid var(--hair); border-radius: var(--radius-card); }
+.hub-parts h2 { margin: 0; font-size: 15px; font-weight: 800; }
+.hub-parts h2 a { color: var(--ink); }
+.hub-parts h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.hub-parts ol { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.hub-parts li a {
+  display: flex; gap: 10px; align-items: flex-start; min-height: 44px; box-sizing: border-box; padding: 10px;
+  border-radius: 8px; font-size: 14px; line-height: 1.35; color: var(--muted);
+}
+.hub-parts li a:hover { background: var(--ivory); color: var(--ink); }
+.hub-parts li a.here { border-left: 4px solid var(--binder); background: var(--ivory); color: var(--ink); font-weight: 700; }
+.hub-part-mark { flex: none; width: 18px; display: grid; place-items: center; font-weight: 700; }
+.hub-parts-note { margin: 14px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+/* ── Phones and narrow windows ───────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .hub-header { padding: 10px 16px; gap: 10px; }
+  .hub-wordmark { flex: 1 1 auto; }
+  .hub-nav, .hub-search-label { display: none; }
+  .hub-search { width: 44px; padding: 0; justify-content: center; }
+  .hub-menu-btn { display: grid; }
+  .hub-binder-bar {
+    display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px;
+    background: var(--divider-manila); color: var(--ink); font-size: 14px; font-weight: 700;
+  }
+  .hub-binder-bar-more { margin-left: auto; font-weight: 600; color: var(--muted); }
+  .topic-body.hub-page { padding: 22px 16px 56px; }
+  .hub-page .topic-title { font-size: 30px; line-height: 1.12; }
+  .hub-page .topic-standfirst { font-size: 16px; }
+  .hub-reading h2 { font-size: 22px; margin-top: 30px; }
+  .hub-jump {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px;
+    margin-bottom: 20px; padding: 0 14px; border: 2px solid var(--binder); border-radius: 10px;
+    font-size: 15px; font-weight: 700; color: var(--ink);
+  }
 }
