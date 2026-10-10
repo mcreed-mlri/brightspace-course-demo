@@ -193,15 +193,19 @@ document.addEventListener("DOMContentLoaded", function () {
     syncModeToggle();
   }
   function modeToggleHtml() {
-    return '<div class="mode-toggle" role="tablist" aria-label="Reading mode">' +
-      '<button data-mode-btn="read" type="button">' + icon("book", 14) + '<span class="mt-label">Read</span></button>' +
-      '<button data-mode-btn="practice" type="button">' + icon("target", 14) + '<span class="mt-label">Practice</span></button>' +
+    // A pair of toggle buttons, not tabs: tabs need tab panels. aria-label
+    // keeps each named on phones, where the text label is hidden.
+    return '<div class="mode-toggle" role="group" aria-label="Reading mode">' +
+      '<button data-mode-btn="read" type="button" aria-pressed="false" aria-label="Read">' + icon("book", 14) + '<span class="mt-label">Read</span></button>' +
+      '<button data-mode-btn="practice" type="button" aria-pressed="false" aria-label="Practice">' + icon("target", 14) + '<span class="mt-label">Practice</span></button>' +
       "</div>";
   }
   function syncModeToggle() {
     var m = document.documentElement.getAttribute("data-mode") || "read";
     document.querySelectorAll("[data-mode-btn]").forEach(function (b) {
-      b.classList.toggle("active", b.getAttribute("data-mode-btn") === m);
+      var on = b.getAttribute("data-mode-btn") === m;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
     });
   }
   function wireModeToggle() {

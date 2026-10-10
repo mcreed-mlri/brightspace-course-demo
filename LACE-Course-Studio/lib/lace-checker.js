@@ -7,7 +7,7 @@
   var REGISTRY_KEY = "lace_course_id_registry";
 
   var CANONICAL_HASHES = {
-    "course-nav.js": "7de15b5f",
+    "course-nav.js": "835a78e3",
     "course-style.css": "29e65701"
   };
 
