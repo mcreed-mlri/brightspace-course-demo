@@ -85,7 +85,7 @@ from `courseArea`, as before.
 A course filed in a binder is laid out as a page of the hub (`chromeMode:
 "hub"`, the default when there is a `binder` block): the hub's header, its
 breadcrumb (binder › tab › … › course › Part N of M), the title over the
-binder's colour rule, then the reading beside a **Practise it in the hub**
+binder's colour rule, then the reading beside a **Practice it in the hub**
 card and the list of the course's parts, with Back and Next at the end. You
 write topic pages exactly as before; `course-nav.js` rearranges them.
 

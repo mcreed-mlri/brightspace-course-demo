@@ -12,7 +12,7 @@
  *                          prev/next. Collapses to a 72px icon strip.
  *   chromeMode = "hub"   → the course as a page of the Learning Hub: the hub's
  *                          header, its breadcrumb and binder rule, the reading
- *                          beside a "Practise it in the hub" card and the list
+ *                          beside a "Practice it in the hub" card and the list
  *                          of parts. DEFAULT for a course filed in a binder.
  *                          No Read · Practice toggle: practice is in the hub.
  *
@@ -588,7 +588,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // The course as a page of the Learning Hub, so moving between them feels
   // like turning a page. The hub's header; on topic pages the hub's heading
   // (breadcrumb, title, binder rule), then the reading beside a card that sends
-  // the learner to practise in the hub and the list of the course's parts.
+  // the learner to practice in the hub and the list of the course's parts.
   // Authors keep writing the same topic markup: this rearranges it.
   function binderInfo() {
     var b = config.binder || {};
@@ -632,7 +632,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "<span><strong>" + esc(st.label) + "</strong> " + '<span class="hub-practice-sub">' + esc(st.text) + "</span></span></li>";
     });
     return '<section class="hub-practice" id="hub-practice" aria-labelledby="hub-practice-h">' +
-      '<p class="hub-practice-kicker">' + (p.status === "coming" ? "Practice for this part" : "Practise it in the hub") + "</p>" +
+      '<p class="hub-practice-kicker">' + (p.status === "coming" ? "Practice for this part" : "Practice it in the hub") + "</p>" +
       '<h2 id="hub-practice-h">' + esc(p.title) + "</h2>" +
       (p.text ? '<p class="hub-practice-text">' + esc(p.text) + "</p>" : "") +
       (steps ? '<ol class="hub-practice-steps">' + steps + "</ol>" : "") +

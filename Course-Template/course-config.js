@@ -142,12 +142,12 @@ window.COURSE_CONFIG = {
           kind: "Practice",
           minutes: 3,
           description: "How the notice got there matters as much as what it says.",
-          // Optional: the card that sends learners to practise in the hub. A
+          // Optional: the card that sends learners to practice in the hub. A
           // built level lists its steps; "coming" says so and links somewhere
           // that exists. Paths are on hubBaseUrl.
           practice: {
             status: "coming",
-            title: "Practise checking service",
+            title: "Practice checking service",
             text: "Practice for this part is being written in the hub.",
             href: "/binder/litigation/pre-trial/",
             linkText: "See Case Prep in the hub",

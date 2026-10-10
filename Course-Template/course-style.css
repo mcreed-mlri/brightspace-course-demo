@@ -913,7 +913,7 @@ a.crumb:hover { color: var(--ink); }
    HUB LAYOUT  (chrome="hub", the default for a course filed in a binder)
    The course as a page of the Learning Hub: the hub's header, its heading
    (breadcrumb, title, binder rule), the reading beside a card that sends the
-   learner to practise in the hub, and the list of parts. course-nav.js builds
+   learner to practice in the hub, and the list of parts. course-nav.js builds
    it from the usual topic markup (layoutTopicAsHubPage).
    ========================================================================= */
 /* A closed drawer is off screen; keep its links out of the Tab order too. */
@@ -1009,7 +1009,7 @@ a.crumb:hover { color: var(--ink); }
 }
 .hub-pager-next:hover { filter: brightness(1.15); }
 
-/* ── Practise it in the hub ──────────────────────────────────────────────── */
+/* ── Practice it in the hub ──────────────────────────────────────────────── */
 .hub-practice { padding: 22px; border-radius: var(--radius-card); background: #17181c; color: #ffffff; }
 .hub-practice-kicker { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #b9bbc0; }
 .hub-practice h2 { margin: 8px 0 0; font-size: 21px; line-height: 1.25; font-weight: 800; color: #ffffff; }
