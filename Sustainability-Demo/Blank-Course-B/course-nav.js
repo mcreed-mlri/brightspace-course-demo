@@ -138,12 +138,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function esc(t) { var d = document.createElement("div"); d.textContent = t == null ? "" : String(t); return d.innerHTML; }
 
+  // A hub page's address: on the same site when the hub serves this package,
+  // on the hub's own site when the package is hosted in Brightspace.
+  function hubHref(path) { return (config.hubBaseUrl || "") + (path || "/"); }
+  var homeHref = hubHref(config.homeLinkUrl);
+
   // ── Shared: compute breadcrumb + prev/next for the current page ──────────
   function navModel() {
     var shortTitle = (config.courseTitle || "").split(":")[0].trim();
     var idx = currentIndex();
-    var crumbs = [{ label: config.hubLabel || "Hub", href: config.homeLinkUrl }];
-    if (config.courseArea) crumbs.push({ label: config.courseArea, href: withParams(config.courseHomeUrl) });
+    var crumbs;
+    if (config.binder && config.binder.crumbs) {
+      // Filed in a binder: the hub's own breadcrumb, then the course.
+      crumbs = config.binder.crumbs.map(function (c) { return { label: c.label, href: hubHref(c.href) }; });
+    } else {
+      crumbs = [{ label: config.hubLabel || "Hub", href: homeHref }];
+      if (config.courseArea) crumbs.push({ label: config.courseArea, href: withParams(config.courseHomeUrl) });
+    }
     if (isOutline) {
       crumbs.push({ label: config.courseTitle, current: true });
     } else {
@@ -263,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div class="wrap-chrome">' +
         '<div class="chrome-left">' +
           '<button class="chrome-icon-btn" id="lace-drawer-toggle" type="button" aria-label="Open course outline">' + icon("menu", 18) + "</button>" +
-          '<a class="chrome-mark" href="' + config.homeLinkUrl + '" aria-label="LACE home">' + MARK + '<span class="mk-name">LACE</span></a>' +
+          '<a class="chrome-mark" href="' + homeHref + '" target="_top" aria-label="' + esc(config.homeLinkText || "Back to the Learning Hub") + '">' + MARK + '<span class="mk-name">Learning Hub</span></a>' +
           '<nav class="crumbs" aria-label="Breadcrumb">' + crumbHtml + "</nav>" +
         "</div>" +
         '<div class="chrome-actions">' + themeToggleHtml() + modeHtml + prevHtml + nextHtml + "</div>" +
@@ -306,9 +317,9 @@ document.addEventListener("DOMContentLoaded", function () {
     rail.className = "course-rail";
     rail.setAttribute("aria-label", "Course navigation");
     rail.innerHTML =
-      '<div class="rail-brand">' + MARK + '<span class="mk-name">LACE</span>' +
+      '<div class="rail-brand">' + MARK + '<span class="mk-name">Learning Hub</span>' +
         '<span style="margin-left:auto">' + themeToggleHtml() + "</span></div>" +
-      '<a class="rail-back" href="' + config.homeLinkUrl + '">' + icon("arrowLeft", 16) + '<span class="rb-label">' + esc(config.homeLinkText || "Back to Hub") + "</span></a>" +
+      '<a class="rail-back" href="' + homeHref + '" target="_top">' + icon("arrowLeft", 16) + '<span class="rb-label">' + esc(config.homeLinkText || "Back to Hub") + "</span></a>" +
       '<div class="rail-course">' +
         '<div class="rc-eyebrow">' + esc(config.courseArea || "Course") + "</div>" +
         '<div class="rc-title">' + esc(config.courseTitle) + "</div>" +
@@ -363,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div><div class="drawer-track"><div style="width:' + pct + '%"></div></div>' +
         '<div class="dt-meta" style="margin-top:6px;">' + done + " of " + total + " complete</div></div>" +
       '<div style="margin-top:6px;display:flex;flex-direction:column;gap:2px;">' + topicsHtml + "</div>" +
-      '<a class="drawer-exit" href="' + config.homeLinkUrl + '">' + icon("arrowLeft", 14) + " " + esc(config.homeLinkText || "Exit to Hub") + "</a>";
+      '<a class="drawer-exit" href="' + homeHref + '" target="_top">' + icon("arrowLeft", 14) + " " + esc(config.homeLinkText || "Exit to Hub") + "</a>";
     var scrim = document.createElement("div");
     scrim.className = "drawer-scrim"; scrim.id = "lace-drawer-scrim";
     document.body.appendChild(scrim); document.body.appendChild(drawer);
@@ -531,7 +542,34 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── Reset (demo / testing) ───────────────────────────────────────────────
   window.resetLaceProgress = function () { localStorage.removeItem(storageKey); window.location.reload(); };
 
+  // ── Binder tabs: the hub's divider tabs, carried into the course ─────────
+  // On wide screens the binder this course is filed in shows on the right, as
+  // in the hub, with its tab open. Each tab returns to that page in the hub,
+  // breaking out of Brightspace's frame when the package is hosted there.
+  function renderBinderTabs() {
+    var b = config.binder;
+    if (!b || !b.tabs) return;
+    var nav = document.createElement("nav");
+    nav.className = "lace-binder-tabs";
+    nav.setAttribute("aria-label", b.name + " tabs");
+    var html = '<p class="lbt-name" aria-hidden="true"><span class="lbt-swatch"></span>' + esc(b.name) + "</p>";
+    b.tabs.forEach(function (t) {
+      var open = t.id === b.currentTab;
+      html += '<a class="lbt-tab' + (open ? " lbt-open" : "") + '" href="' + hubHref(t.href) + '" target="_top"' +
+        (open ? ' aria-current="true"' : "") + '><span class="lbt-label">' + esc(t.label) + "</span></a>";
+    });
+    nav.innerHTML = html;
+    document.body.appendChild(nav);
+    document.documentElement.classList.add("has-binder-tabs");
+  }
+
   // ── Boot ───────────────────────────────────────────────────────────────────
+  // The binder's colour edges the whole course (rules, bars, the open tab),
+  // as it edges the binder's pages in the hub.
+  if (config.binder && config.binder.colour) {
+    document.documentElement.style.setProperty("--binder", config.binder.colour);
+  }
+  renderBinderTabs();
   var model = navModel();
   if (chromeMode === "rail") {
     renderRail(model);

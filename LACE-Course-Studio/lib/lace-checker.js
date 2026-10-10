@@ -7,8 +7,8 @@
   var REGISTRY_KEY = "lace_course_id_registry";
 
   var CANONICAL_HASHES = {
-    "course-nav.js": "b5341c2f",
-    "course-style.css": "9e41fe3b"
+    "course-nav.js": "7de15b5f",
+    "course-style.css": "29e65701"
   };
 
   function djb2Hash(text) {

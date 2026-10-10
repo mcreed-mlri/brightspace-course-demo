@@ -52,9 +52,38 @@ window.COURSE_CONFIG = {
   topic: "court",
   accent: "rust", // legacy course-level accent — superseded by `topic`
 
-  // Exit link — back to the LACE Learning Hub
-  homeLinkText: "Exit to Hub",
-  homeLinkUrl: "https://lms-discovery.vercel.app/",
+  // The Learning Hub's address. Hub links below are paths on it; leave it
+  // empty only when the hub itself serves this package.
+  hubBaseUrl: "https://lms-discovery.vercel.app",
+
+  // Exit link — back to the Learning Hub (a path on hubBaseUrl)
+  homeLinkText: "Back to Case Prep",
+  homeLinkUrl: "/binder/litigation/pre-trial/",
+
+  // ─── BINDER (optional) ───
+  // Where this course is filed in the hub. With it, the course shows the
+  // binder's divider tabs on the right (wide screens), the hub's breadcrumb,
+  // and the binder's colour on its rules and progress bars, so moving between
+  // hub and course feels like one binder. Paths are on hubBaseUrl and must
+  // match the hub's lib/binder.ts. Remove the block for a course not filed in
+  // a binder; it then falls back to `topic` for colour and `courseArea` for
+  // the breadcrumb.
+  binder: {
+    name: "Litigation",
+    colour: "#dc6a3c", // the binder's colour in the hub; strokes only
+    currentTab: "pre-trial", // the tab shown open
+    tabs: [
+      { id: "contents", label: "Contents", href: "/binder/litigation/" },
+      { id: "pre-trial", label: "Case Prep", href: "/binder/litigation/pre-trial/" },
+      { id: "trial-skills", label: "Trial", href: "/binder/litigation/trial-skills/" },
+      { id: "post-trial", label: "Post-Trial", href: "/binder/litigation/post-trial/" },
+      { id: "appellate", label: "Appeals", href: "/binder/litigation/appellate/" },
+    ],
+    crumbs: [
+      { label: "Litigation", href: "/binder/litigation/" },
+      { label: "Case Prep", href: "/binder/litigation/pre-trial/" },
+    ],
+  },
 
   // ─── ANALYTICS BEACON (optional — OFF by default) ───
   // course-beacon.js sends anonymous, item-scoped engagement events (page
